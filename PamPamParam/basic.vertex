@@ -1,0 +1,15 @@
+#version 330 core
+layout (location = 0) in vec2 pos;
+layout (location = 1) in vec2 texCoords;
+out vec2 TexCoords;
+
+uniform mat3 transform;
+
+void main()
+{
+
+    vec3 finalCoords = transform * vec3(pos.x, pos.y, 1.0);
+    gl_Position = vec4(finalCoords.xy, 0.0, finalCoords.z);
+    
+    TexCoords = texCoords;
+}  
