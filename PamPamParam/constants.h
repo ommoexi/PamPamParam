@@ -37,7 +37,8 @@ namespace Constants {
 		float w;
 	};
 
-	const inline float pixelStart{ 0 };
+	const inline float pixelStart { 0 };
+	const inline float pixelEnd { 1 };
 
 	const inline double PI{ 3.141592653589793238462643 };
 

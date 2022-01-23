@@ -46,10 +46,6 @@ int main(int argc, char* argv[])
 
 	handler.addText(test);
 
-	for (int i{}; i < 40000; i++) {
-		Text* text{ new Text{0, 0, 50,50, Colors::white, "I fucking did it" , handler.font(), 0, 100, 50} };
-		handler.addText(*text);
-	}
 
 	float speed{ 5 };
 

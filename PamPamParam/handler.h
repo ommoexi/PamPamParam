@@ -12,8 +12,6 @@ private:
 	std::vector<Object*> m_objects;
 	std::vector<Object*> m_texts;
 
-	void renderObj(const Object& obj, Camera& camera);
-
 	Font m_font{ "fonts\\gameFont.ttf", 524,524 };
 	Batch m_charBatch{ m_font.atlas(), Shaders::I_charShader };
 
@@ -45,11 +43,6 @@ public:
 
 	void renderObjects();
 
-	/*void renderObjects(Camera& camera) {
-		for (auto& obj : m_objects) {
-			renderObj(*obj, camera);
-		}
-	}*/
 
 	const Font& font() const {
 		return m_font;

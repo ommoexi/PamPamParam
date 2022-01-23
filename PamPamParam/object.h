@@ -15,13 +15,10 @@ private:
 	float m_height; // scale y
 	Constants::vec4 m_color;
 	const Shader::Attrib& m_attribConfig;
-	Mesh m_mesh{};  // shared	
-	TextureArray* m_texture{}; // shared
+	Mesh m_mesh{};  
 
 	float m_previousX{ m_x };
 	float m_previousY{ m_y };
-
-
 
 	Constants::vec4 m_colorNormalized{normalizeColor(m_color)};
 
@@ -39,10 +36,6 @@ protected:
 	virtual Object& setHeight(const float& height);
 	virtual Object& setWidth(const float& width);
 
-	const Mesh& mesh() const {
-		return m_mesh;
-	}
-
 	Mesh& mesh() {
 		return m_mesh;
 	}
@@ -56,7 +49,7 @@ protected:
 public:
 
 	Object(const float& width, const float& height, const float& x, const float& y, const Constants::vec4& color,
-		const Shader::Attrib& attribConfig, const Mesh& mesh = {}, TextureArray* texture = nullptr);
+		const Shader::Attrib& attribConfig, const Mesh& mesh = {});
 	virtual ~Object();
 
 	const float& width() const {
@@ -106,19 +99,34 @@ public:
 		return m_attribConfig;
 	}
 
-
-	TextureArray* texture() const {
-		return m_texture;
-	}
-
 	Object& setX(const float& x);
 
 	Object& setY(const float& y);
 
 	virtual Object& setColor(const float& r, const float& g, const float& b, const float& a);
 
-	Object& setTexture(TextureArray* texture) {
-		m_texture = texture;
+
+	Object& setColorR(const float& value) {
+		m_color.x = value;
+		m_colorNormalized.x = normalizeColor(value);
+		return *this;
+	}
+
+	Object& setColorG(const float& value) {
+		m_color.y = value;
+		m_colorNormalized.y = normalizeColor(value);
+		return *this;
+	}
+
+	Object& setColorB(const float& value) {
+		m_color.z = value;
+		m_colorNormalized.z = normalizeColor(value);
+		return *this;
+	}
+
+	Object& setColorA(const float& value) {
+		m_color.w = value;
+		m_colorNormalized.w = normalizeColor(value);
 		return *this;
 	}
 

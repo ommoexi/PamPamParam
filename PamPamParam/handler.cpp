@@ -13,20 +13,20 @@ Handler::~Handler() {
 
 }
 
-void Handler::renderObj(const Object& obj, Camera& camera) {
-	const float& x_boundary{ I_WIN.normalizeX(obj.x()) };
-	const float& y_boundary{ I_WIN.normalizeY(obj.y()) };
-	if (x_boundary >= Constants::openglLeft && x_boundary <= Constants::openglRight &&
-		y_boundary >= Constants::openglLeft && y_boundary <= Constants::openglRight) {
-	}
-}
+//void Handler::renderObj(const Object& obj, Camera& camera) {
+//	const float& x_boundary{ I_WIN.normalizeX(obj.x()) };
+//	const float& y_boundary{ I_WIN.normalizeY(obj.y()) };
+//	if (x_boundary >= Constants::openglLeft && x_boundary <= Constants::openglRight &&
+//		y_boundary >= Constants::openglLeft && y_boundary <= Constants::openglRight) {
+//	}
+//}
 
 void Handler::renderObjects() {
 
 	int offset{};
 
 	for (auto& text : m_texts) {
-		Mesh& textMesh{ text->mesh() };
+		const Mesh& textMesh{ text->mesh() };
 		int verticesSize{ static_cast<int>(textMesh.size()) };
 		m_charBatch.setSubData(offset, textMesh);
 		offset += verticesSize;

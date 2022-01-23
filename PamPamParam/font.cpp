@@ -23,7 +23,7 @@ void Font::setCharacter(const Texture& texture, const char& textureName, const i
 		m_maxCharacterHeight = glyphHeight;
 	}
 
-	std::vector<float> charMesh{
+	Mesh charMesh{
 		//position coords		texture coords
 		x_pos_1, y_pos_1,		texture.x1, texture.y2, static_cast<float>(texture.z),	//left down
 		x_pos_2, y_pos_1, 		texture.x2, texture.y2, static_cast<float>(texture.z),	//right down

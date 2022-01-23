@@ -2,9 +2,9 @@
 
 Object::Object(const float& x, const float& y, const float& width, const float& height,
 	const Constants::vec4& color, const Shader::Attrib& attribConfig,
-	const Mesh& mesh, TextureArray* texture)
+	const Mesh& mesh)
 	: m_x{ x }, m_y{ y }, m_width{ width }, m_height{ height },
-	m_color{ color }, m_attribConfig{ attribConfig }, m_mesh{ mesh }, m_texture{ texture }
+	m_color{ color }, m_attribConfig{ attribConfig }, m_mesh{ mesh }
 {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::object_cpp, &mS_objectsCount);

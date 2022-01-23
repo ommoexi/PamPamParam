@@ -66,12 +66,13 @@ private:
 
 
 	static inline const unsigned int mS_charSizePerAttribute_SIZE{ 3 };
-	//2- pos; 3 - texture; 4- color
+	//2- pos; 3 - texture; 4 - color
 	static inline const int mS_charSizePerAttribute[mS_charSizePerAttribute_SIZE]{ 2,3, 4 };
 	static inline const Attrib mS_charAttrib{ mS_charSizePerAttribute, mS_charSizePerAttribute_SIZE, GL_TRIANGLES, 3 };
 
-	static inline const unsigned int mS_basicSizePerAttribute_SIZE{ 2 };
-	static inline const int mS_basicSizePerAttribute[mS_basicSizePerAttribute_SIZE]{ 2,2 };
+	static inline const unsigned int mS_basicSizePerAttribute_SIZE{ 3 };
+	//2- pos; 3 - texture; 4 - color 
+	static inline const int mS_basicSizePerAttribute[mS_basicSizePerAttribute_SIZE]{ 2,3,4 };
 
 	static inline const Attrib mS_basicAttrib{ mS_basicSizePerAttribute, mS_basicSizePerAttribute_SIZE, GL_TRIANGLES, 3 };
 
