@@ -30,22 +30,40 @@ void Text::setShaderTextures(const int& index, Mesh& textMesh, const Mesh& fontC
 	textMesh[index + stride * 2 + 4] = fontCharMesh[14];
 }
 
-void Text::setShaderColors(const int& index, Mesh& textMesh, const Constants::vec4& colorNormalized, 
-	const int& stride) {
-	textMesh[index + 5] = colorNormalized.x;
-	textMesh[index + 6] = colorNormalized.y;
-	textMesh[index + 7] = colorNormalized.z;
-	textMesh[index + 8] = colorNormalized.w;
+namespace {
 
-	textMesh[index + stride + 5] = colorNormalized.x;
-	textMesh[index + stride + 6] = colorNormalized.y;
-	textMesh[index + stride + 7] = colorNormalized.z;
-	textMesh[index + stride + 8] = colorNormalized.w;
+	void setShaderColorR(const int& index, Mesh& textMesh, const Constants::vec4& colorNormalized,
+		const int& stride) {
+		textMesh[index + 5] = colorNormalized.x;
+		textMesh[index + stride + 5] = colorNormalized.x;
+		textMesh[index + stride * 2 + 5] = colorNormalized.x;
+	}
+	void setShaderColorG(const int& index, Mesh& textMesh, const Constants::vec4& colorNormalized,
+		const int& stride) {
+		textMesh[index + 6] = colorNormalized.y;
+		textMesh[index + stride + 6] = colorNormalized.y;
+		textMesh[index + stride * 2 + 6] = colorNormalized.y;
+	}
+	void setShaderColorB(const int& index, Mesh& textMesh, const Constants::vec4& colorNormalized,
+		const int& stride) {
+		textMesh[index + 7] = colorNormalized.z;
+		textMesh[index + stride + 7] = colorNormalized.z;
+		textMesh[index + stride * 2 + 7] = colorNormalized.z;
+	}
+	void setShaderColorA(const int& index, Mesh& textMesh, const Constants::vec4& colorNormalized,
+		const int& stride) {
+		textMesh[index + 8] = colorNormalized.w;
+		textMesh[index + stride + 8] = colorNormalized.w;
+		textMesh[index + stride * 2 + 8] = colorNormalized.w;
+	}
 
-	textMesh[index + stride * 2 + 5] = colorNormalized.x;
-	textMesh[index + stride * 2 + 6] = colorNormalized.y;
-	textMesh[index + stride * 2 + 7] = colorNormalized.z;
-	textMesh[index + stride * 2 + 8] = colorNormalized.w;
+	void setShaderColors(const int& index, Mesh& textMesh, const Constants::vec4& colorNormalized,
+		const int& stride) {
+		setShaderColorR(index, textMesh, colorNormalized, stride);
+		setShaderColorG(index, textMesh, colorNormalized, stride);
+		setShaderColorB(index, textMesh, colorNormalized, stride);
+		setShaderColorA(index, textMesh, colorNormalized, stride);
+	}
 }
 
 bool Text::moveCursor(float& xCursor, float& yCursor, const Character& fontCharacter,
@@ -178,10 +196,15 @@ Text& Text::setHeight(const float& height) {
 	return *this;
 }
 
+Text& Text::setSize(const float& width, const float& height) {
+	Object::setWidth(width);
+	Object::setHeight(height);
+	resize(width, height);
+	return *this;
+}
 
-Text& Text::setColor(const float& r, const float& g, const float& b, const float& a) {
-	Object::setColor(r, g, b, a);
 
+void Text::setColorBody(text::setShaderColorFunc* func) {
 	Mesh& _mesh{ mesh() };
 	const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
 	const int verticeContentSize{ static_cast<int>(m_content.size()) * totalIndicesPerShape };
@@ -196,9 +219,44 @@ Text& Text::setColor(const float& r, const float& g, const float& b, const float
 		const Mesh& fontCharMesh{ fontCharacter.mesh };
 
 		if (fontCharMesh.size() > 0 && letter != '\n') {
-			setShaderColors(i, _mesh, _colorNormalized, stride);
+			func(i, _mesh, _colorNormalized, stride);
 		}
 	}
+}
+
+Text& Text::setColor(const float& r, const float& g, const float& b, const float& a) {
+	Object::setColor(r, g, b, a);
+
+	setColorBody(setShaderColors);
 
 	return *this;
 }
+
+Text& Text::setColorR(const float& value) {
+	Object::setColorR(value);
+	setColorBody(setShaderColorR);
+
+	return *this;
+
+}
+Text& Text::setColorG(const float& value){
+	Object::setColorG(value);
+
+	setColorBody(setShaderColorG);
+
+	return *this;
+	}
+Text& Text::setColorB(const float& value){
+	Object::setColorB(value);
+
+	setColorBody(setShaderColorB);
+
+	return *this;
+	}
+Text& Text::setColorA(const float& value){
+	Object::setColorA(value);
+
+	setColorBody(setShaderColorA);
+
+	return *this;
+	}

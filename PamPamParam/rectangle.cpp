@@ -1,10 +1,56 @@
 #include "rectangle.h"
 
-Rectangle::Rectangle(const float& width, const float& height, const float& x, const float& y, const Constants::vec4& color) :
-	Object{width ,height, x, y, color, Shader::basicAttrib(), mS_rectangleMesh} {
+namespace {
+
+	void setShaderColorR(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
+		const int& stride) {
+		rectMesh[index + 5] = colorNormalized.x;
+		rectMesh[index + stride + 5] = colorNormalized.x;
+		rectMesh[index + stride * 2 + 5] = colorNormalized.x;
+	}
+	void setShaderColorG(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
+		const int& stride) {
+		rectMesh[index + 6] = colorNormalized.y;
+		rectMesh[index + stride + 6] = colorNormalized.y;
+		rectMesh[index + stride * 2 + 6] = colorNormalized.y;
+	}
+	void setShaderColorB(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
+		const int& stride) {
+		rectMesh[index + 7] = colorNormalized.z;
+		rectMesh[index + stride + 7] = colorNormalized.z;
+		rectMesh[index + stride * 2 + 7] = colorNormalized.z;
+	}
+	void setShaderColorA(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
+		const int& stride) {
+		rectMesh[index + 8] = colorNormalized.w;
+		rectMesh[index + stride + 8] = colorNormalized.w;
+		rectMesh[index + stride * 2 + 8] = colorNormalized.w;
+	}
+
+	void setShaderColors(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
+		const int& stride) {
+		setShaderColorR(index, rectMesh, colorNormalized, stride);
+		setShaderColorG(index, rectMesh, colorNormalized, stride);
+		setShaderColorB(index, rectMesh, colorNormalized, stride);
+		setShaderColorA(index, rectMesh, colorNormalized, stride);
+	}
+}
+
+Rectangle::Rectangle(const float& x, const float& y, const float& width, const float& height, const Constants::vec4& color,
+	const Texture* texture) :
+	Object{ x, y, width, height, color, Shader::basicAttrib(), mS_rectangleMesh }, m_texture{ texture } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::rectangle_cpp, &mS_objectsCount);
 #endif
+
+	Mesh& _mesh{ Object::mesh() };
+	const int& stride{ attribConfig().stride() };
+	const Constants::vec4& _colorNormalized{ colorNormalized() };
+
+
+	setShaderCoords(0, _mesh, stride);
+	setShaderTextures(0, _mesh, *m_texture, stride);
+	setShaderColors(0, _mesh, _colorNormalized, stride);
 }
 Rectangle::~Rectangle() {
 #ifdef _DEBUG
@@ -24,14 +70,14 @@ void Rectangle::setShaderCoords(const int& index, Mesh& rectMesh, const int& str
 	float& left_up_x{ rectMesh[index + stride * 2] };
 	float& left_up_y{ rectMesh[index + stride * 2 + 1] };
 
-	left_down_x = transformX(left_down_x);
-	left_down_y = transformX(left_down_y);
+	left_down_x = transformX(mS_rectangleMesh[index]);
+	left_down_y = transformY(mS_rectangleMesh[index + 1]);
 
-	right_down_x = transformX(right_down_x);
-	right_down_y = transformX(right_down_y);
+	right_down_x = transformX(mS_rectangleMesh[index + stride]);
+	right_down_y = transformY(mS_rectangleMesh[index + stride + 1]);
 
-	left_up_x = transformX(left_up_x);
-	left_up_y = transformX(left_up_y);
+	left_up_x = transformX(mS_rectangleMesh[index + stride * 2]);
+	left_up_y = transformY(mS_rectangleMesh[index + stride * 2 + 1]);
 }
 
 void Rectangle::setShaderTextures(const int& index, Mesh& rectMesh, const Texture& texture, const int& stride) {
@@ -48,20 +94,71 @@ void Rectangle::setShaderTextures(const int& index, Mesh& rectMesh, const Textur
 	rectMesh[index + stride * 2 + 4] = texture.z;
 }
 
-void Rectangle::setShaderColors(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
-	const int& stride) {
-	rectMesh[index + 5] = colorNormalized.x;
-	rectMesh[index + 6] = colorNormalized.y;
-	rectMesh[index + 7] = colorNormalized.z;
-	rectMesh[index + 8] = colorNormalized.w;
 
-	rectMesh[index + stride + 5] = colorNormalized.x;
-	rectMesh[index + stride + 6] = colorNormalized.y;
-	rectMesh[index + stride + 7] = colorNormalized.z;
-	rectMesh[index + stride + 8] = colorNormalized.w;
+void Rectangle::setColorBody(rectangle::setShaderColorFunc* func) {
+	Mesh& _mesh{ Object::mesh() };
+	const int& stride{ attribConfig().stride() };
+	const Constants::vec4& _colorNormalized{ colorNormalized() };
 
-	rectMesh[index + stride * 2 + 5] = colorNormalized.x;
-	rectMesh[index + stride * 2 + 6] = colorNormalized.y;
-	rectMesh[index + stride * 2 + 7] = colorNormalized.z;
-	rectMesh[index + stride * 2 + 8] = colorNormalized.w;
+	func(0, _mesh, _colorNormalized, stride);
+}
+
+Rectangle& Rectangle::setColor(const float& r, const float& g, const float& b, const float& a) {
+	Object::setColor(r, g, b, a);
+
+	setColorBody(setShaderColors);
+
+	return *this;
+}
+
+Rectangle& Rectangle::setColorR(const float& value) {
+	Object::setColorR(value);
+	setColorBody(setShaderColorR);
+
+	return *this;
+
+}
+Rectangle& Rectangle::setColorG(const float& value) {
+	Object::setColorG(value);
+
+	setColorBody(setShaderColorG);
+
+	return *this;
+}
+Rectangle& Rectangle::setColorB(const float& value) {
+	Object::setColorB(value);
+
+	setColorBody(setShaderColorB);
+
+	return *this;
+}
+Rectangle& Rectangle::setColorA(const float& value) {
+	Object::setColorA(value);
+
+	setColorBody(setShaderColorA);
+
+	return *this;
+}
+
+void Rectangle::resize() {
+	Mesh& _mesh{ Object::mesh() };
+	const int& stride{ attribConfig().stride() };
+	setShaderCoords(0, _mesh, stride);
+}
+
+Rectangle& Rectangle::setWidth(const float& width) {
+	Object::setWidth(width);
+	resize();
+	return *this;
+}
+Rectangle& Rectangle::setHeight(const float& height) {
+	Object::setHeight(height);
+	resize();
+	return *this;
+}
+Rectangle& Rectangle::setSize(const float& width, const float& height) {
+	Object::setWidth(width);
+	Object::setHeight(height);
+	resize();
+	return *this;
 }

@@ -1,11 +1,16 @@
 #pragma once
 #include "object.h"
 
+namespace rectangle {
+	using setShaderColorFunc = void(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
+		const int& stride);
+}
 
 class Rectangle : public Object {
 private:
 
-	std::vector<Texture*> m_textures{};
+	// de modificat 
+	const Texture* m_texture{};
 
 	static inline Mesh mS_rectangleMesh{
 		//position coords		                            texture coords       color
@@ -16,20 +21,28 @@ private:
 
 	void setShaderCoords(const int& index, Mesh& rectMesh, const int& stride);
 	void setShaderTextures(const int& index, Mesh& rectMesh, const Texture& texture, const int& stride);
-	void setShaderColors(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized, const int& stride);
 
-
+	void resize();
 
 public:
 
-//#ifdef _DEBUG
-//		DEBUG_DESTRUCTOR_OBJ(this, Source_Files::text_cpp);
-//	setDebugDestructor(false);
-//#endif
 
-
-	Rectangle(const float& width, const float& height, const float& x, const float& y, const Constants::vec4& color);
+	Rectangle(const float& x, const float& y, const float& width, const float& height, const Constants::vec4& color, 
+		const Texture* texture);
 	virtual ~Rectangle();
+
+	void setColorBody(rectangle::setShaderColorFunc* func);
+
+	Rectangle& setColor(const float& r, const float& g, const float& b, const float& a);
+
+	Rectangle& setColorR(const float& value);
+	Rectangle& setColorG(const float& value);
+	Rectangle& setColorB(const float& value);
+	Rectangle& setColorA(const float& value);
+
+	Rectangle& setWidth(const float& width);
+	Rectangle& setHeight(const float& height);
+	Rectangle& setSize(const float& width, const float& height);
 
 #ifdef _DEBUG
 private:

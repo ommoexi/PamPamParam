@@ -79,7 +79,7 @@ Font::Font(std::string_view fontPath, const unsigned int& pixelWidth, const unsi
 
 	}
 
-	m_atlas = new TextureArray{ GL_CLAMP_TO_EDGE,
+	m_atlas = new TextureArray{ static_cast<int>(pixelWidth), static_cast<int>(pixelHeight), GL_CLAMP_TO_EDGE,
 					  GL_CLAMP_TO_EDGE,
 					  GL_LINEAR,
 					  GL_LINEAR, GL_RED, glyphsSize, GL_RED, GL_UNSIGNED_BYTE, true, 1 };

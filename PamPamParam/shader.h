@@ -14,7 +14,7 @@ class Shader
 public:
 	class Attrib {
 	private:
-		const int* m_sizePerAttrib;
+		const int* m_sizePerAttrib; // array
 		unsigned int m_sizePerAttrib_SIZE;
 		unsigned int m_mode;
 		int m_verticesPerMode;

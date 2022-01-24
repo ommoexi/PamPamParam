@@ -30,7 +30,6 @@ Batch::Batch(TextureArray* texture, Shader& shader) : m_texture{ texture },m_sha
 
 }
 
-
 void Batch::setVBOSize(const int& shapes) {
 	long long VBOByteSize{ shapes * m_shader->attribShader().totalIndicesPerShape() * sizeof(float) };
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);

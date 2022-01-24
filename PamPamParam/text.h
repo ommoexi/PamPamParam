@@ -7,6 +7,12 @@
 #include "font.h"
 #include <vector>
 
+namespace text {
+	using setShaderColorFunc = void(const int& index, Mesh& textMesh, const Constants::vec4& colorNormalized,
+		const int& stride);
+
+}
+
 class Text : public Object {
 private:
 	std::string m_content;
@@ -21,12 +27,12 @@ private:
 	Text& operator=(const Text& text);
 
 	void resize(const float& width, const float& height);
+	void setColorBody(text::setShaderColorFunc* func);
 
 	void setShaderCoords(const int& index, Mesh& textMesh, const Mesh& fontCharMesh, const float& xCursor,
 		const float& yCursor, const int& stride);
 	void setShaderTextures(const int& index, Mesh& textMesh, const Mesh& fontCharMesh, const int& stride);
-	void setShaderColors(const int& index, Mesh& textMesh, const Constants::vec4& colorNormalized, 
-		const int& stride);
+
 
 	//returns true if new line
 	bool moveCursor(float& xCursor, float& yCursor, const Character& fontCharacter,
@@ -60,10 +66,15 @@ public:
 		return m_font;
 	}
 
-	Text& setWidth(const float& width) override;
-	Text& setHeight(const float& height) override;
+	Text& setWidth(const float& width);
+	Text& setHeight(const float& height);
+	Text& setSize(const float& width, const float& height);
 
-	Text& setColor(const float& r, const float& g, const float& b, const float& a) override;
+	Text& setColor(const float& r, const float& g, const float& b, const float& a);
+	Text& setColorR(const float& value);
+	Text& setColorG(const float& value);
+	Text& setColorB(const float& value);
+	Text& setColorA(const float& value);
 
 	float getPixelWidthFirstRow() const;
 	float getPixelHeightFirstRow() const;
@@ -84,6 +95,9 @@ public:
 		m_maxPixelWidth = value;
 		return *this;
 	}
+
+	// can't create setFont momentarily because i have to set batch texture as well
+	//Text& setFont(const Font* font);
 
 
 

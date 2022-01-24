@@ -1,5 +1,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "utils.h"
+#include "initTextures.h"
 #include "window.h"
 #include "textureArray.h"
 #include "constants.h"
@@ -9,14 +10,16 @@
 #include "player.h"
 #include "Batch.h"
 #include "shaders.h"
+#include "initTextures.h"
 
 bool processInput();
 
 namespace {
+	
 	double previousTime = SDL_GetTicks();
 	Handler handler{};
 	int frameCount = 0;
-	Text framerateText{ 800, 800,20,20, Colors::black, "FPS" , handler.font(), 0};
+	Text framerateText{ 800, 800,20,20, Colors::black, "FPS" , Textures::I_FONT, 0};
 	bool keys[6]{/*up right down left* left right*/ };
 	void framerate() {
 		double currentTime = SDL_GetTicks();
@@ -33,46 +36,47 @@ namespace {
 
 
 }
-
+#include <filesystem>
 
 int main(int argc, char* argv[])
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	std::vector<Text*> texts{};
 	handler.addText(framerateText);
-	Text test{ 0, 0, 50,50, Colors::white, "I fucking did it" , handler.font(), 0, 100, 50};
-
+	Text test{ 0, 0, 50,50, Colors::white, "I fucking did it" , Textures::I_FONT, 0, 100, 50};
+	Rectangle player{ 0,0, 250,250 , Colors::white, Textures::player };
 	handler.addText(test);
-
-
+	handler.addObj(player);
 	float speed{ 5 };
-
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while (processInput())
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 		framerate();
 		if (keys[0]) {
-			framerateText.setY(framerateText.y() + speed);
+			player.setY(player.y() + speed);
+			player.setColor(player.colorR() - 1, player.colorB() - 1, player.colorG() - 1, player.colorA());
 		}
 
 		else if (keys[2]) {
-			framerateText.setY(framerateText.y() - speed);
+			player.setY(player.y() - speed);
+			player.setColorR(player.colorR() + 1);
+			player.setColorG(player.colorG() + 1);
+			player.setColorB(player.colorB() + 1);
 		}
 		if (keys[1]) {
-			framerateText.setX(framerateText.x() + speed);
+			player.setX(player.x() + speed);
 		}
 		else if (keys[3]) {
-			framerateText.setX(framerateText.x() - speed);
+			player.setX(player.x() - speed);
 		}
 
 		handler.renderObjects();
 		I_WIN.swapBuffers();
 	}
 
-
+	Textures::deleteAllTextures();
 	return 0;
 }
 

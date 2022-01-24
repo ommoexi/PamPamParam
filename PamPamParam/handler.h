@@ -5,25 +5,22 @@
 #include "Batch.h"
 #include "font.h"
 #include "shaders.h"
+#include "textureArray.h"
+#include "initTextures.h"
 
 
 class Handler {
 private:
 	std::vector<Object*> m_objects;
 	std::vector<Object*> m_texts;
+	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader };
+	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader };
 
-	Font m_font{ "fonts\\gameFont.ttf", 524,524 };
-	Batch m_charBatch{ m_font.atlas(), Shaders::I_charShader };
 
 protected:
 public:
 	Handler();
 	~Handler();
-
-	// de modificat
-	Batch& batch() {
-		return m_charBatch;
-	}
 
 	void addObj(Object& object) {
 		m_objects.push_back(&object);
@@ -33,20 +30,9 @@ public:
 		m_texts.push_back(&text);
 	}
 
-	void removeObject(Object& object);
-
-	void updateObjects() {
-		for (auto& obj : m_objects) {
-			obj->update();
-		}
-	}
 
 	void renderObjects();
 
-
-	const Font& font() const {
-		return m_font;
-	}
 
 
 #ifdef _DEBUG

@@ -16,10 +16,8 @@ private:
 	Constants::vec4 m_color;
 	const Shader::Attrib& m_attribConfig;
 	Mesh m_mesh{};  
-
 	float m_previousX{ m_x };
 	float m_previousY{ m_y };
-
 	Constants::vec4 m_colorNormalized{normalizeColor(m_color)};
 
 	Object(const Object& other) = default;
@@ -32,9 +30,6 @@ protected:
 	float transformX(const float& xCoord) const;
 	float transformY(const float& yCoord) const;
 
-	//no implementation only sets width without modifying vertices
-	virtual Object& setHeight(const float& height);
-	virtual Object& setWidth(const float& width);
 
 	Mesh& mesh() {
 		return m_mesh;
@@ -46,9 +41,43 @@ protected:
 
 	friend class Handler;
 
+	// implement these functions in childs
+	
+	Object& setColor(const float& r, const float& g, const float& b, const float& a);
+
+	Object& setColorR(const float& value) {
+		m_color.x = value;
+		m_colorNormalized.x = normalizeColor(value);
+		return *this;
+	}
+
+	Object& setColorG(const float& value) {
+		m_color.y = value;
+		m_colorNormalized.y = normalizeColor(value);
+		return *this;
+	}
+
+	Object& setColorB(const float& value) {
+		m_color.z = value;
+		m_colorNormalized.z = normalizeColor(value);
+		return *this;
+	}
+
+	Object& setColorA(const float& value) {
+		m_color.w = value;
+		m_colorNormalized.w = normalizeColor(value);
+		return *this;
+	}
+
+	//no implementation only sets width without modifying vertices
+	Object& setHeight(const float& height);
+	Object& setWidth(const float& width);
+	 
+	//
+
 public:
 
-	Object(const float& width, const float& height, const float& x, const float& y, const Constants::vec4& color,
+	Object(const float& x, const float& y, const float& width, const float& height, const Constants::vec4& color,
 		const Shader::Attrib& attribConfig, const Mesh& mesh = {});
 	virtual ~Object();
 
@@ -103,32 +132,7 @@ public:
 
 	Object& setY(const float& y);
 
-	virtual Object& setColor(const float& r, const float& g, const float& b, const float& a);
 
-
-	Object& setColorR(const float& value) {
-		m_color.x = value;
-		m_colorNormalized.x = normalizeColor(value);
-		return *this;
-	}
-
-	Object& setColorG(const float& value) {
-		m_color.y = value;
-		m_colorNormalized.y = normalizeColor(value);
-		return *this;
-	}
-
-	Object& setColorB(const float& value) {
-		m_color.z = value;
-		m_colorNormalized.z = normalizeColor(value);
-		return *this;
-	}
-
-	Object& setColorA(const float& value) {
-		m_color.w = value;
-		m_colorNormalized.w = normalizeColor(value);
-		return *this;
-	}
 
 #ifdef _DEBUG
 private:

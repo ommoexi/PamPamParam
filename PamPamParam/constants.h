@@ -1,5 +1,5 @@
 #pragma once
-
+#include <filesystem>
 namespace Constants {
 	namespace Uniforms {
 		inline const char* transform{ "transform" };
@@ -44,6 +44,38 @@ namespace Constants {
 
 	const inline float widthStretch{ 1000 };
 	const inline float heightStretch{ 1000 };
+	
+	const inline std::filesystem::path currentDirectoryPath{ std::filesystem::current_path() };
+
+	const inline std::string basic_fragFile{ "basic.frag" };
+	const inline std::string basic_vertexFile{ "basic.vertex" };
+	const inline std::string char_fragFile{ "char.frag" };
+	const inline std::string char_vertexFile{ "char.vertex" };
+	const inline std::string rect_geomFile{ "rect.geom" };
+
+	const inline std::string basic_fragPath{( currentDirectoryPath / basic_fragFile).generic_string() };
+	const inline std::string basic_vertexPath{ (currentDirectoryPath / basic_vertexFile).generic_string() };
+	const inline std::string char_fragPath{ (currentDirectoryPath / char_fragFile).generic_string() };
+	const inline std::string char_vertexPath{ (currentDirectoryPath / char_vertexFile).generic_string() };
+	const inline std::string rect_geomPath{ (currentDirectoryPath / rect_geomFile).generic_string() };
+
+	namespace textures {
+
+		const inline std::string texturesFolder{ "textures" };
+		const inline std::filesystem::path texturesPath{ currentDirectoryPath / texturesFolder };
+
+		const inline std::string player_pngFile{ "player.png" };
+		const inline std::string player_pngPath{ (texturesPath / player_pngFile).generic_string() };
+	}
+	namespace fonts {
+
+		const inline std::string fontsFolder{ "fonts" };
+		const inline std::filesystem::path fontsPath{ currentDirectoryPath / fontsFolder };
+
+		const inline std::string gameFontFile{ "gameFont.ttf" };
+		const inline std::string gameFont{ (fontsPath / gameFontFile).generic_string() };
+	}
+
 }
 
 enum class Header_Files {

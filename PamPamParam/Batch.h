@@ -6,12 +6,11 @@
 
 class Batch {
 private:
-	TextureArray* m_texture; // va trebuii modificat mai tarziu
+	TextureArray* m_texture; 
 	Shader* m_shader;
 	unsigned int m_VAO;
-	unsigned int m_VBO; // only float values
+	unsigned int m_VBO;
 	int m_verticesSize{};
-
 
 protected:
 public:
@@ -34,6 +33,7 @@ public:
 
 	void draw();
 
+	// use this function before setSubData and outside iteration
 	void bindBuffer() const;
 
 	// DE MODIFICAT 

@@ -4,6 +4,23 @@ namespace {
 	const int textureSpacing{ 1 };
 
 	Texture _nullTexture{};
+
+}
+
+namespace image {
+
+	Image loadImage(std::string_view filePath, std::string_view setName) {
+
+		Image image{ setName.data() };
+
+		image.data = stbi_load(filePath.data(), &image.width, &image.height, &image.channels, 0);
+
+		return image;
+	}
+
+	void freeImageData(Image& image) {
+		stbi_image_free(image.data);
+	}
 }
 
 unsigned int TextureArray::constructorBody(const int& wrap_s, const int& wrap_t, const int& min_filter, const int& mag_filter,
@@ -48,10 +65,10 @@ TextureArray::TextureArray(const int& wrap_s, const int& wrap_t, const int& min_
 
 }
 
-TextureArray::TextureArray(const int& wrap_s, const int& wrap_t, const int& min_filter, const int& mag_filter,
-	const int& internal_format, const std::vector<Constants::vec2>& texturesSize, const std::vector<void*>& pixels,
+TextureArray::TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter, 
+	const int& mag_filter,const int& internal_format, const std::vector<Constants::vec2>& texturesSize, const std::vector<void*>& pixels,
 	const std::vector<std::string>& textureNames, const int& format, const int& type, const bool& generate_mipmap,
-	int unpack_alignment) : m_width{ mS_maxWidth }, m_height{ mS_maxHeight }, m_wrap_s{ wrap_s }, m_wrap_t{ wrap_t }, 
+	int unpack_alignment) : m_width{ width }, m_height{ height }, m_wrap_s{ wrap_s }, m_wrap_t{ wrap_t }, 
 	m_min_filter{ min_filter },m_mag_filter{ mag_filter }, m_unpack_alignment{ unpack_alignment }, m_internal_format{ internal_format },
 	m_format{ format },m_type{ type } {
 
@@ -83,9 +100,31 @@ TextureArray::TextureArray(const int& wrap_s, const int& wrap_t, const int& min_
 
 }
 
-TextureArray::TextureArray(const int& wrap_s, const int& wrap_t, const int& min_filter, const int& mag_filter,
-	const int& internal_format, const std::vector<Constants::vec2>& texturesSize, const int& format,
-	const int& type, const bool& generate_mipmap, int unpack_alignment) : m_width{ mS_maxWidth }, m_height{ mS_maxHeight }, 
+TextureArray::TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter, 
+	const int& mag_filter,const int& internal_format, std::vector<Image>& images, const int& format, const int& type, 
+	const bool& generate_mipmap, int unpack_alignment) : m_width{ width }, m_height{ height },
+	m_wrap_s{ wrap_s }, m_wrap_t{ wrap_t }, m_min_filter{ min_filter }, m_mag_filter{ mag_filter },
+	m_unpack_alignment{ unpack_alignment }, m_internal_format{ internal_format }, m_format{ format }, m_type{ type } {
+#ifdef _DEBUG
+	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::textureArray_cpp, &mS_objectsCount);
+#endif
+
+	std::vector<Constants::vec2> size{};
+	for (auto& image : images) {
+		size.push_back(Constants::vec2{ static_cast<float>(image.width), static_cast<float>(image.height) });
+	}
+	alocateMemory(size);
+	m_id = constructorBody(wrap_s, wrap_t, min_filter, mag_filter, internal_format,
+		m_width, m_height, m_depth, format, type, generate_mipmap, unpack_alignment);
+	for (auto& image : images) {
+		subImage(image.width, image.height, image.name, image.data);
+		image::freeImageData(image);
+	}
+}
+
+TextureArray::TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter,
+	const int& mag_filter,const int& internal_format, const std::vector<Constants::vec2>& texturesSize, const int& format,
+	const int& type, const bool& generate_mipmap, int unpack_alignment) : m_width{ width }, m_height{ height }, 
 	m_wrap_s{ wrap_s }, m_wrap_t{ wrap_t }, m_min_filter{ min_filter },m_mag_filter{ mag_filter }, 
 	m_unpack_alignment{ unpack_alignment }, m_internal_format{ internal_format }, m_format{ format },m_type{ type }{
 #ifdef _DEBUG
@@ -213,22 +252,3 @@ const Texture& TextureArray::getTexture(const std::string& textureName) const {
 void TextureArray::bind() const {
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_id);
 }
-
-
-
-//TextureArray::TextureArray(const int& depth,std::string_view filePath, const int& wrap_s, const int& wrap_t, 
-//	const int& min_filter,
-//	const int& mag_filter, const int& internal_format, const int& format, const bool& generate_mipmap,
-//	int unpack_alignment) : m_depth{ depth } {
-//
-//#ifdef _DEBUG
-//	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::texture_cpp, &mS_objectsCount);
-//#endif
-//
-//	int nrChannels;
-//	unsigned char* data = stbi_load(filePath.data(), &m_width, &m_height, &nrChannels, 0);
-//	m_id = constructorBody(textureType, textureImageType, wrap_s, wrap_t, min_filter, mag_filter, internal_format,
-//		m_width, m_height, m_depth, format, GL_UNSIGNED_BYTE, data, generate_mipmap, unpack_alignment);
-//
-//	stbi_image_free(data);
-//}

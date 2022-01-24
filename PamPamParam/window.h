@@ -9,8 +9,8 @@
 
 class Window {
 private:
-	static inline float mS_width{ 1000 };
-	static inline float mS_height{ 1000 };
+	static inline float mS_width{ 1200 };
+	static inline float mS_height{ 800 };
 	static inline float mS_halfWidth{mS_width / 2};
 	static inline float mS_halfHeight{ mS_height / 2 };
 	std::string m_title;
@@ -74,4 +74,4 @@ private:
 
 };
 
-inline Window I_WIN{ "test" };
+inline Window I_WIN{ "BestGameEver" };

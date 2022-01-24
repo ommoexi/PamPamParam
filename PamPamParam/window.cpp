@@ -1,15 +1,5 @@
 #include "window.h"
 
-namespace {
-	/*void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-	{
-		glViewport(0, 0, width, height);
-		Window::setWidth(static_cast<float>(width));
-		Window::setHeight(static_cast<float>(height));
-
-	}*/
-}
-
 Window::Window(std::string_view title) : m_title{ title } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::window_cpp, &mS_objectsCount);

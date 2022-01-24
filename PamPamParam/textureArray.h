@@ -15,11 +15,20 @@ struct Texture {
 	int height;
 };
 
+// for stbi
+struct Image {
+	std::string name;
+	int width;
+	int height;
+	int channels;
+	unsigned char* data;
+
+};
+
+// i advise loading textures with same height
 class TextureArray {
 
 public:
-	inline static const int mS_maxWidth{ 1024 };
-	inline static const int mS_maxHeight{ 1024 };
 	inline static const int mS_maxDepth{ 256 };
 
 private:
@@ -52,6 +61,7 @@ private:
 		const int& internal_format, const int& width, const int& height, const int& depth, const int& format,
 		const int& type, const bool& generate_mipmap, int unpack_alignment) const;
 
+	// sets how much depth array has based on all texture sizes
 	void alocateMemory(const std::vector<Constants::vec2>& texturesSize);
 
 protected:
@@ -61,14 +71,20 @@ public:
 		const int& type, const bool& generate_mipmap, int unpack_alignment = 4);
 
 	//every texture vector must have same size
-	TextureArray(const int& wrap_s, const int& wrap_t, const int& min_filter, const int& mag_filter,
-		const int& internal_format, const std::vector<Constants::vec2>& texturesSize,
+	TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter, 
+		const int& mag_filter,const int& internal_format, const std::vector<Constants::vec2>& texturesSize,
 		const std::vector<void*>& pixels, const std::vector<std::string>& textureNames, const int& format,
 		const int& type, const bool& generate_mipmap,
 		int unpack_alignment = 4);
 
-	TextureArray(const int& wrap_s, const int& wrap_t, const int& min_filter, const int& mag_filter,
-		const int& internal_format, const std::vector<Constants::vec2>& texturesSize, const int& format,
+	//loads every texture loaded with stbi then deletes it with stbi
+	TextureArray(const int& width, const int& height ,const int& wrap_s, const int& wrap_t, const int& min_filter, 
+		const int& mag_filter,const int& internal_format, std::vector<Image>& images, const int& format,
+		const int& type, const bool& generate_mipmap, int unpack_alignment = 4);
+
+	// alocates memory only and textures must be loaded as same as texturesSize
+	TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter, 
+		const int& mag_filter,const int& internal_format, const std::vector<Constants::vec2>& texturesSize, const int& format,
 		const int& type, const bool& generate_mipmap, int unpack_alignment = 4);
 
 	virtual ~TextureArray();
@@ -92,3 +108,11 @@ private:
 
 #endif
 };
+
+namespace image {
+
+	Image loadImage(std::string_view filePath, std::string_view setName);
+
+	void freeImageData(Image& image);
+
+}
