@@ -111,7 +111,7 @@ private:
 
 namespace image {
 
-	Image loadImage(std::string_view filePath, std::string_view setName);
+	Image loadImage(std::string_view filePath, std::string_view setName, const int& desiredChannels);
 
 	void freeImageData(Image& image);
 

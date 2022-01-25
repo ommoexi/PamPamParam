@@ -44,6 +44,10 @@ public:
 	Rectangle& setHeight(const float& height);
 	Rectangle& setSize(const float& width, const float& height);
 
+	Rectangle& setTexture(const Texture* texture);
+
+	bool isCollide(const Rectangle& rect);
+
 #ifdef _DEBUG
 private:
 	static inline ObjectsCount mS_objectsCount{};

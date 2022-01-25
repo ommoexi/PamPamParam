@@ -66,6 +66,8 @@ namespace Constants {
 
 		const inline std::string player_pngFile{ "player.png" };
 		const inline std::string player_pngPath{ (texturesPath / player_pngFile).generic_string() };
+		const inline std::string death_pngFile{ "death.png" };
+		const inline std::string death_pngPath{ (texturesPath / death_pngFile).generic_string() };
 	}
 	namespace fonts {
 

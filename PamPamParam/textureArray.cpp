@@ -9,11 +9,11 @@ namespace {
 
 namespace image {
 
-	Image loadImage(std::string_view filePath, std::string_view setName) {
+	Image loadImage(std::string_view filePath, std::string_view setName, const int& desiredChannels) {
 
 		Image image{ setName.data() };
 
-		image.data = stbi_load(filePath.data(), &image.width, &image.height, &image.channels, 0);
+		image.data = stbi_load(filePath.data(), &image.width, &image.height, &image.channels, desiredChannels);
 
 		return image;
 	}

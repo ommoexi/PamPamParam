@@ -34,6 +34,7 @@ namespace {
 		setShaderColorB(index, rectMesh, colorNormalized, stride);
 		setShaderColorA(index, rectMesh, colorNormalized, stride);
 	}
+
 }
 
 Rectangle::Rectangle(const float& x, const float& y, const float& width, const float& height, const Constants::vec4& color,
@@ -161,4 +162,16 @@ Rectangle& Rectangle::setSize(const float& width, const float& height) {
 	Object::setHeight(height);
 	resize();
 	return *this;
+}
+
+Rectangle& Rectangle::setTexture(const Texture* texture) {
+	m_texture = texture;
+	Mesh& _mesh{ Object::mesh() };
+	const int& stride{ attribConfig().stride() };
+	setShaderTextures(0, _mesh, *m_texture, stride);
+	return *this;
+}
+
+bool Rectangle::isCollide(const Rectangle& rect) {
+	return false;
 }

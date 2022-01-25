@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 	Rectangle player{ 0,0, 250,250 , Colors::white, Textures::player };
 	handler.addText(test);
 	handler.addObj(player);
-	float speed{ 5 };
+	float speed{ 7.6 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while (processInput())
 	{
@@ -56,14 +56,10 @@ int main(int argc, char* argv[])
 		framerate();
 		if (keys[0]) {
 			player.setY(player.y() + speed);
-			player.setColor(player.colorR() - 1, player.colorB() - 1, player.colorG() - 1, player.colorA());
 		}
 
 		else if (keys[2]) {
 			player.setY(player.y() - speed);
-			player.setColorR(player.colorR() + 1);
-			player.setColorG(player.colorG() + 1);
-			player.setColorB(player.colorB() + 1);
 		}
 		if (keys[1]) {
 			player.setX(player.x() + speed);
@@ -94,18 +90,22 @@ bool processInput()
 			{
 
 			case SDLK_UP:
+			case SDLK_w:
 				keys[0] = true;
 				break;
 
 			case SDLK_RIGHT:
+			case SDLK_d:
 				keys[1] = true;
 				break;
 
 			case SDLK_DOWN:
+			case SDLK_s:
 				keys[2] = true;
 				break;
 
 			case SDLK_LEFT:
+			case SDLK_a:
 				keys[3] = true;
 				break;
 
@@ -119,17 +119,21 @@ bool processInput()
 			switch (e.key.keysym.sym)
 			{
 			case SDLK_UP:
+			case SDLK_w:
 				keys[0] = false;
 				break;
 			case SDLK_RIGHT:
+			case SDLK_d:
 				keys[1] = false;
 				break;
 
 			case SDLK_DOWN:
+			case SDLK_s:
 				keys[2] = false;
 				break;
 
 			case SDLK_LEFT:
+			case SDLK_a:
 				keys[3] = false;
 				break;
 
