@@ -224,6 +224,14 @@ void Text::setColorBody(text::setShaderColorFunc* func) {
 	}
 }
 
+Text& Text::setColor(const Constants::vec4& color) {
+	Object::setColor(color);
+
+	setColorBody(setShaderColors);
+
+	return *this;
+}
+
 Text& Text::setColor(const float& r, const float& g, const float& b, const float& a) {
 	Object::setColor(r, g, b, a);
 

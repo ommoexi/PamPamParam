@@ -104,3 +104,15 @@ Object& Object::setColor(const float& r, const float& g, const float& b, const f
 	m_colorNormalized.w = normalizeColor(a);
 	return *this;
 }
+
+Object& Object::setColor(const Constants::vec4& color) {
+	m_color.x = color.x;
+	m_color.y = color.y;
+	m_color.z = color.z;
+	m_color.w = color.w;
+	m_colorNormalized.x = normalizeColor(color.x);
+	m_colorNormalized.y = normalizeColor(color.y);
+	m_colorNormalized.z = normalizeColor(color.z);
+	m_colorNormalized.w = normalizeColor(color.w);
+	return *this;
+}

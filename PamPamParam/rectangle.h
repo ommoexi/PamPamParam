@@ -9,6 +9,11 @@ namespace rectangle {
 class Rectangle : public Object {
 private:
 
+	float m_x2{x() + width()};
+	float m_y2{y() + height()};
+	float m_previousX2{m_x2};
+	float m_previousY2{m_y2};
+
 	// de modificat 
 	const Texture* m_texture{};
 
@@ -23,18 +28,21 @@ private:
 	void setShaderTextures(const int& index, Mesh& rectMesh, const Texture& texture, const int& stride);
 
 	void resize();
+	
+	using Object::setX;
+	using Object::setY;
 
 public:
 
 
-	Rectangle(const float& x, const float& y, const float& width, const float& height, const Constants::vec4& color, 
-		const Texture* texture);
+	Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture, 
+		const Constants::vec4& color = Colors::white);
 	virtual ~Rectangle();
 
 	void setColorBody(rectangle::setShaderColorFunc* func);
 
 	Rectangle& setColor(const float& r, const float& g, const float& b, const float& a);
-
+	Rectangle& setColor(const Constants::vec4& color);
 	Rectangle& setColorR(const float& value);
 	Rectangle& setColorG(const float& value);
 	Rectangle& setColorB(const float& value);
@@ -46,6 +54,23 @@ public:
 
 	Rectangle& setTexture(const Texture* texture);
 
+	const float& x2() const {
+		return m_x2;
+	}
+	const float& y2() const {
+		return m_y2;
+	}
+	const float& previousX2() const {
+		return m_previousX2;
+	}
+	const float& previousY2() const {
+		return m_previousY2;
+	}
+
+	Rectangle& setX(const float& value);
+	Rectangle& setY(const float& value);
+
+	// simple collision
 	bool isCollide(const Rectangle& rect);
 
 #ifdef _DEBUG

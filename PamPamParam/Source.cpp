@@ -42,22 +42,21 @@ int main(int argc, char* argv[])
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	std::vector<Text*> texts{};
 	handler.addText(framerateText);
-	Text test{ 0, 0, 50,50, Colors::white, "I fucking did it" , Textures::I_FONT, 0, 100, 50};
-	Rectangle player{ 0,0, 250,250 , Colors::white, Textures::player };
-	handler.addText(test);
+	
+	Rectangle player{ 0,0, 128,128 , Textures::player };
 	handler.addObj(player);
-	float speed{ 7.6 };
+	
+	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while (processInput())
 	{
+		
 		glClear(GL_COLOR_BUFFER_BIT);
 		framerate();
 		if (keys[0]) {
 			player.setY(player.y() + speed);
 		}
-
 		else if (keys[2]) {
 			player.setY(player.y() - speed);
 		}

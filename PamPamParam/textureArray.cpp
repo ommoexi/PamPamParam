@@ -252,3 +252,7 @@ const Texture& TextureArray::getTexture(const std::string& textureName) const {
 void TextureArray::bind() const {
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_id);
 }
+
+const Texture& getNullTexture() {
+	return _nullTexture;
+}

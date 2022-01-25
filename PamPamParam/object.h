@@ -44,6 +44,7 @@ protected:
 	// implement these functions in childs
 	
 	Object& setColor(const float& r, const float& g, const float& b, const float& a);
+	Object& setColor(const Constants::vec4& color);
 
 	Object& setColorR(const float& value) {
 		m_color.x = value;

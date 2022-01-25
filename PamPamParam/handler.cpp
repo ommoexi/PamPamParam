@@ -16,13 +16,13 @@ Handler::~Handler() {
 
 void Handler::renderObjects() {
 
-	int offset{};
+	int textOffset{};
 	m_charBatch.bindBuffer();
 	for (auto& text : m_texts) {
 		const Mesh& textMesh{ text->mesh() };
 		int verticesSize{ static_cast<int>(textMesh.size()) };
-		m_charBatch.setSubData(offset, textMesh);
-		offset += verticesSize;
+		m_charBatch.setSubData(textOffset, textMesh);
+		textOffset += verticesSize;
 
 	}
 
@@ -32,7 +32,7 @@ void Handler::renderObjects() {
 		const Mesh& objectMesh{ object->mesh() };
 		int verticesSize{ static_cast<int>(objectMesh.size()) };
 		m_basicBatch.setSubData(objectOffset, objectMesh);
-		offset += verticesSize;
+		objectOffset += verticesSize;
 	}
 	m_charBatch.draw();
 	m_basicBatch.draw();

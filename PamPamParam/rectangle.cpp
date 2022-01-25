@@ -37,8 +37,8 @@ namespace {
 
 }
 
-Rectangle::Rectangle(const float& x, const float& y, const float& width, const float& height, const Constants::vec4& color,
-	const Texture* texture) :
+Rectangle::Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
+	const Constants::vec4& color) :
 	Object{ x, y, width, height, color, Shader::basicAttrib(), mS_rectangleMesh }, m_texture{ texture } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::rectangle_cpp, &mS_objectsCount);
@@ -112,6 +112,14 @@ Rectangle& Rectangle::setColor(const float& r, const float& g, const float& b, c
 	return *this;
 }
 
+Rectangle& Rectangle::setColor(const Constants::vec4& color) {
+	Object::setColor(color);
+
+	setColorBody(setShaderColors);
+
+	return *this;
+}
+
 Rectangle& Rectangle::setColorR(const float& value) {
 	Object::setColorR(value);
 	setColorBody(setShaderColorR);
@@ -173,5 +181,23 @@ Rectangle& Rectangle::setTexture(const Texture* texture) {
 }
 
 bool Rectangle::isCollide(const Rectangle& rect) {
-	return false;
+	if (x2() >= rect.x() && x() <= rect.x2() && y2() >= rect.y() && y() <= rect.y2()) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+Rectangle& Rectangle::setX(const float& value) {
+	m_previousX2 = m_x2;
+	Object::setX(value);
+	m_x2 = value + width();
+	return *this;
+}
+Rectangle& Rectangle::setY(const float& value) {
+	m_previousY2 = m_y2;
+	Object::setY(value);
+	m_y2 = value + height();
+	return *this;
 }

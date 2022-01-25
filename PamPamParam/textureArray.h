@@ -15,6 +15,7 @@ struct Texture {
 	int height;
 };
 
+
 // for stbi
 struct Image {
 	std::string name;
@@ -116,3 +117,5 @@ namespace image {
 	void freeImageData(Image& image);
 
 }
+
+const Texture& getNullTexture();

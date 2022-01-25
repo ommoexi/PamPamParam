@@ -71,6 +71,7 @@ public:
 	Text& setSize(const float& width, const float& height);
 
 	Text& setColor(const float& r, const float& g, const float& b, const float& a);
+	Text& setColor(const Constants::vec4& color);
 	Text& setColorR(const float& value);
 	Text& setColorG(const float& value);
 	Text& setColorB(const float& value);
