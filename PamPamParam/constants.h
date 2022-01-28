@@ -100,6 +100,7 @@ enum class Header_Files {
 	player_h,
 	block_h,
 	batch_h,
+	animation_h,
 };
 
 enum class Source_Files {
@@ -121,6 +122,7 @@ enum class Source_Files {
 	player_cpp,
 	block_cpp,
 	batch_cpp,
+	animation_cpp,
 };
 
 namespace Colors {

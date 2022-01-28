@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="animation.cpp" />
     <ClCompile Include="batch.cpp" />
     <ClCompile Include="block.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="animation.h" />
     <ClInclude Include="Batch.h" />
     <ClInclude Include="block.h" />
     <ClInclude Include="camera.h" />

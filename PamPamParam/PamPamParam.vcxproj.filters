@@ -93,6 +93,9 @@
     <ClCompile Include="initTextures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -150,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="initTextures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
