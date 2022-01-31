@@ -2,6 +2,7 @@
 #include "utils.h"
 #include "textureArray.h"
 #include "font.h"
+#include "animation.h"
 
 namespace Textures {
 
@@ -13,12 +14,19 @@ namespace Textures {
 	inline Font I_FONT{ Constants::fonts::gameFont, 524,524 };
 
 	int initAllTextures();
+	// deletes animations as well from allTextures
 	void deleteAllTextures();
 	
 	inline TextureArray* I_ALLTEXTURES;
 
 	inline const Texture* player{};
 	inline const Texture* death{};
+
+	namespace hidden {
+		std::vector<Texture*> animation{};
+	}
+
+	inline Animation animation{};
 
 
 }

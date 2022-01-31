@@ -39,7 +39,7 @@ namespace {
 
 Rectangle::Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
 	const Constants::vec4& color) :
-	Object{ x, y, width, height, color, Shader::basicAttrib(), mS_rectangleMesh }, m_texture{ texture } {
+	Object{ x, y, width, height, color, Shader::basicAttrib(), mS_rectangleMesh }, m_currentTexture{ texture } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::rectangle_cpp, &mS_objectsCount);
 #endif
@@ -50,7 +50,7 @@ Rectangle::Rectangle(const float& x, const float& y, const float& width, const f
 
 
 	setShaderCoords(0, _mesh, stride);
-	setShaderTextures(0, _mesh, *m_texture, stride);
+	setShaderTextures(0, _mesh, *m_currentTexture, stride);
 	setShaderColors(0, _mesh, _colorNormalized, stride);
 }
 Rectangle::~Rectangle() {
@@ -173,10 +173,10 @@ Rectangle& Rectangle::setSize(const float& width, const float& height) {
 }
 
 Rectangle& Rectangle::setTexture(const Texture* texture) {
-	m_texture = texture;
+	m_currentTexture = texture;
 	Mesh& _mesh{ Object::mesh() };
 	const int& stride{ attribConfig().stride() };
-	setShaderTextures(0, _mesh, *m_texture, stride);
+	setShaderTextures(0, _mesh, *m_currentTexture, stride);
 	return *this;
 }
 

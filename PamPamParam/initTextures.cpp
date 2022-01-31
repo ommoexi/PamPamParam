@@ -17,6 +17,11 @@ namespace Textures {
 		Textures::player = &I_ALLTEXTURES->getTexture(Textures::string::player);
 		Textures::death = &I_ALLTEXTURES->getTexture(Textures::string::death);
 
+		Textures::hidden::animation = std::vector<Texture*>{ Textures::player, Textures::death };
+		Textures::animation = Animation{ Textures::hidden::animation, 10 };
+	
+		
+		
 		return 1;
 	}
 

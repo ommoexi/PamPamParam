@@ -23,7 +23,7 @@ private:
 
 	std::map<int, int> m_linesCharacterCount{ {1, 0} };
 
-	Text(const Text& text) = default;
+	Text(const Text& text);
 	Text& operator=(const Text& text);
 
 	void resize(const float& width, const float& height);

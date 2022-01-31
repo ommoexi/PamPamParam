@@ -15,7 +15,7 @@ private:
 	float m_previousY2{m_y2};
 
 	// de modificat 
-	const Texture* m_texture{};
+	const Texture* m_currentTexture{};
 
 	static inline Mesh mS_rectangleMesh{
 		//position coords		                            texture coords       color
