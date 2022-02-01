@@ -4,6 +4,7 @@
 #include "stb_image.h"
 #include <string_view>
 #include <map>
+#include <string>
 
 struct Texture {
 	float x1;
@@ -13,12 +14,15 @@ struct Texture {
 	int z;
 	int width;
 	int height;
+
 };
 
 
 // for stbi
 struct Image {
 	std::string name;
+	unsigned int splitWidth;
+	unsigned int splitHeight;
 	int width;
 	int height;
 	int channels;
@@ -40,7 +44,7 @@ private:
 	int m_xOffset{};
 	int m_yOffset{};
 	int m_maxTextureHeightPerRow{};
-	int m_zOffset{1};
+	int m_zOffset{ 1 };
 
 	int m_wrap_s{};
 	int m_wrap_t{};
@@ -72,25 +76,28 @@ public:
 		const int& type, const bool& generate_mipmap, int unpack_alignment = 4);
 
 	//every texture vector must have same size
-	TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter, 
-		const int& mag_filter,const int& internal_format, const std::vector<Constants::vec2>& texturesSize,
+	TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter,
+		const int& mag_filter, const int& internal_format, const std::vector<Constants::vec2>& texturesSize,
 		const std::vector<void*>& pixels, const std::vector<std::string>& textureNames, const int& format,
 		const int& type, const bool& generate_mipmap,
 		int unpack_alignment = 4);
 
 	//loads every texture loaded with stbi then deletes it with stbi
-	TextureArray(const int& width, const int& height ,const int& wrap_s, const int& wrap_t, const int& min_filter, 
-		const int& mag_filter,const int& internal_format, std::vector<Image>& images, const int& format,
+	TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter,
+		const int& mag_filter, const int& internal_format, std::vector<Image>& images, const int& format,
 		const int& type, const bool& generate_mipmap, int unpack_alignment = 4);
 
 	// alocates memory only and textures must be loaded as same as texturesSize
-	TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter, 
-		const int& mag_filter,const int& internal_format, const std::vector<Constants::vec2>& texturesSize, const int& format,
+	TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter,
+		const int& mag_filter, const int& internal_format, const std::vector<Constants::vec2>& texturesSize, const int& format,
 		const int& type, const bool& generate_mipmap, int unpack_alignment = 4);
 
 	virtual ~TextureArray();
 
-	const Texture& subImage(const int& width, const int& height, const std::string& textureName, void* pixels);
+	// if split is 0 then no split and if split doesnt split exactly on image the outer is discarded
+	// names will be image.name-{row.col} row and col start from 1
+	const Texture& subImage(const int& width, const int& height, const std::string& textureName, void* pixels,
+		const unsigned int& splitWidth = 0, const unsigned int& splitHeight = 0);
 
 	const Texture& getTexture(const std::string& textureName) const;
 
@@ -112,10 +119,13 @@ private:
 
 namespace image {
 
-	Image loadImage(std::string_view filePath, std::string_view setName, const int& desiredChannels);
+	Image loadImage(std::string_view filePath, std::string_view setName, const int& desiredChannels, unsigned int splitWidth = 0,
+		unsigned int splitHeight = 0);
 
 	void freeImageData(Image& image);
 
 }
 
 const Texture& getNullTexture();
+
+std::string splitTextureName(const std::string& textureName, const int& row, const int& col);

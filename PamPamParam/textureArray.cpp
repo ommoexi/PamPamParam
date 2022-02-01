@@ -1,17 +1,23 @@
 #include "textureArray.h"
 
+
+std::string splitTextureName(const std::string& textureName, const int& row, const int& col) {
+	return textureName + "-" + std::to_string(row) + "." + std::to_string(col);
+}
+
+
 namespace {
 	const int textureSpacing{ 1 };
 
 	Texture _nullTexture{};
-
 }
 
 namespace image {
 
-	Image loadImage(std::string_view filePath, std::string_view setName, const int& desiredChannels) {
+	Image loadImage(std::string_view filePath, std::string_view setName, const int& desiredChannels, unsigned int splitWidth,
+		unsigned int splitHeight) {
 
-		Image image{ setName.data() };
+		Image image{ setName.data(), splitWidth, splitHeight };
 
 		image.data = stbi_load(filePath.data(), &image.width, &image.height, &image.channels, desiredChannels);
 
@@ -101,8 +107,8 @@ TextureArray::TextureArray(const int& width, const int& height, const int& wrap_
 }
 
 TextureArray::TextureArray(const int& width, const int& height, const int& wrap_s, const int& wrap_t, const int& min_filter, 
-	const int& mag_filter,const int& internal_format, std::vector<Image>& images, const int& format, const int& type, 
-	const bool& generate_mipmap, int unpack_alignment) : m_width{ width }, m_height{ height },
+	const int& mag_filter,const int& internal_format, std::vector<Image>& images, const int& format, 
+	const int& type,const bool& generate_mipmap, int unpack_alignment) : m_width{ width }, m_height{ height },
 	m_wrap_s{ wrap_s }, m_wrap_t{ wrap_t }, m_min_filter{ min_filter }, m_mag_filter{ mag_filter },
 	m_unpack_alignment{ unpack_alignment }, m_internal_format{ internal_format }, m_format{ format }, m_type{ type } {
 #ifdef _DEBUG
@@ -117,7 +123,7 @@ TextureArray::TextureArray(const int& width, const int& height, const int& wrap_
 	m_id = constructorBody(wrap_s, wrap_t, min_filter, mag_filter, internal_format,
 		m_width, m_height, m_depth, format, type, generate_mipmap, unpack_alignment);
 	for (auto& image : images) {
-		subImage(image.width, image.height, image.name, image.data);
+		subImage(image.width, image.height, image.name, image.data, image.splitWidth, image.splitHeight);
 		image::freeImageData(image);
 	}
 }
@@ -183,7 +189,8 @@ TextureArray::~TextureArray() {
 	glDeleteTextures(1, &m_id);
 }
 
-const Texture& TextureArray::subImage(const int& width, const int& height, const std::string& textureName, void* pixels) {
+const Texture& TextureArray::subImage(const int& width, const int& height, const std::string& textureName, void* pixels,
+	const unsigned int& splitWidth, const unsigned int& splitHeight) {
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_id);
 	if (m_maxTextureHeightPerRow < height) {
 		m_maxTextureHeightPerRow = height;
@@ -229,9 +236,40 @@ const Texture& TextureArray::subImage(const int& width, const int& height, const
 
 #endif
 #endif
-	Texture newTexture{ Texture{ x_1, x_2, y_1, y_2, m_zOffset, width, height } };
-	m_textures[textureName] = newTexture;
-	return m_textures[textureName];
+	if (splitWidth || splitHeight) {
+		float widthSplitCoords{ (x_2 - x_1) };
+		float heightSplitCoords{ (y_2 - y_1) };
+		int widthSplit {width};
+		int heightSplit {height};
+
+		if (splitWidth) {
+			widthSplitCoords /= splitWidth;
+			widthSplit /= static_cast<int>(splitWidth);
+		}
+		if (splitHeight) {
+			heightSplitCoords /= splitHeight;
+			heightSplit /= static_cast<int>(splitHeight);
+		}
+
+		int colIndicator{};
+		std::string newTextureName{};
+		for (float col{ x_1 }; col < x_2; col += widthSplitCoords) {
+			colIndicator++;
+			int	rowIndicator{};
+			for (float row{ y_2 }; row > y_1; row -= heightSplitCoords) {
+				rowIndicator++;
+				Texture newTexture{ col, col + widthSplitCoords, row - heightSplitCoords, row, m_zOffset, widthSplit, heightSplit };
+				newTextureName = splitTextureName(textureName, rowIndicator, colIndicator);
+				m_textures[newTextureName] = newTexture;
+			}
+		}
+		return m_textures[newTextureName];
+	}
+	else {
+		Texture newTexture{ Texture{ x_1, x_2, y_1, y_2, m_zOffset, width, height } };
+		m_textures[textureName] = newTexture;
+		return m_textures[textureName];
+	}
 
 }
 

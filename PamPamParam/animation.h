@@ -4,16 +4,18 @@
 
 class Animation {
 private:
-	const std::vector<Texture*>* m_textures; // shared
-	mutable int m_currentIndex{-1} ;
-	int m_framersPerTexture{};
-	mutable int m_timer{ m_framersPerTexture };
+	const std::vector<const Texture*>* m_textures{}; // shared
+	mutable int m_currentIndex{} ;
+	unsigned int m_framersPerTexture{};
+	mutable unsigned int m_timer{ m_framersPerTexture };
 
 public:
 
-	Animation(const std::vector<Texture*>& textures, const int& framesPerTexture);
+	Animation(const std::vector<const Texture*>& textures, const unsigned int& framesPerTexture);
 	Animation();
 	~Animation();
+	Animation& operator=(const Animation& animation) = default;
+	Animation(const Animation& animation);
 
 	const int& framesPerTextures() const {
 		return m_framersPerTexture;

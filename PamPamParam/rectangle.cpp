@@ -38,11 +38,15 @@ namespace {
 }
 
 Rectangle::Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-	const Constants::vec4& color) :
+	const std::map<std::string, Animation>* animations, const Constants::vec4& color) :
 	Object{ x, y, width, height, color, Shader::basicAttrib(), mS_rectangleMesh }, m_currentTexture{ texture } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::rectangle_cpp, &mS_objectsCount);
 #endif
+
+	if (animations != nullptr) {
+		m_animations = *animations;
+	}
 
 	Mesh& _mesh{ Object::mesh() };
 	const int& stride{ attribConfig().stride() };

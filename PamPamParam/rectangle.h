@@ -1,5 +1,7 @@
 #pragma once
 #include "object.h"
+#include "animation.h"
+#include "initTextures.h"
 
 namespace rectangle {
 	using setShaderColorFunc = void(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
@@ -14,8 +16,8 @@ private:
 	float m_previousX2{m_x2};
 	float m_previousY2{m_y2};
 
-	// de modificat 
 	const Texture* m_currentTexture{};
+	std::map<std::string, Animation> m_animations{};
 
 	static inline Mesh mS_rectangleMesh{
 		//position coords		                            texture coords       color
@@ -35,8 +37,8 @@ private:
 public:
 
 
-	Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture, 
-		const Constants::vec4& color = Colors::white);
+	Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
+		const std::map<std::string, Animation>* animations = nullptr,const Constants::vec4& color = Colors::white);
 	virtual ~Rectangle();
 
 	void setColorBody(rectangle::setShaderColorFunc* func);
@@ -69,6 +71,13 @@ public:
 
 	Rectangle& setX(const float& value);
 	Rectangle& setY(const float& value);
+
+	void rudimentaryUpdate() {
+		const Texture& text{ m_animations[Textures::animationString].nextTexture() };
+		if (m_currentTexture != &text) {
+			setTexture(&text);
+		}
+	}
 
 	// simple collision
 	bool isCollide(const Rectangle& rect);

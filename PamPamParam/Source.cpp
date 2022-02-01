@@ -36,7 +36,7 @@ namespace {
 
 
 }
-#include <filesystem>
+
 
 int main(int argc, char* argv[])
 {
@@ -44,14 +44,19 @@ int main(int argc, char* argv[])
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	handler.addText(framerateText);
 	
-	Rectangle player{ 0,0, 128,128 , Textures::player };
+	Animation t{ Textures::animationVecDog, 8 };
+	std::map<std::string, Animation> m{ };
+	m[Textures::animationString] = t;
+
+	Rectangle player{ -500,-500, 200,100 , Textures::animationVecDog[0], &m};
 	handler.addObj(player);
-	
+
+
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while (processInput())
 	{
-		
+		player.rudimentaryUpdate();
 		glClear(GL_COLOR_BUFFER_BIT);
 		framerate();
 		if (keys[0]) {
