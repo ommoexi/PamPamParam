@@ -203,6 +203,11 @@ Text& Text::setSize(const float& width, const float& height) {
 	return *this;
 }
 
+Text& Text::setMaxPixelWidth(const float& value) {
+	m_maxPixelWidth = value;
+	resize(width(), height());
+	return *this;
+}
 
 void Text::setColorBody(text::setShaderColorFunc* func) {
 	Mesh& _mesh{ mesh() };

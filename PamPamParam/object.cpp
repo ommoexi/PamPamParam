@@ -27,13 +27,11 @@ Object::~Object() {
 #endif
 }
 
-// no rot
 float Object::transformX(const float& xCoord) const {
 	float transformedX{ (xCoord * m_width + m_x) / Constants::widthStretch };
 	return transformedX;
 }
 
-// no rot
 float Object::transformY(const float& yCoord) const {
 	float transformedY{ (yCoord * m_height + m_y) / Constants::heightStretch };
 	return transformedY;

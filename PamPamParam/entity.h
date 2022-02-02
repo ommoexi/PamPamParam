@@ -1,6 +1,6 @@
 #pragma once
 #include "rectangle.h"
-
+#include "basicBlock.h"
 
 class Entity :public Rectangle {
 private:

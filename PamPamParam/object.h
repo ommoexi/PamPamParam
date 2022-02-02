@@ -133,7 +133,6 @@ public:
 
 	virtual void update(std::vector<Object*>& objs) {};
 
-
 #ifdef _DEBUG
 private:
 	static inline ObjectsCount mS_objectsCount{};

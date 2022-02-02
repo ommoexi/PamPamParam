@@ -58,15 +58,4 @@ inline float normalizeColor(const float& color) {
 }
 
 
-struct RectanglePoints {
-	Constants::vec2 p1;
-	Constants::vec2 p2;
-	Constants::vec2 p3;
-	Constants::vec2 p4;
-
-	Constants::vec2& operator[](const int& value) {
-		return *(&p1 + value);
-	}
-};
-
 using Mesh = std::vector<float>;

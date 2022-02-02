@@ -59,8 +59,10 @@ Rectangle::Rectangle(const float& x, const float& y, const float& width, const f
 }
 Rectangle::~Rectangle() {
 #ifdef _DEBUG
-	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::rectangle_cpp);
-	setDebugDestructor(false);
+	if (debugDestructor()) {
+		DEBUG_DESTRUCTOR_OBJ(this, Source_Files::rectangle_cpp);
+		setDebugDestructor(false);
+	}
 #endif
 }
 

@@ -34,9 +34,7 @@ namespace {
 		}
 	}
 
-
 }
-
 
 int main(int argc, char* argv[])
 {
@@ -53,8 +51,6 @@ int main(int argc, char* argv[])
 	handler.addObj(block);
 	handler.addObj(player);
 
-	Text test{ 100,100,250,250,Colors::red, "why should i", Textures::I_FONT, 0 };
-	handler.addText(test);
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while (true)

@@ -20,13 +20,11 @@ Entity::~Entity() {
 }
 
 void Entity::update(std::vector<Object*>& objs) {
-	for (size_t i{}; i < 10; i++) {
-
-	}
-	/*for (auto& obj : objs) {
-		Rectangle& d{ dynamic_cast<Rectangle&>(*obj) };
-		if (isCollide(d) && this != obj) {
-
+	for (auto& obj : objs) {
+		if (BasicBlock* basicBlock{ dynamic_cast<BasicBlock*>(obj) }) {
+			if (isCollide(*basicBlock)) {
+				std::cout << "YES IT IS";
+			}
 		}
-	}*/
+	}
 }

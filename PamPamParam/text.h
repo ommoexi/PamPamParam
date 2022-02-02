@@ -21,7 +21,7 @@ private:
 	float m_maxPixelWidth;
 	float m_letterSpacingVertical;
 
-	std::map<int, int> m_linesCharacterCount{ {1, 0} };
+	std::map<int, int> m_linesCharacterCount{ };
 
 	Text(const Text& text);
 	Text& operator=(const Text& text);
@@ -59,7 +59,7 @@ public:
 	}
 
 	float maxPixelWidth() const {
-		return m_maxPixelWidth * Constants::widthStretch;
+		return m_maxPixelWidth;
 	}
 
 	const Font* font() const {
@@ -92,10 +92,7 @@ public:
 		return *this;
 	}
 
-	Text& setMaxPixelWidth(const float& value) {
-		m_maxPixelWidth = value;
-		return *this;
-	}
+	Text& setMaxPixelWidth(const float& value);
 
 	// can't create setFont momentarily because i have to set batch texture as well
 	//Text& setFont(const Font* font);
