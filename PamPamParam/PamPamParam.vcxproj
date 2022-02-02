@@ -150,13 +150,14 @@
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="batch.cpp" />
-    <ClCompile Include="block.cpp" />
+    <ClCompile Include="basicBlock.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="initTextures.cpp" />
+    <ClCompile Include="input.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="handler.cpp" />
     <ClCompile Include="player.cpp" />
@@ -171,13 +172,15 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="Batch.h" />
-    <ClInclude Include="block.h" />
+    <ClInclude Include="basicBlock.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="font.h" />
+    <ClInclude Include="includeBlocks.h" />
     <ClInclude Include="initTextures.h" />
+    <ClInclude Include="input.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="handler.h" />
     <ClInclude Include="player.h" />

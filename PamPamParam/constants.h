@@ -82,7 +82,7 @@ namespace Constants {
 	}
 
 }
-
+#ifdef _DEBUG
 enum class Header_Files {
 	camera_h,
 	constants_h,
@@ -101,9 +101,11 @@ enum class Header_Files {
 	handler_h,
 	entity_h,
 	player_h,
-	block_h,
+	basicBlock_h,
 	batch_h,
 	animation_h,
+	input_h,
+	includeBlocks_h
 };
 
 enum class Source_Files {
@@ -126,7 +128,9 @@ enum class Source_Files {
 	block_cpp,
 	batch_cpp,
 	animation_cpp,
+	input_cpp
 };
+#endif
 
 namespace Colors {
 	const inline Constants::vec4 red{ 255.f, 0.f, 0.f, 255.f };

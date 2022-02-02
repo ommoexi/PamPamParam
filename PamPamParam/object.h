@@ -23,8 +23,6 @@ private:
 	Object(const Object& other) = default;
 	Object& operator=(const Object& other);
 
-	virtual void update() {};
-
 protected:
 
 	float transformX(const float& xCoord) const;
@@ -133,6 +131,7 @@ public:
 
 	Object& setY(const float& y);
 
+	virtual void update() {};
 
 
 #ifdef _DEBUG

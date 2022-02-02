@@ -11,8 +11,8 @@
 #include "Batch.h"
 #include "shaders.h"
 #include "initTextures.h"
-
-bool processInput();
+#include "input.h"
+#include "includeBlocks.h"
 
 namespace {
 	
@@ -20,7 +20,6 @@ namespace {
 	Handler handler{};
 	int frameCount = 0;
 	Text framerateText{ 800, 800,20,20, Colors::black, "FPS" , Textures::I_FONT, 0};
-	bool keys[6]{/*up right down left* left right*/ };
 	void framerate() {
 		double currentTime = SDL_GetTicks();
 		frameCount++;
@@ -44,31 +43,36 @@ int main(int argc, char* argv[])
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	handler.addText(framerateText);
 	
-	Animation t{ Textures::animationVecDog, 8 };
+	Animation t{ Textures::animations::animationVecDog, 8 };
 	std::map<std::string, Animation> m{ };
-	m[Textures::animationString] = t;
+	m[Textures::animations::animationString] = t;
 
-	Rectangle player{ -500,-500, 200,100 , Textures::animationVecDog[0], &m};
+	Rectangle player{ -500,-500, 160,80 , Textures::animations::animationVecDog[0], &m};
+	BasicBlock block{ 200,200, 100,100, Textures::splitTest };
+	handler.addObj(block);
 	handler.addObj(player);
 
 
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	while (processInput())
+	while (true)
 	{
-		player.rudimentaryUpdate();
+		input::processInput();
+		if (input::keyExit) {
+			break;
+		}
 		glClear(GL_COLOR_BUFFER_BIT);
 		framerate();
-		if (keys[0]) {
+		if (input::keyW) {
 			player.setY(player.y() + speed);
 		}
-		else if (keys[2]) {
+		else if (input::keyS) {
 			player.setY(player.y() - speed);
 		}
-		if (keys[1]) {
+		if (input::keyD) {
 			player.setX(player.x() + speed);
 		}
-		else if (keys[3]) {
+		else if (input::keyA) {
 			player.setX(player.x() - speed);
 		}
 
@@ -78,76 +82,6 @@ int main(int argc, char* argv[])
 
 	Textures::deleteAllTextures();
 	return 0;
-}
-
-bool processInput()
-{
-	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
-			return false;
-		}
-		else if (e.type == SDL_KEYDOWN)
-		{
-			//Select surfaces based on key press
-			switch (e.key.keysym.sym)
-			{
-
-			case SDLK_UP:
-			case SDLK_w:
-				keys[0] = true;
-				break;
-
-			case SDLK_RIGHT:
-			case SDLK_d:
-				keys[1] = true;
-				break;
-
-			case SDLK_DOWN:
-			case SDLK_s:
-				keys[2] = true;
-				break;
-
-			case SDLK_LEFT:
-			case SDLK_a:
-				keys[3] = true;
-				break;
-
-			default:
-				break;
-			}
-		}
-		if (e.type == SDL_KEYUP)
-		{
-			//Select surfaces based on key press
-			switch (e.key.keysym.sym)
-			{
-			case SDLK_UP:
-			case SDLK_w:
-				keys[0] = false;
-				break;
-			case SDLK_RIGHT:
-			case SDLK_d:
-				keys[1] = false;
-				break;
-
-			case SDLK_DOWN:
-			case SDLK_s:
-				keys[2] = false;
-				break;
-
-			case SDLK_LEFT:
-			case SDLK_a:
-				keys[3] = false;
-				break;
-
-
-			default:
-				break;
-			}
-		}
-	}
-	return true;
 }
 
 

@@ -1,18 +1,13 @@
 #pragma once
 #include "rectangle.h"
 
-
-class Entity :public Rectangle {
+class BasicBlock : public Rectangle {
 private:
-	float m_gravity{ 3 };
-
 protected:
 public:
-	Entity(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
+	BasicBlock(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
 		const std::map<std::string, Animation>* animations = nullptr, const Constants::vec4& color = Colors::white);
-	virtual ~Entity();
-
-	virtual void update() override;
+	virtual ~BasicBlock();
 
 #ifdef _DEBUG
 private:

@@ -24,10 +24,10 @@ namespace Textures {
 	inline const Texture* death{};
 	inline const Texture* splitTest{};
 
-
-	inline std::vector<const Texture*> animationVecDog{};
-	inline std::string animationString{ "animation" };
-
+	namespace animations {
+		inline std::vector<const Texture*> animationVecDog{};
+		inline std::string animationString{ "animation" };
+	}
 
 
 }

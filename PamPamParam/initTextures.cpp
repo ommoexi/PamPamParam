@@ -21,7 +21,7 @@ namespace Textures {
 		Textures::death = &I_ALLTEXTURES->getTexture(Textures::string::death);
 		Textures::splitTest = &I_ALLTEXTURES->getTexture(Textures::string::splitTest);
 
-		animationVecDog = std::vector<const Texture*>{ &I_ALLTEXTURES->getTexture(splitTextureName("dog", 1,1)),
+		animations::animationVecDog = std::vector<const Texture*>{ &I_ALLTEXTURES->getTexture(splitTextureName("dog", 1,1)),
 		& I_ALLTEXTURES->getTexture(splitTextureName("dog", 1,2)) ,
 		& I_ALLTEXTURES->getTexture(splitTextureName("dog", 1,3)) ,
 		& I_ALLTEXTURES->getTexture(splitTextureName("dog", 1,4)) ,

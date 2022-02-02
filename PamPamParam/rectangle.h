@@ -72,13 +72,6 @@ public:
 	Rectangle& setX(const float& value);
 	Rectangle& setY(const float& value);
 
-	void rudimentaryUpdate() {
-		const Texture& text{ m_animations[Textures::animationString].nextTexture() };
-		if (m_currentTexture != &text) {
-			setTexture(&text);
-		}
-	}
-
 	// simple collision
 	bool isCollide(const Rectangle& rect);
 
