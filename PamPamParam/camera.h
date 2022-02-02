@@ -2,13 +2,17 @@
 #include "utils.h"
 #include <iostream>
 
+
+
 class Camera {
 private:
 	float m_x;
 	float m_y;
 	float m_z;
 
-	float m_transform[9]{
+	static inline const int mS_transformSize{ 9 };
+
+	float m_transform[mS_transformSize]{
 		1.0f, 0.0, 0.0f, // x
 		0.0f, 1.0f, 0.0f, //y 
 		0.0f, 0.0f, 1.0f //w
@@ -17,13 +21,15 @@ private:
 	Camera(const Camera& camera);
 	Camera& operator=(const Camera& camera);
 
+	using transformArray = float[mS_transformSize];
+
 protected:
 public:
 	Camera(float x, float y, float z);
 	virtual ~Camera();
 
 
-	const float* transform() {
+	const transformArray& transform() {
 		return m_transform;
 	}
 

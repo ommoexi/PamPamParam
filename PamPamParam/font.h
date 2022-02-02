@@ -31,8 +31,10 @@ private:
 protected:
 public:
 	//font width and height should be 64 max
-	Font(std::string_view fontPath, const unsigned int& pixelWidth, const unsigned int& pixelHeight);
-	// deletes m_atlas and m_characters
+	Font(std::string_view fontPath, const unsigned int& pixelWidth, const unsigned int& pixelHeight,
+		const int& min_filter = GL_NEAREST, const int& mag_filter = GL_NEAREST,
+		const int& wrap_s = GL_CLAMP_TO_EDGE, const int& wrap_t = GL_CLAMP_TO_EDGE);
+	// deletes m_atlas
 	virtual ~Font();
 
 	const Character& character(const char& c) const {

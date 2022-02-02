@@ -179,6 +179,7 @@
     <ClInclude Include="entity.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="includeBlocks.h" />
+    <ClInclude Include="includeEntities.h" />
     <ClInclude Include="initTextures.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="object.h" />

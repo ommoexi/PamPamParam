@@ -32,7 +32,7 @@ public:
 
 
 	void renderObjects();
-
+	void updateObjects();
 
 
 #ifdef _DEBUG

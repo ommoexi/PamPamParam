@@ -13,6 +13,7 @@
 #include "initTextures.h"
 #include "input.h"
 #include "includeBlocks.h"
+#include "includeEntities.h"
 
 namespace {
 	
@@ -47,22 +48,19 @@ int main(int argc, char* argv[])
 	std::map<std::string, Animation> m{ };
 	m[Textures::animations::animationString] = t;
 
-	Rectangle player{ -500,-500, 160,80 , Textures::animations::animationVecDog[0], &m};
+	Entity player{ -500,-500, 160,80 , Textures::animations::animationVecDog[0], &m};
 	BasicBlock block{ 200,200, 100,100, Textures::splitTest };
 	handler.addObj(block);
 	handler.addObj(player);
 
-
+	Text test{ 100,100,250,250,Colors::red, "why should i", Textures::I_FONT, 0 };
+	handler.addText(test);
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while (true)
 	{
-		input::processInput();
-		if (input::keyExit) {
-			break;
-		}
 		glClear(GL_COLOR_BUFFER_BIT);
-		framerate();
+		input::processInput();
 		if (input::keyW) {
 			player.setY(player.y() + speed);
 		}
@@ -75,7 +73,12 @@ int main(int argc, char* argv[])
 		else if (input::keyA) {
 			player.setX(player.x() - speed);
 		}
+		if (input::keyExit) {
+			break;
+		}
+		framerate();
 
+		handler.updateObjects();
 		handler.renderObjects();
 		I_WIN.swapBuffers();
 	}

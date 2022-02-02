@@ -105,7 +105,8 @@ enum class Header_Files {
 	batch_h,
 	animation_h,
 	input_h,
-	includeBlocks_h
+	includeBlocks_h,
+	includeEntities_h,
 };
 
 enum class Source_Files {

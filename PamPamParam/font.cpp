@@ -5,7 +5,8 @@ void Font::setCharacter(const Texture& texture, const char& textureName, const i
 	float enlargeLetter{ 2.75 }; // letters divided by screen width and height are too small therefore they need to be multiplied by this
 
 	if (texture.width == 0) {
-		float space_width{ m_pixelWidth / 2.4f / m_pixelWidth * enlargeLetter };
+	/*	float space_width{ m_pixelWidth / 2.4f / m_pixelWidth * enlargeLetter };*/
+		float space_width{ 1 };
 		m_characters.insert({ textureName , Character{space_width, 0, std::vector<float>{}} });
 		return;
 	}
@@ -34,7 +35,8 @@ void Font::setCharacter(const Texture& texture, const char& textureName, const i
 
 }
 
-Font::Font(std::string_view fontPath, const unsigned int& pixelWidth, const unsigned int& pixelHeight) :
+Font::Font(std::string_view fontPath, const unsigned int& pixelWidth, const unsigned int& pixelHeight,
+	const int& min_filter, const int& mag_filter, const int& wrap_s, const int& wrap_t) :
 	m_pixelWidth{ pixelWidth }, m_pixelHeight{ pixelHeight } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::font_cpp, &mS_objectsCount);
@@ -78,11 +80,8 @@ Font::Font(std::string_view fontPath, const unsigned int& pixelWidth, const unsi
 		glyphsSize.push_back({ static_cast<float>(glyph->bitmap.width), static_cast<float>(glyph->bitmap.rows) });
 
 	}
-
-	m_atlas = new TextureArray{ static_cast<int>(pixelWidth), static_cast<int>(pixelHeight), GL_CLAMP_TO_EDGE,
-					  GL_CLAMP_TO_EDGE,
-					  GL_LINEAR,
-					  GL_LINEAR, GL_RED, glyphsSize, GL_RED, GL_UNSIGNED_BYTE, true, 1 };
+	m_atlas = new TextureArray{ static_cast<int>(pixelWidth), static_cast<int>(pixelHeight), wrap_s,
+					  wrap_t, min_filter, mag_filter, GL_RED, glyphsSize, GL_RED, GL_UNSIGNED_BYTE, true, 1 };
 
 	const size_t& totalGlyphs{ glyphsSize.size() };
 

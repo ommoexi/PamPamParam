@@ -131,7 +131,7 @@ public:
 
 	Object& setY(const float& y);
 
-	virtual void update() {};
+	virtual void update(std::vector<Object*>& objs) {};
 
 
 #ifdef _DEBUG

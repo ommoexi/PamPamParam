@@ -19,6 +19,14 @@ Entity::~Entity() {
 #endif 
 }
 
-void Entity::update() {
+void Entity::update(std::vector<Object*>& objs) {
+	for (size_t i{}; i < 10; i++) {
 
+	}
+	/*for (auto& obj : objs) {
+		Rectangle& d{ dynamic_cast<Rectangle&>(*obj) };
+		if (isCollide(d) && this != obj) {
+
+		}
+	}*/
 }

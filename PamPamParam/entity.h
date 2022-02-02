@@ -12,7 +12,7 @@ public:
 		const std::map<std::string, Animation>* animations = nullptr, const Constants::vec4& color = Colors::white);
 	virtual ~Entity();
 
-	virtual void update() override;
+	virtual void update(std::vector<Object*>& objs) override;
 
 #ifdef _DEBUG
 private:

@@ -12,7 +12,7 @@ namespace Textures {
 		inline const std::string splitTest{ "splitTest" };
 	}
 
-	inline Font I_FONT{ Constants::fonts::gameFont, 524,524 };
+	inline Font I_FONT{ Constants::fonts::gameFont, 64,64 };
 
 	int initAllTextures();
 	// deletes animations as well from allTextures

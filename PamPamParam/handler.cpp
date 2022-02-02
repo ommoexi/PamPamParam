@@ -3,8 +3,8 @@ Handler::Handler() {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::handler_cpp, &mS_objectsCount);
 #endif
-	m_charBatch.setVBOSize(2000);
-	m_basicBatch.setVBOSize(20000);
+	m_charBatch.setVBOSize(5000);
+	m_basicBatch.setVBOSize(5000);
 
 }
 Handler::~Handler() {
@@ -38,4 +38,10 @@ void Handler::renderObjects() {
 	m_basicBatch.draw();
 	m_charBatch.clearVerticesSize();
 	m_basicBatch.clearVerticesSize();
+}
+
+void Handler::updateObjects() {
+	for (auto& obj : m_objects) {
+		obj->update(m_objects);
+	}
 }
