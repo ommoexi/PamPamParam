@@ -17,9 +17,6 @@ private:
 	SDL_Window* m_window;
 	SDL_GLContext m_context;
 
-	Window(const Window& window);
-	Window& operator=(const Window& window);
-
 	static const float& halfWidth() {
 		return mS_halfWidth;
 	}
@@ -32,6 +29,8 @@ public:
 
 	Window(std::string_view title);
 	virtual ~Window();
+	Window(const Window& window) = delete;
+	Window& operator=(const Window& window) = delete;
 
 	void swapBuffers() {
 		SDL_GL_SwapWindow(m_window);

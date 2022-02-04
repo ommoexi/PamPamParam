@@ -14,6 +14,9 @@ private:
 
 protected:
 public:
+	Batch(const Batch& batch) = delete;
+	Batch& operator=(const Batch& batch) = delete;
+
 	Batch(TextureArray* texture, Shader& shader);
 	virtual ~Batch();
 
@@ -23,23 +26,13 @@ public:
 
 	void setVBOSize(const int& shapes);
 
-	// size is not in bytes
-	void setVerticesSize(const int& size) {
-		m_verticesSize = size;
-	}
-
 	// bind first
 	void setSubData(const int& offset, const Mesh& mesh);
 
-	void draw();
+	void draw() const;
 
 	// use this function before setSubData and outside iteration
 	void bindBuffer() const;
-
-	// DE MODIFICAT 
-	void clearVerticesSize() {
-		m_verticesSize = 0;
-	}
 
 	const Shader& shader() const {
 		return *m_shader;

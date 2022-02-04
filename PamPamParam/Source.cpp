@@ -28,9 +28,9 @@ namespace {
 		if (currentTime - previousTime >= 1000)
 		{
 			framerateText.setContent(std::to_string(frameCount) + " FPS");
+			std::cout << frameCount << '\n';
 			frameCount = 0;
 			previousTime = currentTime;
-			std::cout << framerateText.content() << '\n';
 		}
 	}
 
@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	handler.addText(framerateText);
+	handler.addObj(framerateText);
 	
 	Animation t{ Textures::animations::animationVecDog, 8 };
 	std::map<std::string, Animation> m{ };
@@ -48,8 +48,14 @@ int main(int argc, char* argv[])
 
 	Entity player{ -500,-500, 160,80 , Textures::animations::animationVecDog[0], &m};
 	BasicBlock block{ 200,200, 100,100, Textures::splitTest };
+
 	handler.addObj(block);
 	handler.addObj(player);
+
+	for (size_t i{}; i < 3000; i++) {
+		Entity* t{ new Entity{-500,-500, 160,80 , Textures::animations::animationVecDog[0]} };
+		handler.addObj(*t);
+	}
 
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

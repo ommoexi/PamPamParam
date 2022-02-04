@@ -36,7 +36,8 @@ private:
 
 public:
 
-
+	Rectangle(const Rectangle& rect) = delete;
+	Rectangle& operator=(const Rectangle& rect) = delete;
 	Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
 		const std::map<std::string, Animation>* animations = nullptr,const Constants::vec4& color = Colors::white);
 	virtual ~Rectangle();

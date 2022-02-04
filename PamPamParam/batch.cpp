@@ -31,14 +31,13 @@ Batch::Batch(TextureArray* texture, Shader& shader) : m_texture{ texture },m_sha
 }
 
 void Batch::setVBOSize(const int& shapes) {
+	m_verticesSize = shapes * m_shader->attribShader().verticesPerMode();
 	long long VBOByteSize{ shapes * m_shader->attribShader().totalIndicesPerShape() * sizeof(float) };
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
     glBufferData(GL_ARRAY_BUFFER, VBOByteSize, nullptr, GL_DYNAMIC_DRAW);
-	m_verticesSize = 0;
 }
 
 void Batch::setSubData(const int& offset, const Mesh& mesh) {
-	m_verticesSize += static_cast<int>(mesh.size() / m_shader->attribShader().stride());
 	long long size{ static_cast<long long>(mesh.size() * sizeof(float)) };
 	long long bytesOffset{ offset * sizeof(float) };
 	glBufferSubData(GL_ARRAY_BUFFER,bytesOffset, size , mesh.data());
@@ -57,7 +56,7 @@ Batch::~Batch() {
 	glDeleteVertexArrays(1, &m_VAO);
 }
 
-void Batch::draw() {
+void Batch::draw() const {
 	m_texture->bind();
 	m_shader->bind();
 

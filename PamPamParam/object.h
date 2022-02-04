@@ -7,6 +7,7 @@
 #include <math.h>
 #include <vector>
 
+
 class Object {
 private:
 	float m_x; // bottom left corner
@@ -19,9 +20,6 @@ private:
 	float m_previousX{ m_x };
 	float m_previousY{ m_y };
 	Constants::vec4 m_colorNormalized{normalizeColor(m_color)};
-
-	Object(const Object& other) = default;
-	Object& operator=(const Object& other);
 
 protected:
 
@@ -79,6 +77,8 @@ public:
 	Object(const float& x, const float& y, const float& width, const float& height, const Constants::vec4& color,
 		const Shader::Attrib& attribConfig, const Mesh& mesh = {});
 	virtual ~Object();
+	Object(const Object& other) = delete;
+	Object& operator=(const Object& other) = delete;
 
 	const float& width() const {
 		return m_width;
@@ -130,8 +130,6 @@ public:
 	Object& setX(const float& x);
 
 	Object& setY(const float& y);
-
-	virtual void update(std::vector<Object*>& objs) {};
 
 #ifdef _DEBUG
 private:

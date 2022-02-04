@@ -19,12 +19,10 @@ Entity::~Entity() {
 #endif 
 }
 
-void Entity::update(std::vector<Object*>& objs) {
-	for (auto& obj : objs) {
-		if (BasicBlock* basicBlock{ dynamic_cast<BasicBlock*>(obj) }) {
-			if (isCollide(*basicBlock)) {
-				std::cout << "YES IT IS";
-			}
+void Entity::update(std::vector<Entity*>& entities, std::vector<BasicBlock*>& basicBlocks) {
+	for (auto& basicBlock : basicBlocks) {
+		if (isCollide(*basicBlock)) {
+			std::cout << "collision\n";
 		}
 	}
 }

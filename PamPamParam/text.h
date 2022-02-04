@@ -23,9 +23,6 @@ private:
 
 	std::map<int, int> m_linesCharacterCount{ };
 
-	Text(const Text& text);
-	Text& operator=(const Text& text);
-
 	void resize(const float& width, const float& height);
 	void setColorBody(text::setShaderColorFunc* func);
 
@@ -41,6 +38,8 @@ private:
 protected:
 
 public:
+	Text(const Text& text) = delete;
+	Text& operator=(const Text& text) = delete;
 	Text(const float& x, const float& y, const float& letterWidth, const float& letterHeight, 
 		const Constants::vec4& color, std::string_view content,const Font& font,
 		const float& letterSpacingHorizontal, const float& maxPixelWidth = std::numeric_limits<float>::max(),

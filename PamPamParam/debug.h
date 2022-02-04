@@ -20,8 +20,8 @@ private:
 		std::string m_functionLocation{};
 		ObjectsCount* m_objectsCount{};
 	public:
-		Data(std::string_view className, std::string_view varName, std::string_view fileName, 
-			std::string_view classNameLocation, std::string_view functionLocation) :m_className{ className }, 
+		Data(std::string_view className, std::string_view varName, std::string_view fileName,
+			std::string_view classNameLocation, std::string_view functionLocation) :m_className{ className },
 			m_varName{ varName }, m_fileName{ fileName }, m_classNameLocation{ m_classNameLocation },
 			m_functionLocation{ functionLocation }{}
 		Data() = default;
@@ -75,19 +75,20 @@ private:
 
 	std::map<const void*, Data> m_allObjects{};
 	std::ostream* m_stream{ &std::cout };
-	Debugger(const Debugger& debugger);
-	Debugger& operator=(const Debugger& debugger);
 protected:
 public:
+	Debugger(const Debugger& debugger) = delete;
+	Debugger& operator=(const Debugger& debugger) = delete;
+
 	Debugger() = default;
 	virtual ~Debugger();
 	//call with macro in utils.h
 	void _addObj(const void* obj, std::string_view objClassName, std::string_view varName, std::string_view fileName,
 		std::string_view objClassNameLocation, std::string_view funcLocation);
-	void _constructorObj(const void* obj, std::string_view fileName, std::string_view objClassName, 
+	void _constructorObj(const void* obj, std::string_view fileName, std::string_view objClassName,
 		ObjectsCount* objectsCount);
 	// call with macro in utils.h
-	void _removeObj(const void* obj, std::string_view fileName, std::string_view objClassNameLocation, 
+	void _removeObj(const void* obj, std::string_view fileName, std::string_view objClassNameLocation,
 		std::string_view funcLocation, std::string_view varName, const bool& removeFromAllObjects);
 	void _destructorObj(const void* obj, std::string_view fileName, std::string_view objClassName);
 

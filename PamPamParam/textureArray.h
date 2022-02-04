@@ -59,9 +59,6 @@ private:
 
 	inline static const Texture mS_nullTexture{};
 
-	TextureArray(const TextureArray& texture);
-	TextureArray& operator=(const TextureArray& texture);
-
 	unsigned int constructorBody(const int& wrap_s, const int& wrap_t, const int& min_filter, const int& mag_filter,
 		const int& internal_format, const int& width, const int& height, const int& depth, const int& format,
 		const int& type, const bool& generate_mipmap, int unpack_alignment) const;
@@ -71,6 +68,9 @@ private:
 
 protected:
 public:
+	TextureArray(const TextureArray& texture) = delete;
+	TextureArray& operator=(const TextureArray& texture) = delete;
+
 	TextureArray(const int& wrap_s, const int& wrap_t, const int& min_filter, const int& mag_filter,
 		const int& internal_format, const int& width, const int& height, const int& depth, const int& format,
 		const int& type, const bool& generate_mipmap, int unpack_alignment = 4);

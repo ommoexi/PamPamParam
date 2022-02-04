@@ -60,10 +60,6 @@ private:
 	unsigned int m_fragmentId;
 	const Attrib& m_attribShader;
 
-	Shader(const Shader& shader);
-	Shader& operator=(const Shader& shader);
-
-
 
 	static inline const unsigned int mS_charSizePerAttribute_SIZE{ 3 };
 	//2- pos; 3 - texture; 4 - color
@@ -79,6 +75,9 @@ private:
 
 protected:
 public:
+	Shader(const Shader& shader) = delete;
+	Shader& operator=(const Shader& shader) = delete;
+
 	Shader(const std::string& vertexFileName, const std::string& geometryFileName,
 		const std::string& fragmentFileName, const Attrib& attribShader);
 	virtual ~Shader();

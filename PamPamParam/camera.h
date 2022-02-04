@@ -18,13 +18,13 @@ private:
 		0.0f, 0.0f, 1.0f //w
 	};
 
-	Camera(const Camera& camera);
-	Camera& operator=(const Camera& camera);
-
 	using transformArray = float[mS_transformSize];
 
 protected:
 public:
+	Camera(const Camera& camera) = delete;
+	Camera& operator=(const Camera& camera) = delete;
+
 	Camera(float x, float y, float z);
 	virtual ~Camera();
 

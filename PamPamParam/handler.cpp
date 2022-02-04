@@ -28,20 +28,24 @@ void Handler::renderObjects() {
 
 	int objectOffset{};
 	m_basicBatch.bindBuffer();
-	for (auto& object : m_objects) {
-		const Mesh& objectMesh{ object->mesh() };
-		int verticesSize{ static_cast<int>(objectMesh.size()) };
-		m_basicBatch.setSubData(objectOffset, objectMesh);
+	for (auto& entity : m_entities) {
+		const Mesh& entityMesh{ entity->mesh() };
+		int verticesSize{ static_cast<int>(entityMesh.size()) };
+		m_basicBatch.setSubData(objectOffset, entityMesh);
+		objectOffset += verticesSize;
+	}
+	for (auto& basicBloc : m_basicBlocks) {
+		const Mesh& basicBlockMesh{ basicBloc->mesh() };
+		int verticesSize{ static_cast<int>(basicBlockMesh.size()) };
+		m_basicBatch.setSubData(objectOffset, basicBlockMesh);
 		objectOffset += verticesSize;
 	}
 	m_charBatch.draw();
 	m_basicBatch.draw();
-	m_charBatch.clearVerticesSize();
-	m_basicBatch.clearVerticesSize();
 }
 
 void Handler::updateObjects() {
-	for (auto& obj : m_objects) {
-		obj->update(m_objects);
+	for (auto& entity : m_entities) {
+		entity->update(m_entities, m_basicBlocks);
 	}
 }

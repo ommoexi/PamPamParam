@@ -36,6 +36,8 @@ public:
 		const int& wrap_s = GL_CLAMP_TO_EDGE, const int& wrap_t = GL_CLAMP_TO_EDGE);
 	// deletes m_atlas
 	virtual ~Font();
+	Font(const Font& font) = delete;
+	Font& operator=(const Font& font) = delete;
 
 	const Character& character(const char& c) const {
 		try {
