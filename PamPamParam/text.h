@@ -30,7 +30,6 @@ private:
 		const float& yCursor, const int& stride);
 	void setShaderTextures(const int& index, Mesh& textMesh, const Mesh& fontCharMesh, const int& stride);
 
-
 	//returns true if new line
 	bool moveCursor(float& xCursor, float& yCursor, const Character& fontCharacter,
 		const float& maxCharacterHeight, const float& width, const float& height, const char& letter);

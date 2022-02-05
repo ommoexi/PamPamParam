@@ -161,6 +161,7 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="handler.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="quadTree.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="rectangle.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="object.h" />
     <ClInclude Include="handler.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="quadTree.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="rectangle.h" />
     <ClInclude Include="shaders.h" />

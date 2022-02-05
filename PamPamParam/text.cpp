@@ -112,7 +112,7 @@ float Text::getPixelHeightFirstRow() const {
 	for (auto& c : m_content) {
 		auto& character{ m_font->character(c) };
 		float characterHeight{ character.height * height() };
-		if(totalHeight > characterHeight){
+		if(totalHeight < characterHeight){
 			totalHeight = characterHeight;
 		}
 	}
@@ -252,7 +252,7 @@ Text& Text::setColorR(const float& value) {
 	return *this;
 
 }
-Text& Text::setColorG(const float& value){
+Text& Text::setColorG(const float& value) {
 	Object::setColorG(value);
 
 	setColorBody(setShaderColorG);

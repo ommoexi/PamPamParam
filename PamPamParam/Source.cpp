@@ -20,7 +20,10 @@ namespace {
 	double previousTime = SDL_GetTicks();
 	Handler handler{};
 	int frameCount = 0;
-	Text framerateText{ 800, 800,20,20, Colors::black, "FPS" , Textures::I_FONT, 0};
+	Text framerateText{ Constants::widthStretch - framerateText.getPixelWidthFirstRow() - 10, 
+		Constants::heightStretch - framerateText.getPixelHeightFirstRow() -10,
+		20,20, Colors::black, "FPS" , Textures::I_FONT, 0};
+
 	void framerate() {
 		double currentTime = SDL_GetTicks();
 		frameCount++;
@@ -31,6 +34,8 @@ namespace {
 			std::cout << frameCount << '\n';
 			frameCount = 0;
 			previousTime = currentTime;
+			framerateText.setX(Constants::widthStretch - framerateText.getPixelWidthFirstRow() -10);
+			framerateText.setY(Constants::heightStretch - framerateText.getPixelHeightFirstRow() - 10);
 		}
 	}
 
@@ -38,6 +43,7 @@ namespace {
 
 int main(int argc, char* argv[])
 {
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	handler.addObj(framerateText, false);
@@ -46,11 +52,16 @@ int main(int argc, char* argv[])
 	std::map<std::string, Animation> m{ };
 	m[Textures::animations::animationString] = t;
 
-	Entity player{ -500,-500, 160,80 , Textures::animations::animationVecDog[0], &m};
+	Entity player{ 0,0, 160,80 , Textures::animations::animationVecDog[0], &m};
 	BasicBlock block{ 200,200, 100,100, Textures::splitTest };
 
 	handler.addObj(block, false);
 	handler.addObj(player, false);
+
+	for (size_t i{}; i < 2000; i++) {
+		Entity* p{ new Entity{ -500,-500, 160,80 , Textures::animations::animationVecDog[0], &m} };
+		handler.addObj(*p, true);
+	}
 
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

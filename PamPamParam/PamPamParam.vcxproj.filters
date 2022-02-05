@@ -102,6 +102,9 @@
     <ClCompile Include="input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="quadTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="includeEntities.h">
       <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="quadTree.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

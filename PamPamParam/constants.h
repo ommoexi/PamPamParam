@@ -113,6 +113,7 @@ enum class Header_Files {
 	input_h,
 	includeBlocks_h,
 	includeEntities_h,
+	quadTree_h,
 };
 
 enum class Source_Files {
@@ -135,7 +136,8 @@ enum class Source_Files {
 	block_cpp,
 	batch_cpp,
 	animation_cpp,
-	input_cpp
+	input_cpp,
+	quadTree_cpp,
 };
 #endif
 

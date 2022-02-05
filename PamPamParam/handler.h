@@ -27,8 +27,8 @@ private:
 	std::vector<BasicBlock*> m_basicBlocks{};
 	std::vector<Text*> m_texts{};
 
-	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 5000 };
-	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 5000 };
+	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 5000};
+	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 50000 };
 
 protected:
 public:
