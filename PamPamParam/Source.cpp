@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	handler.addObj(framerateText);
+	handler.addObj(framerateText, false);
 	
 	Animation t{ Textures::animations::animationVecDog, 8 };
 	std::map<std::string, Animation> m{ };
@@ -49,18 +49,13 @@ int main(int argc, char* argv[])
 	Entity player{ -500,-500, 160,80 , Textures::animations::animationVecDog[0], &m};
 	BasicBlock block{ 200,200, 100,100, Textures::splitTest };
 
-	handler.addObj(block);
-	handler.addObj(player);
-
-	for (size_t i{}; i < 3000; i++) {
-		Entity* t{ new Entity{-500,-500, 160,80 , Textures::animations::animationVecDog[0]} };
-		handler.addObj(*t);
-	}
+	handler.addObj(block, false);
+	handler.addObj(player, false);
 
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while (true)
-	{
+	{	
 		glClear(GL_COLOR_BUFFER_BIT);
 		input::processInput();
 		if (input::keyW) {

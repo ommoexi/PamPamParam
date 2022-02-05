@@ -81,6 +81,12 @@ namespace Constants {
 		const inline std::string gameFont{ (fontsPath / gameFontFile).generic_string() };
 	}
 
+	namespace handler {
+		const inline size_t entitiesSize{ 500 };
+		const inline size_t basicBlocksSize{ 500 };
+		const inline size_t textsSize{ 500 };
+	}
+
 }
 #ifdef _DEBUG
 enum class Header_Files {

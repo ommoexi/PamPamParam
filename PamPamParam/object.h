@@ -21,11 +21,34 @@ private:
 	float m_previousY{ m_y };
 	Constants::vec4 m_colorNormalized{normalizeColor(m_color)};
 
+	bool m_removeFromHandler{ false };
+	bool m_useDeleteWhenRemoved{ false };
+
+	Object& setUseDeleteWhenRemoved(const bool& value) {
+		m_useDeleteWhenRemoved = value;
+		return *this;
+	}
+
+	bool m_deleted{ false }; // this variable is for handler only if it is on stack and it is deleted then it is true
+	const bool& isDeleted() const {
+		return m_deleted;
+	}
+	//int m_index{}; // id for handler
+
 protected:
+
+	friend class Handler;
+
+	/*Object& setIndex(const int& value) {
+		m_index = value;
+		return *this;
+	}
+	const int& index() const {
+		return m_index;
+	}*/
 
 	float transformX(const float& xCoord) const;
 	float transformY(const float& yCoord) const;
-
 
 	Mesh& mesh() {
 		return m_mesh;
@@ -34,8 +57,6 @@ protected:
 	const Constants::vec4& colorNormalized() {
 		return m_colorNormalized;
 	}
-
-	friend class Handler;
 
 	// implement these functions in childs
 	
@@ -130,6 +151,18 @@ public:
 	Object& setX(const float& x);
 
 	Object& setY(const float& y);
+
+	const bool& isRemoveFromHandler() const {
+		return m_removeFromHandler;
+	}
+
+	void setRemoveFromHandler(const bool& value) {
+		m_removeFromHandler = value;
+	}
+
+	const bool& useDeleteWhenRemoved() const {
+		return m_useDeleteWhenRemoved;
+	}
 
 #ifdef _DEBUG
 private:

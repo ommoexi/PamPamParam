@@ -10,17 +10,25 @@
 #include "entity.h"
 #include "basicBlock.h"
 #include "text.h"
+#include <array>
 
 
 class Handler {
 private:
-	//std::vector<Object*> m_objects;
-	std::vector<Entity*> m_entities;
-	std::vector<BasicBlock*> m_basicBlocks;
-	std::vector<Text*> m_texts;
-	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader };
-	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader };
+	/*std::vector<int> m_entitiesAvailableIndexes{};
+	std::vector<int> m_basicBlocksAvailableIndexes{};
+	std::vector<int> m_textsAvailableIndexes{};
 
+	std::array<Entity*, Constants::handler::entitiesSize> m_entities{};
+	std::array<BasicBlock*, Constants::handler::basicBlocksSize> m_basicBlocks{};
+	std::array<Text*, Constants::handler::textsSize> m_texts{};*/
+
+	std::vector<Entity*> m_entities{};
+	std::vector<BasicBlock*> m_basicBlocks{};
+	std::vector<Text*> m_texts{};
+
+	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 5000 };
+	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 5000 };
 
 protected:
 public:
@@ -29,24 +37,16 @@ public:
 	Handler();
 	~Handler();
 
-	/*void addObj(Object& object) {
-		m_objects.push_back(&object);
-	}*/
-	void addObj(Entity& entity) {
-		m_entities.push_back(&entity);
-	}
-	void addObj(BasicBlock& basicBlock) {
-		m_basicBlocks.push_back(&basicBlock);
-	}
+	void addObj(Entity& entity, const bool& useDeleteWhenRemoved);
+	void addObj(BasicBlock& basicBlock, const bool& useDeleteWhenRemoved);
+	void addObj(Text& text, const bool& useDeleteWhenRemoved);
 
-	void addObj(Text& text) {
-		m_texts.push_back(&text);
-	}
-
+	void removeObj(Entity& entity);
+	void removeObj(BasicBlock& basicBlock);
+	void removeObj(Text& text);
 
 	void renderObjects();
 	void updateObjects();
-
 
 #ifdef _DEBUG
 private:

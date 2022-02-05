@@ -76,6 +76,18 @@ public:
 	// simple collision
 	bool isCollide(const Rectangle& rect);
 
+	const std::map<std::string, Animation>& animations() const {
+		return m_animations;
+	}
+	Rectangle& setAnimations(const std::map<std::string, Animation>& value) {
+		m_animations = value;
+		return *this;
+	}
+
+	void updateAnimation(const std::string& animationName);
+	void setAnimationFramesPerTexture(const std::string& animationName, const unsigned int& framesPerTexture);
+	const unsigned int& animationFramesPerTexture(const std::string& animationName);
+
 #ifdef _DEBUG
 private:
 	static inline ObjectsCount mS_objectsCount{};

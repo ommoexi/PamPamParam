@@ -1,6 +1,6 @@
 #include "Batch.h"
 
-Batch::Batch(TextureArray* texture, Shader& shader) : m_texture{ texture },m_shader{ &shader } {
+Batch::Batch(TextureArray* texture, Shader& shader, const int& shapes) : m_texture{ texture },m_shader{ &shader } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::batch_cpp, &mS_objectsCount);
 #endif
@@ -14,8 +14,9 @@ Batch::Batch(TextureArray* texture, Shader& shader) : m_texture{ texture },m_sha
 	glGenBuffers(1, &m_VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-	int stride{ attribShader.stride() * sizeOfFloat};
+	glGenBuffers(1, &m_VBC);
 
+	int stride{ attribShader.stride() * sizeOfFloat};
 
 	glVertexAttribPointer(0, attribShader.sizePerAttrib()[0], GL_FLOAT, GL_FALSE,
 		stride, (void*)0);
@@ -28,13 +29,18 @@ Batch::Batch(TextureArray* texture, Shader& shader) : m_texture{ texture },m_sha
 		start += attribShader.sizePerAttrib()[i] * sizeOfFloat;
 	}
 
+	setVBOSize(shapes);
 }
 
 void Batch::setVBOSize(const int& shapes) {
 	m_verticesSize = shapes * m_shader->attribShader().verticesPerMode();
-	long long VBOByteSize{ shapes * m_shader->attribShader().totalIndicesPerShape() * sizeof(float) };
+	m_VBOByteSize = shapes * m_shader->attribShader().totalIndicesPerShape() * sizeof(float) ;
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferData(GL_ARRAY_BUFFER, VBOByteSize, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, m_VBOByteSize, nullptr, GL_DYNAMIC_DRAW);
+
+	glBindBuffer(GL_COPY_READ_BUFFER, m_VBC);
+	glBufferData(GL_COPY_READ_BUFFER, m_VBOByteSize, nullptr, GL_DYNAMIC_DRAW);
+
 }
 
 void Batch::setSubData(const int& offset, const Mesh& mesh) {
@@ -62,4 +68,11 @@ void Batch::draw() const {
 
 	glBindVertexArray(m_VAO);
 	glDrawArrays(m_shader->attribShader().mode(), 0, m_verticesSize);
+}
+
+// not a really good method but it will suffice for now
+void Batch::setAllDataVoid() {
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBindBuffer(GL_COPY_READ_BUFFER, m_VBC);
+	glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_ARRAY_BUFFER, 0, 0, m_VBOByteSize);
 }

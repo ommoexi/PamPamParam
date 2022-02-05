@@ -17,10 +17,10 @@ public:
 	Animation& operator=(const Animation& animation) = default;
 	Animation(const Animation& animation);
 
-	const int& framesPerTextures() const {
+	const unsigned int& framesPerTextures() const {
 		return m_framersPerTexture;
 	}
-	Animation& setFramesPerTexture(const int& value) {
+	Animation& setFramesPerTexture(const unsigned int& value) {
 		m_framersPerTexture = value;
 		return *this;
 	}

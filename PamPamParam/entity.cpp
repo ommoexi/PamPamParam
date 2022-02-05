@@ -1,6 +1,5 @@
 #include "entity.h"
 
-
 Entity::Entity(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
 	const std::map<std::string, Animation>* animations, const Constants::vec4& color) :
 	Rectangle{ x, y, width, height, texture, animations, color } {
@@ -20,9 +19,17 @@ Entity::~Entity() {
 }
 
 void Entity::update(std::vector<Entity*>& entities, std::vector<BasicBlock*>& basicBlocks) {
+	updateAnimation(Textures::animations::animationString);
 	for (auto& basicBlock : basicBlocks) {
-		if (isCollide(*basicBlock)) {
-			std::cout << "collision\n";
+		if (basicBlock) {
+			if (isCollide(*basicBlock)) {
+				basicBlock->setRemoveFromHandler(true);
+				std::cout << " PLEASE DELETE \n";
+			}
 		}
 	}
+	for (auto& entity : entities) {
+
+	}
+
 }

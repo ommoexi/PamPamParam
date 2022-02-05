@@ -10,14 +10,16 @@ private:
 	Shader* m_shader;
 	unsigned int m_VAO;
 	unsigned int m_VBO;
+	unsigned int m_VBC;
 	int m_verticesSize{};
+	long long m_VBOByteSize{};
 
 protected:
 public:
 	Batch(const Batch& batch) = delete;
 	Batch& operator=(const Batch& batch) = delete;
 
-	Batch(TextureArray* texture, Shader& shader);
+	Batch(TextureArray* texture, Shader& shader, const int& shapes);
 	virtual ~Batch();
 
 	const int& verticesSize() const {
@@ -37,6 +39,8 @@ public:
 	const Shader& shader() const {
 		return *m_shader;
 	}
+
+	void setAllDataVoid();
 
 #ifdef _DEBUG
 private:

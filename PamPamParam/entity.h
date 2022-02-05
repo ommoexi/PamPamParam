@@ -1,6 +1,7 @@
 #pragma once
 #include "rectangle.h"
 #include "basicBlock.h"
+#include <array>
 
 class Entity :public Rectangle {
 private:
@@ -13,7 +14,10 @@ public:
 		const std::map<std::string, Animation>* animations = nullptr, const Constants::vec4& color = Colors::white);
 	virtual ~Entity();
 
-	virtual void update(std::vector<Entity*>& entities, std::vector<BasicBlock*>& basicBlocks);
+	/*virtual void update(std::array<Entity*, Constants::handler::entitiesSize>& entities, 
+		std::array<BasicBlock*, Constants::handler::basicBlocksSize>& basicBlocks);*/
+
+	virtual void update(std::vector<Entity*>& entities,std::vector<BasicBlock*>& basicBlocks);
 
 #ifdef _DEBUG
 private:
