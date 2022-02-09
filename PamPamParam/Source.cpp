@@ -41,6 +41,8 @@ namespace {
 
 }
 
+#include "map.h"
+
 int main(int argc, char* argv[])
 {
 
@@ -62,6 +64,7 @@ int main(int argc, char* argv[])
 		Entity* p{ new Entity{ -500,-500, 160,80 , Textures::animations::animationVecDog[0], &m} };
 		handler.addObj(*p, true);
 	}
+	Map test{ Point{0,0}, Point{10000,10000}, 2500 };
 
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

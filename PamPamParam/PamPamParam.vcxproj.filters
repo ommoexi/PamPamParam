@@ -102,7 +102,10 @@
     <ClCompile Include="input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="quadTree.cpp">
+    <ClCompile Include="map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="zone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -176,7 +179,10 @@
     <ClInclude Include="includeEntities.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
-    <ClInclude Include="quadTree.h">
+    <ClInclude Include="map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

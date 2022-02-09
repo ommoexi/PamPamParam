@@ -161,7 +161,7 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="handler.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="quadTree.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="rectangle.cpp" />
@@ -169,6 +169,7 @@
     <ClCompile Include="textureArray.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="window.cpp" />
+    <ClCompile Include="zone.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
@@ -186,7 +187,7 @@
     <ClInclude Include="object.h" />
     <ClInclude Include="handler.h" />
     <ClInclude Include="player.h" />
-    <ClInclude Include="quadTree.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="rectangle.h" />
     <ClInclude Include="shaders.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="textureArray.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="window.h" />
+    <ClInclude Include="zone.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="basic.frag" />

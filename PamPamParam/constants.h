@@ -113,7 +113,8 @@ enum class Header_Files {
 	input_h,
 	includeBlocks_h,
 	includeEntities_h,
-	quadTree_h,
+	map_h,
+	zone_h,
 };
 
 enum class Source_Files {
@@ -137,7 +138,8 @@ enum class Source_Files {
 	batch_cpp,
 	animation_cpp,
 	input_cpp,
-	quadTree_cpp,
+	map_h,
+	zone_h,
 };
 #endif
 
@@ -148,3 +150,9 @@ namespace Colors {
 	const inline Constants::vec4 white{ 255.f, 255.f, 255.f, 255.f };
 	const inline Constants::vec4 black{ 0.0f,0.0f, 0.0f, 255.0f };
 }
+// constants.h
+struct Point
+{
+	int x{};
+	int y{};
+};

@@ -3,18 +3,6 @@ Handler::Handler() {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::handler_cpp, &mS_objectsCount);
 #endif
-	/*m_charBatch.setVBOSize(Constants::handler::textsSize * 10);
-	m_basicBatch.setVBOSize(Constants::handler::entitiesSize + Constants::handler::basicBlocksSize);
-
-	for (size_t i{}; i < Constants::handler::entitiesSize; i++) {
-		m_entitiesAvailableIndexes.push_back(i);
-	}
-	for (size_t i{}; i < Constants::handler::basicBlocksSize; i++) {
-		m_basicBlocksAvailableIndexes.push_back(i);
-	}
-	for (size_t i{}; i < Constants::handler::textsSize; i++) {
-		m_textsAvailableIndexes.push_back(i);
-	}*/
 }
 Handler::~Handler() {
 #ifdef _DEBUG
@@ -44,48 +32,15 @@ Handler::~Handler() {
 void Handler::addObj(Entity& entity, const bool& useDeleteWhenRemoved) {
 	m_entities.push_back(&entity);
 	entity.setUseDeleteWhenRemoved(useDeleteWhenRemoved);
-	/*try {
-		const int& alocateId{ m_entitiesAvailableIndexes.at(0) };
-		setObjectId(entity, alocateId);
-		m_entities[alocateId] = &entity;
-		m_entitiesAvailableIndexes.erase(m_entitiesAvailableIndexes.begin());
-	}
-	catch (...) {
-#ifdef _DEBUG
-		debugMessage("Handler entity objects not enough space to add!\n");
-#endif
-	}*/
 }
 void Handler::addObj(BasicBlock& basicBlock, const bool& useDeleteWhenRemoved) {
 	m_basicBlocks.push_back(&basicBlock);
 	basicBlock.setUseDeleteWhenRemoved(useDeleteWhenRemoved);
-	//	try {
-	//		const int& alocateId{ m_basicBlocksAvailableIndexes.at(0) };
-	//		setObjectId(basicBlock, alocateId);
-	//		m_basicBlocks[alocateId] = &basicBlock;
-	//		m_basicBlocksAvailableIndexes.erase(m_basicBlocksAvailableIndexes.begin());
-	//	}
-	//	catch (...) {
-	//#ifdef _DEBUG
-	//		debugMessage("Handler entity objects not enough space to add!\n");
-	//#endif
-	//	}
 }
 
 void Handler::addObj(Text& text, const bool& useDeleteWhenRemoved) {
 	m_texts.push_back(&text);
 	text.setUseDeleteWhenRemoved(useDeleteWhenRemoved);
-	/*try {
-		const int& alocateId{ m_textsAvailableIndexes.at(0) };
-		setObjectId(text, alocateId);
-		m_texts[alocateId] = &text;
-		m_textsAvailableIndexes.erase(m_textsAvailableIndexes.begin());
-	}
-	catch (...) {
-#ifdef _DEBUG
-		debugMessage("Handler entity objects not enough space to add!\n");
-#endif
-	}*/
 }
 
 void Handler::removeObj(Entity& entity) {

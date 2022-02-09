@@ -15,20 +15,12 @@
 
 class Handler {
 private:
-	/*std::vector<int> m_entitiesAvailableIndexes{};
-	std::vector<int> m_basicBlocksAvailableIndexes{};
-	std::vector<int> m_textsAvailableIndexes{};
-
-	std::array<Entity*, Constants::handler::entitiesSize> m_entities{};
-	std::array<BasicBlock*, Constants::handler::basicBlocksSize> m_basicBlocks{};
-	std::array<Text*, Constants::handler::textsSize> m_texts{};*/
-
 	std::vector<Entity*> m_entities{};
 	std::vector<BasicBlock*> m_basicBlocks{};
 	std::vector<Text*> m_texts{};
 
 	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 5000};
-	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 50000 };
+	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 5000 };
 
 protected:
 public:
