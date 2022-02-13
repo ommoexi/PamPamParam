@@ -192,6 +192,11 @@ TextureArray::~TextureArray() {
 const Texture& TextureArray::subImage(const int& width, const int& height, const std::string& textureName, void* pixels,
 	const unsigned int& splitWidth, const unsigned int& splitHeight) {
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_id);
+#ifdef _DEBUG
+	if (width > m_width || height > m_height) {
+		debugMessage("TEXTURE IS LARGER THAN TEXTUREARRAY!\n");
+	}
+#endif
 	if (m_maxTextureHeightPerRow < height) {
 		m_maxTextureHeightPerRow = height;
 	}

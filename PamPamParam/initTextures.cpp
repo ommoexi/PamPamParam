@@ -12,7 +12,7 @@ namespace Textures {
 		images.push_back(image::loadImage("E:\\Andrei\\andrei\\PamPamParam\\PamPamParam\\textures\\craftpix-net-672711-free-street-animal-pixel-art-asset-pack\\1 Dog\\Walk.png", "dog", unpack_alignment, 6, 0));
 
 
-		I_ALLTEXTURES = new TextureArray{ 1024, 1024, GL_CLAMP_TO_EDGE,
+		I_ALLTEXTURES = new TextureArray{ 2048, 2048, GL_CLAMP_TO_EDGE,
 					  GL_CLAMP_TO_EDGE,
 					  GL_NEAREST,
 					  GL_NEAREST, GL_RGBA, images, GL_RGBA, GL_UNSIGNED_BYTE, true,unpack_alignment };

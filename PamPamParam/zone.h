@@ -15,22 +15,24 @@ private:
 	Zone* m_south{};
 	Zone* m_west{};
 
-	Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, int& mapMaxDepth);
+	int m_id{}; // for testing only
+
+	Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, const int& id, std::vector<Zone*>& lowestZones);
 	friend class Map;
 
-	Zone& setNorth(Zone*& zone) {
+	Zone& setNorth(Zone* zone) {
 		m_north = zone;
 		return *this;
 	}
-	Zone& setEast(Zone*& zone) {
+	Zone& setEast(Zone* const zone) {
 		m_east = zone;
 		return *this;
 	}
-	Zone& setSouth(Zone*& zone) {
+	Zone& setSouth(Zone* const zone) {
 		m_south = zone;
 		return *this;
 	}
-	Zone& setWest(Zone*& zone) {
+	Zone& setWest(Zone* const zone) {
 		m_west = zone;
 		return *this;
 	}
@@ -40,38 +42,44 @@ public:
 	Zone& operator=(const Zone& zone) = delete;
 	~Zone();
 
-	Zone* const subZoneTopLeft() const {
+	Zone* subZoneTopLeft() const {
 		return m_subZoneTopLeft;
 	}
 
-	Zone* const subZoneTopRight() const {
+	Zone* subZoneTopRight() const {
 		return m_subZoneTopRight;
 	}
 
-	Zone* const subZoneBotLeft() const {
+	Zone* subZoneBotLeft() const {
 		return m_subZoneBotLeft;
 	}
 
-	Zone* const subZoneBotRight() const {
+	Zone* subZoneBotRight() const {
 		return m_subZoneBotRight;
 	}
 
-	Zone* const north() const {
+	Zone* north() const {
 		return m_north;
 	}
 
-	Zone* const east() const {
+	Zone* east() const {
 		return m_east;
 	}
 
-	Zone* const south() const {
+	Zone* south() const {
 		return m_south;
 	}
 
-	Zone* const west() const {
+	Zone* west() const {
 		return m_west;
 	}
 
+	const Point& botLeft() const {
+		return m_botLeft;
+	}
+	const Point& topRight() const {
+		return m_topRight;
+	}
 
 #ifdef _DEBUG
 private:

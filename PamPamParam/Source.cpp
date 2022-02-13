@@ -31,7 +31,7 @@ namespace {
 		if (currentTime - previousTime >= 1000)
 		{
 			framerateText.setContent(std::to_string(frameCount) + " FPS");
-			std::cout << frameCount << '\n';
+			//std::cout << frameCount << '\n';
 			frameCount = 0;
 			previousTime = currentTime;
 			framerateText.setX(Constants::widthStretch - framerateText.getPixelWidthFirstRow() -10);
@@ -54,17 +54,16 @@ int main(int argc, char* argv[])
 	std::map<std::string, Animation> m{ };
 	m[Textures::animations::animationString] = t;
 
-	Entity player{ 0,0, 160,80 , Textures::animations::animationVecDog[0], &m};
-	BasicBlock block{ 200,200, 100,100, Textures::splitTest };
+	Entity player{ 0,0, 50,50 , &getNullTexture(), &m};
 
-	handler.addObj(block, false);
 	handler.addObj(player, false);
 
-	for (size_t i{}; i < 2000; i++) {
-		Entity* p{ new Entity{ -500,-500, 160,80 , Textures::animations::animationVecDog[0], &m} };
-		handler.addObj(*p, true);
+
+	Map test{ Point{-800,-800}, Point{800,800}, 100 };
+	// de modificat
+	for (auto& t : test.forTestingOnly) {
+		handler.addObj(*t, true);
 	}
-	Map test{ Point{0,0}, Point{10000,10000}, 2500 };
 
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -74,15 +73,19 @@ int main(int argc, char* argv[])
 		input::processInput();
 		if (input::keyW) {
 			player.setY(player.y() + speed);
+			test.moveNorth();
 		}
 		else if (input::keyS) {
 			player.setY(player.y() - speed);
+			test.moveSouth();
 		}
 		if (input::keyD) {
 			player.setX(player.x() + speed);
+			test.moveEast();
 		}
 		else if (input::keyA) {
 			player.setX(player.x() - speed);
+			test.moveWest();
 		}
 		if (input::keyExit) {
 			break;
