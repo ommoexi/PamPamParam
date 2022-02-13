@@ -1,5 +1,6 @@
 #pragma once
 #include "utils.h"
+#include "basicBlock.h"
 class Zone {
 private:
 	Point m_botLeft{};
@@ -15,9 +16,7 @@ private:
 	Zone* m_south{};
 	Zone* m_west{};
 
-	int m_id{}; // for testing only
-
-	Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, const int& id, std::vector<Zone*>& lowestZones);
+	Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, std::vector<Zone*>& lowestZones);
 	friend class Map;
 
 	Zone& setNorth(Zone* zone) {

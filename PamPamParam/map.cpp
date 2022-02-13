@@ -12,21 +12,21 @@ m_topRight{ topRight }{
 	{
 		m_subZoneTopLeft = new Zone{
 		Point{m_botLeft.x, (m_botLeft.y + m_topRight.y) / 2 },
-		Point{(m_botLeft.x + m_topRight.x) / 2, m_topRight.y}, minCellSize, 1, m_lowestZones
+		Point{(m_botLeft.x + m_topRight.x) / 2, m_topRight.y}, minCellSize, m_lowestZones
 		};
 
 		m_subZoneTopRight = new Zone{
-		Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, m_topRight, minCellSize, 2, m_lowestZones
+		Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, m_topRight, minCellSize, m_lowestZones
 		};
 
 		m_subZoneBotLeft = new Zone{
-		m_botLeft, Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, minCellSize, 3, m_lowestZones
+		m_botLeft, Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, minCellSize, m_lowestZones
 		};
 
 
 		m_subZoneBotRight = new Zone{
 		Point{(m_botLeft.x + m_topRight.x) / 2, m_botLeft.y },
-		Point{m_topRight.x, (m_botLeft.y + m_topRight.y) / 2}, minCellSize, 4, m_lowestZones
+		Point{m_topRight.x, (m_botLeft.y + m_topRight.y) / 2}, minCellSize, m_lowestZones
 		};
 
 	}
@@ -81,13 +81,7 @@ void Map::linkLowestZones() {
 			Zone* leftZone{ m_lowestZones[k - 1] };
 			Zone* rightZone{ m_lowestZones[k] };
 			leftZone->setEast(rightZone);
-			rightZone->setWest(leftZone);
-			///    de modificat
-			forTestingOnly.push_back(new BasicBlock(leftZone->botLeft().x, leftZone->botLeft().y, 
-				(leftZone->topRight().x - leftZone->botLeft().x),
-				(leftZone->topRight().y - leftZone->botLeft().y),
-				Textures::splitTest));
-			// ******************************************************
+			rightZone->setWest(leftZone);		
 		}
 	}
 	// link vertically
@@ -102,89 +96,38 @@ void Map::linkLowestZones() {
 
 }
 
-#ifdef _DEBUG
-
-void Map::printId(Zone* zone) {
-	Zone* currentZone{ zone };
-	while (currentZone) {
-		std::cout << currentZone->m_id << " X: " << currentZone->botLeft().x << " Y: " << currentZone->botLeft().y << '\n';
-		currentZone = currentZone->subZoneTopLeft();
-	}
-	currentZone = zone;
-	while (currentZone) {
-		std::cout << currentZone->m_id << " X: " << currentZone->botLeft().x << " Y: " << currentZone->botLeft().y << '\n';
-		currentZone = currentZone->subZoneTopRight();
-	}
-	currentZone = zone;
-	while (currentZone) {
-		std::cout << currentZone->m_id << " X: " << currentZone->botLeft().x << " Y: " << currentZone->botLeft().y << '\n';
-		currentZone = currentZone->subZoneBotLeft();
-	}
-	currentZone = zone;
-	while (currentZone) {
-		std::cout << currentZone->m_id << " X: " << currentZone->botLeft().x << " Y: " << currentZone->botLeft().y << '\n';
-		currentZone = currentZone->subZoneBotRight();
-	}
-}
-int i{};
-void Map::printIds() {
-	printId(m_subZoneTopLeft);
-	printId(m_subZoneTopRight);
-	printId(m_subZoneBotLeft);
-	printId(m_subZoneBotRight);
-}
-
 void Map::moveNorth() {
-	if (m_currentZone->north() && i >= 50) {
+	if (m_currentZone->north()) {
 		m_currentZone = m_currentZone->north();
-		std::cout << m_currentZone->m_id << " x : " << m_currentZone->m_botLeft.x << " y : " << m_currentZone->m_botLeft.y << '\n';
-		i = 0;
 	}
-	else  if (i >= 50) {
+	else {
 		std::cout << "NO NORTH \n";
-		i = 0;
 	}
-	i++;
 }
 void Map::moveEast() {
-	if (m_currentZone->east() && i >= 50) {
+	if (m_currentZone->east()) {
 		m_currentZone = m_currentZone->east();
-		std::cout << m_currentZone->m_id << " x : " << m_currentZone->m_botLeft.x << " y : " << m_currentZone->m_botLeft.y << '\n';
-		i = 0;
 	}
-	else if (i >= 50) {
+	else {
 		std::cout << "NO EAST \n";
-		i = 0;
 	}
-	i++;
 }
 void Map::moveSouth() {
-	if (m_currentZone->south() && i >= 50) {
+	if (m_currentZone->south()) {
 		m_currentZone = m_currentZone->south();
-		std::cout << m_currentZone->m_id << " x : " << m_currentZone->m_botLeft.x << " y : " << m_currentZone->m_botLeft.y << '\n';
-		i = 0;
 	}
-	else if (i >= 50) {
+	else {
 		std::cout << "NO SOUTH \n";
-		i = 0;
 	}
-	i++;
 }
 void Map::moveWest() {
-	if (m_currentZone->west() && i >= 50) {
+	if (m_currentZone->west()) {
 		m_currentZone = m_currentZone->west();
-		std::cout << m_currentZone->m_id << " x : " << m_currentZone->m_botLeft.x << " y : " << m_currentZone->m_botLeft.y << '\n';
-		i = 0;
 	}
-	else if (i >= 50) {
+	else {
 		std::cout << "NO WEST \n";
-		i = 0;
 	}
-	i++;
 }
-
-
-#endif
 
 Map::~Map() {
 #ifdef _DEBUG

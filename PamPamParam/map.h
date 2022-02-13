@@ -25,31 +25,17 @@ class Map
 	void linkLowestZones();
 
 public:
-	std::vector<BasicBlock*> forTestingOnly{}; // de modificat
 	~Map();
-	Map(const Map& quadTree) = delete;
-	Map& operator=(const Map& quadTree) = delete;
+	Map(const Map& map) = delete;
+	Map& operator=(const Map& map) = delete;
 	// minCellSize should be large >= 500
 	Map(const Point& botLeft, const Point& topRight, const int& minCellSize);
-
-#ifdef _DEBUG
-	// for testing purposes only
-
-	void printId(Zone* zone);
-
-	void printIds();
 
 	void moveNorth();
 	void moveEast();
 	void moveSouth();
 	void moveWest();
-	void printCurrentZoneId() {
-		if (m_currentZone) {
-			std::cout << m_currentZone->m_id << '\n';
-		}
-	}
 
-#endif
 #ifdef _DEBUG
 private:
 	static inline ObjectsCount mS_objectsCount{};

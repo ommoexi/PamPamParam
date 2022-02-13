@@ -60,10 +60,6 @@ int main(int argc, char* argv[])
 
 
 	Map test{ Point{-800,-800}, Point{800,800}, 100 };
-	// de modificat
-	for (auto& t : test.forTestingOnly) {
-		handler.addObj(*t, true);
-	}
 
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -73,19 +69,15 @@ int main(int argc, char* argv[])
 		input::processInput();
 		if (input::keyW) {
 			player.setY(player.y() + speed);
-			test.moveNorth();
 		}
 		else if (input::keyS) {
 			player.setY(player.y() - speed);
-			test.moveSouth();
 		}
 		if (input::keyD) {
 			player.setX(player.x() + speed);
-			test.moveEast();
 		}
 		else if (input::keyA) {
 			player.setX(player.x() - speed);
-			test.moveWest();
 		}
 		if (input::keyExit) {
 			break;

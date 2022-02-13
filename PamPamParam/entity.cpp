@@ -20,15 +20,6 @@ Entity::~Entity() {
 
 void Entity::update(std::vector<Entity*>& entities, std::vector<BasicBlock*>& basicBlocks) {
 	updateAnimation(Textures::animations::animationString);
-	for (auto& basicBlock : basicBlocks) {
-		if (basicBlock) { // DE MODIFICAT
-			if (isCollide(*basicBlock)) {
-				basicBlock->setColor(Colors::black);
-			}
-			else {
-				basicBlock->setColor(Colors::white);
-			}
-		}
-	}
+
 
 }
