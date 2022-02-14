@@ -15,7 +15,6 @@ namespace Textures {
 	inline Font I_FONT{ Constants::fonts::gameFont, 64,64 };
 
 	int initAllTextures();
-	// deletes animations as well from allTextures
 	void deleteAllTextures();
 
 	inline TextureArray* I_ALLTEXTURES;
@@ -26,7 +25,6 @@ namespace Textures {
 
 	namespace animations {
 		inline std::vector<const Texture*> animationVecDog{};
-		inline std::string animationString{ "animation" };
 	}
 
 

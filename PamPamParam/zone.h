@@ -1,8 +1,11 @@
 #pragma once
 #include "utils.h"
 #include "basicBlock.h"
+#include "entity.h"
+#include "text.h"
 class Zone {
 private:
+	// zone  functions are linked with map functions
 	Point m_botLeft{};
 	Point m_topRight{};
 
@@ -10,6 +13,10 @@ private:
 	Zone* m_subZoneTopRight{};
 	Zone* m_subZoneBotLeft{};
 	Zone* m_subZoneBotRight{};
+
+	std::vector<Entity*> m_entities{};
+	std::vector<BasicBlock*> m_basicBlocks{};
+	std::vector<Text*> m_texts{};
 
 	Zone* m_north{};
 	Zone* m_east{};

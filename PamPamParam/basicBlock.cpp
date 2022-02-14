@@ -1,8 +1,8 @@
 #include "basicBlock.h"
 
 BasicBlock::BasicBlock(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-	const std::map<std::string, Animation>* animations, const Constants::vec4& color)
-	: Rectangle{ x, y, width, height, texture, animations, color } {
+	const Constants::vec4& color)
+	: Rectangle{ x, y, width, height, texture, color } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::basicBlock_cpp, &mS_objectsCount);
 #endif 

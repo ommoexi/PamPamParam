@@ -50,14 +50,11 @@ int main(int argc, char* argv[])
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	handler.addObj(framerateText, false);
 	
-	Animation t{ Textures::animations::animationVecDog, 8 };
-	std::map<std::string, Animation> m{ };
-	m[Textures::animations::animationString] = t;
+	Animation standingAnimation{ Textures::animations::animationVecDog, 8 };
 
-	Entity player{ 0,0, 50,50 , &getNullTexture(), &m};
+	Player player{ 0,0, 500,500, standingAnimation};
 
 	handler.addObj(player, false);
-
 
 	Map test{ Point{-800,-800}, Point{800,800}, 100 };
 

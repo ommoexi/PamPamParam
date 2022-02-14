@@ -39,7 +39,7 @@ public:
 	Rectangle(const Rectangle& rect) = delete;
 	Rectangle& operator=(const Rectangle& rect) = delete;
 	Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-		const std::map<std::string, Animation>* animations = nullptr,const Constants::vec4& color = Colors::white);
+		const Constants::vec4& color = Colors::white);
 	virtual ~Rectangle();
 
 	void setColorBody(rectangle::setShaderColorFunc* func);
@@ -79,10 +79,17 @@ public:
 	const std::map<std::string, Animation>& animations() const {
 		return m_animations;
 	}
-	Rectangle& setAnimations(const std::map<std::string, Animation>& value) {
+	Rectangle& setAllAnimations(const std::map<std::string, Animation>& value) {
 		m_animations = value;
 		return *this;
 	}
+
+	Rectangle& setAnimation(const Animation& animation, const std::string& animationName) {
+		m_animations[animationName] = animation;
+		return *this;
+	}
+
+	const Animation& getAnimation(const std::string& animationName);
 
 	void updateAnimation(const std::string& animationName);
 	void setAnimationFramesPerTexture(const std::string& animationName, const unsigned int& framesPerTexture);

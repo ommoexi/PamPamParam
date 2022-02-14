@@ -8,6 +8,7 @@
 // creating a huge map will load slowly and it will not work
 class Map
 {
+	// map functions are linked with zone functions
 	Point m_botLeft{};
 	Point m_topRight{};
 

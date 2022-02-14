@@ -11,11 +11,8 @@ public:
 	Entity(const Entity& entity) = delete;
 	Entity& operator=(const Entity& entity) = delete;
 	Entity(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-		const std::map<std::string, Animation>* animations = nullptr, const Constants::vec4& color = Colors::white);
+		const Constants::vec4& color = Colors::white);
 	virtual ~Entity();
-
-	/*virtual void update(std::array<Entity*, Constants::handler::entitiesSize>& entities, 
-		std::array<BasicBlock*, Constants::handler::basicBlocksSize>& basicBlocks);*/
 
 	virtual void update(std::vector<Entity*>& entities,std::vector<BasicBlock*>& basicBlocks);
 

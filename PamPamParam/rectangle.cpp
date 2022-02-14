@@ -38,15 +38,11 @@ namespace {
 }
 
 Rectangle::Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-	const std::map<std::string, Animation>* animations, const Constants::vec4& color) :
+	 const Constants::vec4& color) :
 	Object{ x, y, width, height, color, Shader::basicAttrib(), mS_rectangleMesh }, m_currentTexture{ texture } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::rectangle_cpp, &mS_objectsCount);
 #endif
-
-	if (animations != nullptr) {
-		m_animations = *animations;
-	}
 
 	Mesh& _mesh{ Object::mesh() };
 	const int& stride{ attribConfig().stride() };
@@ -237,6 +233,7 @@ void Rectangle::setAnimationFramesPerTexture(const std::string& animationName, c
 
 namespace {
 	unsigned int nullUInt{};
+	Animation nullAnimation{};
 }
 
 const unsigned int& Rectangle::animationFramesPerTexture(const std::string& animationName) {
@@ -250,4 +247,17 @@ const unsigned int& Rectangle::animationFramesPerTexture(const std::string& anim
 #endif
 	}
 	return nullUInt;
+}
+
+const Animation& Rectangle::getAnimation(const std::string& animationName) {
+	try {
+		auto& animation{ m_animations.at(animationName) };
+		return animation;
+	}
+	catch (...) {
+#ifdef _DEBUG
+		debugMessage("Rectangle animation not found!\n");
+#endif
+	}
+	return nullAnimation;
 }

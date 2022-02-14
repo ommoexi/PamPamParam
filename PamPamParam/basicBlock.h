@@ -8,7 +8,7 @@ public:
 	BasicBlock(const BasicBlock& basicBlock) = delete;
 	BasicBlock& operator=(const BasicBlock& basicBlock) = delete;
 	BasicBlock(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-		const std::map<std::string, Animation>* animations = nullptr, const Constants::vec4& color = Colors::white);
+		const Constants::vec4& color = Colors::white);
 	virtual ~BasicBlock();
 
 #ifdef _DEBUG
