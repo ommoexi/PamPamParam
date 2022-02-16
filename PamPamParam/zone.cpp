@@ -41,3 +41,13 @@ Zone::~Zone() {
 	delete m_subZoneTopRight;
 #endif
 }
+
+void Zone::addObj(Entity& entity) {
+	m_entities.push_back(&entity);
+}
+void Zone::addObj(BasicBlock& basicBlock) {
+	m_basicBlocks.push_back(&basicBlock);
+}
+void Zone::addObj(Text& text) {
+	m_texts.push_back(&text);
+}

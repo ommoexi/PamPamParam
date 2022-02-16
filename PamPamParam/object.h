@@ -33,11 +33,11 @@ private:
 	const bool& isDeleted() const {
 		return m_deleted;
 	}
-	//int m_index{}; // id for handler
 
 protected:
 
 	friend class Handler;
+	friend class Map;
 
 	/*Object& setIndex(const int& value) {
 		m_index = value;

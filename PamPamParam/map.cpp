@@ -129,6 +129,48 @@ void Map::moveWest() {
 	}
 }
 
+void Map::addObj(Entity& entity, const bool& useDeleteWhenRemoved) {
+	//m_entities.push_back(&entity);
+	entity.setUseDeleteWhenRemoved(useDeleteWhenRemoved);
+}
+void Map::addObj(BasicBlock& basicBlock, const bool& useDeleteWhenRemoved) {
+	//m_basicBlocks.push_back(&basicBlock);
+	basicBlock.setUseDeleteWhenRemoved(useDeleteWhenRemoved);
+}
+
+void Map::addObj(Text& text, const bool& useDeleteWhenRemoved) {
+	//m_texts.push_back(&text);
+	text.setUseDeleteWhenRemoved(useDeleteWhenRemoved);
+}
+
+Zone* Map::getZone(Object* obj) const {
+
+	if (obj->x() <= m_topRight.x && obj->x() > m_botLeft.x && obj->y() <= m_topRight.y && obj->y() >= m_botLeft.y) {
+		m_subZoneTopLeft = new Zone{
+		Point{m_botLeft.x, (m_botLeft.y + m_topRight.y) / 2 },
+		Point{(m_botLeft.x + m_topRight.x) / 2, m_topRight.y}, minCellSize, m_lowestZones
+		};
+
+		m_subZoneTopRight = new Zone{
+		Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, m_topRight, minCellSize, m_lowestZones
+		};
+
+		m_subZoneBotLeft = new Zone{
+		m_botLeft, Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, minCellSize, m_lowestZones
+		};
+
+
+		m_subZoneBotRight = new Zone{
+		Point{(m_botLeft.x + m_topRight.x) / 2, m_botLeft.y },
+		Point{m_topRight.x, (m_botLeft.y + m_topRight.y) / 2}, minCellSize, m_lowestZones
+		};
+	}
+#ifdef _DEBUG
+	debugMessage("CANNOT INSERT OBJ IN MAP OUT OF BOUNDS\n");
+#endif
+	
+}
+
 Map::~Map() {
 #ifdef _DEBUG
 	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::quadTree_cpp);

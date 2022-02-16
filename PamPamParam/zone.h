@@ -87,6 +87,10 @@ public:
 		return m_topRight;
 	}
 
+	void addObj(Entity& entity);
+	void addObj(BasicBlock& basicBlock);
+	void addObj(Text& text);
+
 #ifdef _DEBUG
 private:
 	static inline ObjectsCount mS_objectsCount{};

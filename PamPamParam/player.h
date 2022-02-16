@@ -3,6 +3,7 @@
 class Player : public Entity {
 private:
 	// must implement these animations when creating a new player or crash 
+
 	const static inline std::string mS_standingAnimationString{"stand"};
 
 public:
