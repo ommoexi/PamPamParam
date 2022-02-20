@@ -6,7 +6,6 @@
 #include <iostream>
 
 
-using ObjectsCount = unsigned long long;
 class Debugger {
 private:
 	class Data {

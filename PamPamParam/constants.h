@@ -1,5 +1,19 @@
 #pragma once
 #include <filesystem>
+//constants.h for debug.h and debug.cpp
+using ObjectsCount = unsigned long long;
+// constants.h
+struct Point
+{
+	int x{};
+	int y{};
+#ifdef _DEBUG
+private:
+	static inline ObjectsCount mS_objectsCount{};
+
+#endif
+};
+
 namespace Constants {
 	namespace Uniforms {
 		inline const char* transform{ "transform" };
@@ -12,6 +26,23 @@ namespace Constants {
 #else
 		'/';
 #endif
+
+	struct ZoneCoords {
+		int x{};
+		int y{};
+		int x2{};
+		int y2{};
+		int middleX{};
+		int middleY{};
+
+		ZoneCoords(const Point& first, const Point& second);
+
+#ifdef _DEBUG
+	private:
+		static inline ObjectsCount mS_objectsCount{};
+
+#endif
+	};
 
 	inline const int openglLeft{ -1 };
 	inline const int openglRight{ 1 };
@@ -87,6 +118,8 @@ namespace Constants {
 		const inline size_t textsSize{ 500 };
 	}
 
+
+
 }
 #ifdef _DEBUG
 enum class Header_Files {
@@ -119,6 +152,7 @@ enum class Header_Files {
 
 enum class Source_Files {
 	camera_cpp,
+	constants_cpp,
 	debug_cpp,
 	font_cpp,
 	glad_c,
@@ -150,9 +184,4 @@ namespace Colors {
 	const inline Constants::vec4 white{ 255.f, 255.f, 255.f, 255.f };
 	const inline Constants::vec4 black{ 0.0f,0.0f, 0.0f, 255.0f };
 }
-// constants.h
-struct Point
-{
-	int x{};
-	int y{};
-};
+

@@ -3,6 +3,8 @@
 #include "basicBlock.h"
 #include "entity.h"
 #include "text.h"
+
+
 class Zone {
 private:
 	// zone  functions are linked with map functions
@@ -13,6 +15,7 @@ private:
 	Zone* m_subZoneTopRight{};
 	Zone* m_subZoneBotLeft{};
 	Zone* m_subZoneBotRight{};
+
 
 	std::vector<Entity*> m_entities{};
 	std::vector<BasicBlock*> m_basicBlocks{};

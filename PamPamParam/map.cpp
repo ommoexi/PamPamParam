@@ -1,32 +1,31 @@
 #include "map.h"
 
-
-Map::Map(const Point& botLeft, const Point& topRight, const int& minCellSize) :m_botLeft{ botLeft },
-m_topRight{ topRight }{
+Map::Map(const Point& botLeft, const Point& topRight, const int& minCellSize) : m_coords{ botLeft, topRight }
+{
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::quadTree_cpp, &mS_objectsCount);
 #endif
 
-	if (!(abs(m_topRight.x - m_botLeft.x) <= minCellSize) &&
-		!(abs(m_topRight.y - m_botLeft.y) <= minCellSize))
+	if (!(abs(m_coords.x2 - m_coords.x) <= minCellSize) &&
+		!(abs(m_coords.y2 - m_coords.y) <= minCellSize))
 	{
 		m_subZoneTopLeft = new Zone{
-		Point{m_botLeft.x, (m_botLeft.y + m_topRight.y) / 2 },
-		Point{(m_botLeft.x + m_topRight.x) / 2, m_topRight.y}, minCellSize, m_lowestZones
+		Point{m_coords.x, (m_coords.y + m_coords.y2) / 2 },
+		Point{(m_coords.x + m_coords.x2) / 2, m_coords.y2}, minCellSize, m_lowestZones
 		};
 
 		m_subZoneTopRight = new Zone{
-		Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, m_topRight, minCellSize, m_lowestZones
+		Point{(m_coords.x + m_coords.x2) / 2, (m_coords.y + m_coords.y2) / 2}, Point{m_coords.x2, m_coords.y2}, minCellSize, m_lowestZones
 		};
 
 		m_subZoneBotLeft = new Zone{
-		m_botLeft, Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, minCellSize, m_lowestZones
+		Point{m_coords.x, m_coords.y}, Point{(m_coords.x + m_coords.x2) / 2, (m_coords.y + m_coords.y2) / 2}, minCellSize, m_lowestZones
 		};
 
 
 		m_subZoneBotRight = new Zone{
-		Point{(m_botLeft.x + m_topRight.x) / 2, m_botLeft.y },
-		Point{m_topRight.x, (m_botLeft.y + m_topRight.y) / 2}, minCellSize, m_lowestZones
+		Point{(m_coords.x + m_coords.x2) / 2, m_coords.y },
+		Point{m_coords.x2, (m_coords.y + m_coords.y2) / 2}, minCellSize, m_lowestZones
 		};
 
 	}
@@ -61,6 +60,7 @@ m_topRight{ topRight }{
 #endif
 
 }
+
 
 void Map::linkLowestZones() {
 	std::sort(m_lowestZones.begin(), m_lowestZones.end(), [](Zone*& leftZone, Zone*& rightZone)
@@ -144,8 +144,10 @@ void Map::addObj(Text& text, const bool& useDeleteWhenRemoved) {
 }
 
 Zone* Map::getZone(Object* obj) const {
-
-	if (obj->x() <= m_topRight.x && obj->x() > m_botLeft.x && obj->y() <= m_topRight.y && obj->y() >= m_botLeft.y) {
+	const float& x{ obj->x() };
+	const float& y{ obj->y() };
+	if (x <= m_topRight.x && x > m_botLeft.x && y <= m_topRight.y && y >= m_botLeft.y) {
+		//if(x < m_botLeft.x)
 		m_subZoneTopLeft = new Zone{
 		Point{m_botLeft.x, (m_botLeft.y + m_topRight.y) / 2 },
 		Point{(m_botLeft.x + m_topRight.x) / 2, m_topRight.y}, minCellSize, m_lowestZones
