@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 
 	handler.addObj(player, false);
 
-	Map test{ Point{-800,-800}, Point{800,800}, 100 };
+	Map test{ Point{0,0}, Point{100,100}, 25 };
 
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

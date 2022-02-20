@@ -61,18 +61,17 @@ Map::Map(const Point& botLeft, const Point& topRight, const int& minCellSize) : 
 
 }
 
-
 void Map::linkLowestZones() {
 	std::sort(m_lowestZones.begin(), m_lowestZones.end(), [](Zone*& leftZone, Zone*& rightZone)
 		{
-			return leftZone->botLeft().y < rightZone->botLeft().y;
+			return leftZone->coords().y < rightZone->coords().y;
 		});
 	size_t rowsColSize{ static_cast<size_t>(sqrt(m_lowestZones.size())) };
 	size_t i{};
 	for (size_t k{ rowsColSize }; k < m_lowestZones.size() + 1; i += rowsColSize, k += rowsColSize) {
 		std::sort(m_lowestZones.begin() + i, m_lowestZones.begin() + k, [](Zone*& leftZone, Zone*& rightZone)
 			{
-				return leftZone->botLeft().x < rightZone->botLeft().x;
+				return leftZone->coords().x < rightZone->coords().x;
 			});
 	}
 	// link horizontally
@@ -144,31 +143,37 @@ void Map::addObj(Text& text, const bool& useDeleteWhenRemoved) {
 }
 
 Zone* Map::getZone(Object* obj) const {
+	if(m_subZoneBotLeft)
 	const float& x{ obj->x() };
 	const float& y{ obj->y() };
-	if (x <= m_topRight.x && x > m_botLeft.x && y <= m_topRight.y && y >= m_botLeft.y) {
-		//if(x < m_botLeft.x)
-		m_subZoneTopLeft = new Zone{
-		Point{m_botLeft.x, (m_botLeft.y + m_topRight.y) / 2 },
-		Point{(m_botLeft.x + m_topRight.x) / 2, m_topRight.y}, minCellSize, m_lowestZones
-		};
+	if (x >= m_coords.x && x <= m_coords.y2 && y >= m_coords.y && y <= m_coords.y2) {
+		// left
+		if (x <= m_coords.middleX) {
+			//down
+			if (y <= m_coords.middleY) {
 
-		m_subZoneTopRight = new Zone{
-		Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, m_topRight, minCellSize, m_lowestZones
-		};
+			}
+			else {
 
-		m_subZoneBotLeft = new Zone{
-		m_botLeft, Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, minCellSize, m_lowestZones
-		};
+			}
+			//up
+		}
+		// right
+		else {
+			//down
+			if (y <= m_coords.middleY) {
 
+			}
+			else {
 
-		m_subZoneBotRight = new Zone{
-		Point{(m_botLeft.x + m_topRight.x) / 2, m_botLeft.y },
-		Point{m_topRight.x, (m_botLeft.y + m_topRight.y) / 2}, minCellSize, m_lowestZones
-		};
+			}
+			//up
+		}
 	}
 #ifdef _DEBUG
-	debugMessage("CANNOT INSERT OBJ IN MAP OUT OF BOUNDS\n");
+	else {
+		debugMessage("CANNOT INSERT OBJ IN MAP OUT OF BOUNDS\n");
+	}
 #endif
 	
 }

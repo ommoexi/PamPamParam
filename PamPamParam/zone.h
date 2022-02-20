@@ -8,8 +8,8 @@
 class Zone {
 private:
 	// zone  functions are linked with map functions
-	Point m_botLeft{};
-	Point m_topRight{};
+
+	Constants::ZoneCoords m_coords;
 
 	Zone* m_subZoneTopLeft{};
 	Zone* m_subZoneTopRight{};
@@ -45,6 +45,8 @@ private:
 		m_west = zone;
 		return *this;
 	}
+
+	Zone* getZone(Object* obj) const;
 
 public:
 	Zone(const Zone& zone) = delete;
@@ -83,11 +85,8 @@ public:
 		return m_west;
 	}
 
-	const Point& botLeft() const {
-		return m_botLeft;
-	}
-	const Point& topRight() const {
-		return m_topRight;
+	const Constants::ZoneCoords& coords() const {
+		return m_coords;
 	}
 
 	void addObj(Entity& entity);

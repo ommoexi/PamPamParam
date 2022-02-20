@@ -1,31 +1,34 @@
 #include "zone.h"
 
-Zone::Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, std::vector<Zone*>& lowestZones) :
-	m_botLeft{ botLeft }, m_topRight{ topRight } {
+Zone::Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, std::vector<Zone*>& lowestZones) : 
+	m_coords{ botLeft, topRight }
+	 {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::quadTree_cpp, &mS_objectsCount);
 #endif
 
-	if (!(abs(m_topRight.x - m_botLeft.x) <= minCellSize) &&
-		!(abs(m_topRight.y - m_botLeft.y) <= minCellSize))
+	if (!(abs(m_coords.x2 - m_coords.x) <= minCellSize) &&
+		!(abs(m_coords.y2 - m_coords.y) <= minCellSize))
 	{
 		m_subZoneTopLeft = new Zone{
-		Point{m_botLeft.x, (m_botLeft.y + m_topRight.y) / 2 },
-		Point{(m_botLeft.x + m_topRight.x) / 2, m_topRight.y}, minCellSize,lowestZones
+		Point{m_coords.x, (m_coords.y + m_coords.y2) / 2 },
+		Point{(m_coords.x + m_coords.x2) / 2, m_coords.y2}, minCellSize, lowestZones
 		};
 
 		m_subZoneTopRight = new Zone{
-		Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, m_topRight, minCellSize, lowestZones
+		Point{(m_coords.x + m_coords.x2) / 2, (m_coords.y + m_coords.y2) / 2}, Point{m_coords.x2, m_coords.y2}, minCellSize, lowestZones
 		};
 
 		m_subZoneBotLeft = new Zone{
-		m_botLeft, Point{(m_botLeft.x + m_topRight.x) / 2, (m_botLeft.y + m_topRight.y) / 2}, minCellSize,lowestZones
+		Point{m_coords.x, m_coords.y}, Point{(m_coords.x + m_coords.x2) / 2, (m_coords.y + m_coords.y2) / 2}, minCellSize, lowestZones
 		};
 
+
 		m_subZoneBotRight = new Zone{
-		Point{(m_botLeft.x + m_topRight.x) / 2, m_botLeft.y },
-		Point{m_topRight.x, (m_botLeft.y + m_topRight.y) / 2}, minCellSize,lowestZones
+		Point{(m_coords.x + m_coords.x2) / 2, m_coords.y },
+		Point{m_coords.x2, (m_coords.y + m_coords.y2) / 2}, minCellSize, lowestZones
 		};
+
 	}
 	else {
 		lowestZones.push_back(this);
@@ -50,4 +53,33 @@ void Zone::addObj(BasicBlock& basicBlock) {
 }
 void Zone::addObj(Text& text) {
 	m_texts.push_back(&text);
+}
+
+Zone* Zone::getZone(Object* obj) const {
+	const float& x{ obj->x() };
+	const float& y{ obj->y() };
+	if (x >= m_coords.x && x <= m_coords.y2 && y >= m_coords.y && y <= m_coords.y2) {
+		// left
+		if (x <= m_coords.middleX) {
+			//down
+			if (y <= m_coords.middleY) {
+
+			}
+			else {
+
+			}
+			//up
+		}
+		// right
+		else {
+			//down
+			if (y <= m_coords.middleY) {
+
+			}
+			else {
+
+			}
+			//up
+		}
+	}
 }

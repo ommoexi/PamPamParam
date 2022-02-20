@@ -1,17 +1,11 @@
 #pragma once
 #include <filesystem>
-//constants.h for debug.h and debug.cpp
-using ObjectsCount = unsigned long long;
+
 // constants.h
 struct Point
 {
 	int x{};
 	int y{};
-#ifdef _DEBUG
-private:
-	static inline ObjectsCount mS_objectsCount{};
-
-#endif
 };
 
 namespace Constants {
@@ -36,12 +30,6 @@ namespace Constants {
 		int middleY{};
 
 		ZoneCoords(const Point& first, const Point& second);
-
-#ifdef _DEBUG
-	private:
-		static inline ObjectsCount mS_objectsCount{};
-
-#endif
 	};
 
 	inline const int openglLeft{ -1 };

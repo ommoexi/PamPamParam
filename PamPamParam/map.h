@@ -41,6 +41,10 @@ public:
 	void addObj(BasicBlock& basicBlock, const bool& useDeleteWhenRemoved);
 	void addObj(Text& text, const bool& useDeleteWhenRemoved);
 
+	Constants::ZoneCoords& coords() {
+		return m_coords;
+	}
+
 	Zone* getZone(Object* obj) const;
 
 #ifdef _DEBUG
