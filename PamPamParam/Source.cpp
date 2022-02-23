@@ -52,16 +52,21 @@ int main(int argc, char* argv[])
 	
 	Animation standingAnimation{ Textures::animations::animationVecDog, 8 };
 
-	Player player{ 0,0, 500,500, standingAnimation};
+	Player player{ -500,-500, 500,500, standingAnimation};
 
 	handler.addObj(player, false);
 
-	Map test{ Point{0,0}, Point{100,100}, 25 };
+	Map test{ Point{0,0}, Point{1000000,100000}, static_cast<int>(Constants::widthStretch + Constants::heightStretch), 2, 2, &player };
 
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while (true)
 	{	
+		Zone* t{ test.getZone(player) };
+		if (t) {
+			std::cout << t->coords().x << " player : " << player.x() << '\n';
+		}
+
 		glClear(GL_COLOR_BUFFER_BIT);
 		input::processInput();
 		if (input::keyW) {

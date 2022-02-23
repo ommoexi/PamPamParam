@@ -4,6 +4,11 @@
 #include "entity.h"
 #include "text.h"
 
+struct ZoneVectors {
+	std::vector<std::vector<Entity*>*> entities{};
+	std::vector<std::vector<BasicBlock*>*> basicBlocks{};
+	std::vector<std::vector<Text*>*> texts{};
+};
 
 class Zone {
 private:
@@ -46,7 +51,7 @@ private:
 		return *this;
 	}
 
-	Zone* getZone(Object* obj) const;
+	Zone* getZone(const Object& obj);
 
 public:
 	Zone(const Zone& zone) = delete;
@@ -92,6 +97,10 @@ public:
 	void addObj(Entity& entity);
 	void addObj(BasicBlock& basicBlock);
 	void addObj(Text& text);
+
+	void removeObj(Entity& entity);
+	void removeObj(BasicBlock& basicBlock);
+	void removeObj(Text& text);
 
 #ifdef _DEBUG
 private:

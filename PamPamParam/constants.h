@@ -160,8 +160,8 @@ enum class Source_Files {
 	batch_cpp,
 	animation_cpp,
 	input_cpp,
-	map_h,
-	zone_h,
+	map_cpp,
+	zone_cpp,
 };
 #endif
 

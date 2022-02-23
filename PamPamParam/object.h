@@ -38,6 +38,7 @@ protected:
 
 	friend class Handler;
 	friend class Map;
+	friend class Zone;
 
 	/*Object& setIndex(const int& value) {
 		m_index = value;
