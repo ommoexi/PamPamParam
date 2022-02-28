@@ -30,6 +30,8 @@ namespace Constants {
 		int middleY{};
 
 		ZoneCoords(const Point& first, const Point& second);
+		void copy(const Point& first, const Point& second);
+		ZoneCoords() = default;
 	};
 
 	inline const int openglLeft{ -1 };
@@ -62,7 +64,9 @@ namespace Constants {
 	const inline double PI{ 3.141592653589793238462643 };
 
 	const inline float widthStretch{ 1000 };
+	const inline float width{ widthStretch * 2 };
 	const inline float heightStretch{ 1000 };
+	const inline float height{ heightStretch * 2 };
 	
 	const inline std::filesystem::path currentDirectoryPath{ std::filesystem::current_path() };
 

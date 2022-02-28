@@ -35,6 +35,12 @@ Zone::Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, 
 	}
 }
 
+Zone::Zone() {
+#ifdef _DEBUG
+	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::zone_cpp, &mS_objectsCount);
+#endif
+}
+
 Zone::~Zone() {
 #ifdef _DEBUG
 	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::zone_cpp);
@@ -66,6 +72,7 @@ Zone::~Zone() {
 
 void Zone::addObj(Entity& entity) {
 	m_entities.push_back(&entity);
+	entity.setBottomLeftBounds()
 }
 void Zone::addObj(BasicBlock& basicBlock) {
 	m_basicBlocks.push_back(&basicBlock);
@@ -103,48 +110,4 @@ Zone* Zone::getZone(const Object& obj) {
 		}
 	}
 	return this;
-}
-
-void Zone::removeObj(Entity& entity) {
-	if (entity.useDeleteWhenRemoved()) {
-		delete& entity;
-	}
-	auto it = std::find(m_entities.begin(), m_entities.end(), &entity);
-	if (it != m_entities.end()) {
-		m_entities.erase(it);
-	}
-#ifdef _DEBUG
-	else {
-		debugMessage("Remove entity not found!\n");
-	}
-#endif
-
-}
-void Zone::removeObj(BasicBlock& basicBlock) {
-	if (basicBlock.useDeleteWhenRemoved()) {
-		delete& basicBlock;
-	}
-	auto it = std::find(m_basicBlocks.begin(), m_basicBlocks.end(), &basicBlock);
-	if (it != m_basicBlocks.end()) {
-		m_basicBlocks.erase(it);
-	}
-#ifdef _DEBUG
-	else {
-		debugMessage("Remove basicBlock not found!\n");
-	}
-#endif
-}
-void Zone::removeObj(Text& text) {
-	if (text.useDeleteWhenRemoved()) {
-		delete& text;
-	}
-	auto it = std::find(m_texts.begin(), m_texts.end(), &text);
-	if (it != m_texts.end()) {
-		m_texts.erase(it);
-	}
-#ifdef _DEBUG
-	else {
-		debugMessage("Remove text not found!\n");
-	}
-#endif
 }

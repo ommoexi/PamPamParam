@@ -11,7 +11,7 @@ public:
 		const Constants::vec4& color = Colors::white);
 	virtual ~Player();
 
-	void update(std::vector<Entity*>& entities, std::vector<BasicBlock*>& basicBlocks);
+	void update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) override;
 
 	static const std::string& standingAnimationString() {
 		return mS_standingAnimationString;

@@ -60,10 +60,11 @@ void Batch::bindBuffer() const{
 
 Batch::~Batch() {
 #ifdef _DEBUG
-	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::mesh_cpp);
+	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::batch_cpp);
 #endif
 
 	glDeleteBuffers(1, &m_VBO);
+	glDeleteBuffers(1, &m_VBC);
 	glDeleteVertexArrays(1, &m_VAO);
 }
 

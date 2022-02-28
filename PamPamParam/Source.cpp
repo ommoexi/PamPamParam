@@ -20,8 +20,8 @@ namespace {
 	double previousTime = SDL_GetTicks();
 	Handler handler{};
 	int frameCount = 0;
-	Text framerateText{ Constants::widthStretch - framerateText.getPixelWidthFirstRow() - 10, 
-		Constants::heightStretch - framerateText.getPixelHeightFirstRow() -10,
+	Text framerateText{ Constants::width - framerateText.getPixelWidthFirstRow() - 10, 
+		Constants::height - framerateText.getPixelHeightFirstRow() -10,
 		20,20, Colors::black, "FPS" , Textures::I_FONT, 0};
 
 	void framerate() {
@@ -34,8 +34,8 @@ namespace {
 			//std::cout << frameCount << '\n';
 			frameCount = 0;
 			previousTime = currentTime;
-			framerateText.setX(Constants::widthStretch - framerateText.getPixelWidthFirstRow() -10);
-			framerateText.setY(Constants::heightStretch - framerateText.getPixelHeightFirstRow() - 10);
+			framerateText.setX(Constants::width - framerateText.getPixelWidthFirstRow() -10);
+			framerateText.setY(Constants::height - framerateText.getPixelHeightFirstRow() - 10);
 		}
 	}
 
@@ -48,24 +48,27 @@ int main(int argc, char* argv[])
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	handler.addObj(framerateText, false);
 	
 	Animation standingAnimation{ Textures::animations::animationVecDog, 8 };
 
-	Player player{ -500,-500, 500,500, standingAnimation};
+	Player player{ 0,0, 160, 80, standingAnimation};
+	Map basicMap{ Point{-2000, -2000}, Point{4000, 4000}, 50,
+		10, 10, &player };
 
-	handler.addObj(player, false);
+	basicMap.addObj(framerateText, false);
+	handler.setMap(&basicMap);
 
-	Map test{ Point{0,0}, Point{1000000,100000}, static_cast<int>(Constants::widthStretch + Constants::heightStretch), 2, 2, &player };
+	//for (size_t i{}; i < 2001; i += 50) {
+	//	for (size_t k{}; k < 2001; k+= 50) {
+	//		BasicBlock* b{ new BasicBlock(i, k, 50, 50, Textures::splitTest) };
+	//		basicMap.addObj(*b, true);
+	//	}
+	//}
 
 	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while (true)
 	{	
-		Zone* t{ test.getZone(player) };
-		if (t) {
-			std::cout << t->coords().x << " player : " << player.x() << '\n';
-		}
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		input::processInput();

@@ -28,12 +28,12 @@ Object::~Object() {
 }
 
 float Object::transformX(const float& xCoord) const {
-	float transformedX{ (xCoord * m_width + m_x) / Constants::widthStretch };
+	float transformedX{ -1 + (xCoord * m_width + m_x) / Constants::widthStretch };
 	return transformedX;
 }
 
 float Object::transformY(const float& yCoord) const {
-	float transformedY{ (yCoord * m_height + m_y) / Constants::heightStretch };
+	float transformedY{ -1 + (yCoord * m_height + m_y) / Constants::heightStretch };
 	return transformedY;
 }
 

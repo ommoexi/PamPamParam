@@ -21,7 +21,7 @@ private:
 	float m_previousY{ m_y };
 	Constants::vec4 m_colorNormalized{normalizeColor(m_color)};
 
-	bool m_removeFromHandler{ false };
+	bool m_removeFromVector{ false };
 	bool m_useDeleteWhenRemoved{ false };
 
 	Object& setUseDeleteWhenRemoved(const bool& value) {
@@ -33,6 +33,9 @@ private:
 	const bool& isDeleted() const {
 		return m_deleted;
 	}
+
+	Point m_bottomLeftBounds{}; // for map only
+	Point m_topRightBounds{};   // for map only
 
 protected:
 
@@ -153,16 +156,35 @@ public:
 
 	Object& setY(const float& y);
 
-	const bool& isRemoveFromHandler() const {
-		return m_removeFromHandler;
+	const bool& isRemoveFromVector() const {
+		return m_removeFromVector;
 	}
 
-	void setRemoveFromHandler(const bool& value) {
-		m_removeFromHandler = value;
+	void setRemoveFromVector(const bool& value) {
+		m_removeFromVector = value;
 	}
 
 	const bool& useDeleteWhenRemoved() const {
 		return m_useDeleteWhenRemoved;
+	}
+
+	//m_bottomLeftBounds{};
+	//m_topRightBounds{};
+	const Point& bottomLeftBounds() const {
+		return m_bottomLeftBounds;
+	}
+	const Point& topRightBounds() const {
+		return m_topRightBounds;
+	}
+
+	void setBottomLeftBounds(const int& x, const int& y) {
+		m_bottomLeftBounds.x = x;
+		m_bottomLeftBounds.y = y;
+	}
+
+	void setTopRightBounds(const int& x, const int& y) {
+		m_topRightBounds.x = x;
+		m_topRightBounds.y = y;
 	}
 
 #ifdef _DEBUG

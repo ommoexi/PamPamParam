@@ -1,5 +1,6 @@
 #include "map.h"
 
+
 Map::Map(const Point& botLeft, const Point& topRight, const int& minCellSize, const unsigned int& updateRadius,
 	const unsigned int& renderRadius, Player* mainPlayer) : m_coords{ botLeft, topRight }, m_updateRadius{ updateRadius },
 	m_renderRadius{ renderRadius }, m_mainPlayer{ mainPlayer }
@@ -48,11 +49,13 @@ Map::Map(const Point& botLeft, const Point& topRight, const int& minCellSize, co
 		linkLowestZones();
 
 		setCurrentZone(*m_mainPlayer);
+		m_currentZone->addObj(*m_mainPlayer);
 
 	}
 	else {
 #ifdef _DEBUG
 		debugMessage("MAP TOO SMALL");
+		m_currentZone = &mS_nullZone;
 #endif
 	}
 
@@ -92,51 +95,13 @@ void Map::linkLowestZones() {
 
 }
 
-void Map::moveNorth() {
-	if (m_currentZone->north()) {
-		m_currentZone = m_currentZone->north();
-	}
-#ifdef _DEBUG
-	else {
-		debugMessage("CAN'T MOVE MAP NORTH\n");
-	}
-#endif
-}
-void Map::moveEast() {
-	if (m_currentZone->east()) {
-		m_currentZone = m_currentZone->east();
-	}
-#ifdef _DEBUG
-	else {
-		debugMessage("CAN'T MOVE MAP EAST\n");
-	}
-#endif
-}
-void Map::moveSouth() {
-	if (m_currentZone->south()) {
-		m_currentZone = m_currentZone->south();
-	}
-#ifdef _DEBUG
-	else {
-		debugMessage("CAN'T MOVE MAP SOUTH\n");
-	}
-#endif
-}
-void Map::moveWest() {
-	if (m_currentZone->west()) {
-		m_currentZone = m_currentZone->west();
-	}
-#ifdef _DEBUG
-	else {
-		debugMessage("CAN'T MOVE MAP WEST\n");
-	}
-#endif
-}
 
 void Map::setCurrentZone(const Object& obj) {
 	Zone* zone{ getZone(obj) };
 	if (zone) {
 		m_currentZone = zone;
+		setUpdateVectors();
+		setRenderVectors();
 	}
 #ifdef _DEBUG
 	else {
@@ -164,6 +129,25 @@ void Map::addObj(Text& text, const bool& useDeleteWhenRemoved) {
 	Zone* zone{ getZone(text) };
 	if (zone) {
 		text.setUseDeleteWhenRemoved(useDeleteWhenRemoved);
+		zone->addObj(text);
+	}
+}
+
+void Map::addObj(Entity& entity) {
+	Zone* zone{ getZone(entity) };
+	if (zone) {
+		zone->addObj(entity);
+	}
+}
+void Map::addObj(BasicBlock& basicBlock) {
+	Zone* zone{ getZone(basicBlock) };
+	if (zone) {
+		zone->addObj(basicBlock);
+	}
+}
+void Map::addObj(Text& text) {
+	Zone* zone{ getZone(text) };
+	if (zone) {
 		zone->addObj(text);
 	}
 }
@@ -214,20 +198,135 @@ Map::~Map() {
 #endif
 }
 
+void Map::setVectorsEastZone(ZoneVectors& vectors, unsigned int radius, Zone* zone) {
+	Zone* currentZone{ zone };
+	while (radius && (currentZone = currentZone->east())) {
+		setVectorsZone(vectors, currentZone);
+		radius--;
+	}
+}
+
+void Map::setVectorsWestZone(ZoneVectors& vectors, unsigned int radius, Zone* zone) {
+	Zone* currentZone{ zone };
+	while (radius && (currentZone = currentZone->west())) {
+		setVectorsZone(vectors, currentZone);
+		radius--;
+	}
+}
+void Map::setVectorsZone(ZoneVectors& vectors, Zone* zone) {
+	vectors.basicBlocks.push_back(&zone->m_basicBlocks);
+	vectors.texts.push_back(&zone->m_texts);
+	vectors.entities.push_back(&zone->m_entities);
+}
+
 void Map::setVectors(ZoneVectors& vectors, unsigned int radius) {
 	vectors.basicBlocks.clear();
 	vectors.entities.clear();
 	vectors.texts.clear();
 
-	vectors.basicBlocks.push_back(&m_currentZone->m_basicBlocks);
-	vectors.texts.push_back(&m_currentZone->m_texts);
-	vectors.entities.push_back(&m_currentZone->m_entities);
+	setVectorsZone(vectors, m_currentZone);
+	unsigned int westAndEastRadius{ radius - 1 };
+	setVectorsEastZone(vectors, westAndEastRadius, m_currentZone);
+	setVectorsWestZone(vectors, westAndEastRadius, m_currentZone);
 
+	Zone* upDownZone{ m_currentZone};
+	unsigned int upDownRadius{ radius - 1 };
+	while (upDownRadius && (upDownZone = upDownZone->north())) {
+		setVectorsZone(vectors, upDownZone);
+		setVectorsEastZone(vectors, westAndEastRadius, upDownZone);
+		setVectorsWestZone(vectors, westAndEastRadius, upDownZone);
+		upDownRadius--;
+	}
+	upDownZone = m_currentZone;
+	upDownRadius = radius - 1;
+	while (upDownRadius && (upDownZone = upDownZone->south())) {
+		setVectorsZone(vectors, upDownZone);
+		setVectorsEastZone(vectors, westAndEastRadius, upDownZone);
+		setVectorsWestZone(vectors, westAndEastRadius, upDownZone);
+		upDownRadius--;
+	}
 }
+
 
 void Map::setUpdateVectors() {
 	setVectors(m_updateVectors, m_updateRadius);
+
 }
 void Map::setRenderVectors() {
 	setVectors(m_renderVectors, m_renderRadius);
+}
+
+void Map::update() {
+	// am facut un rahat mare trebuie modificat
+	for (size_t i{}; i < m_updateVectors.entities.size(); i++) {
+		auto& entities{ *m_updateVectors.entities[i] };
+		for (size_t k{}; k < entities.size();) {
+			Entity& entity{ *entities[k] };
+			if (entity.isRemoveFromVector()) {
+				if (entity.useDeleteWhenRemoved()) {
+					delete& entity;
+				}
+				entities.erase(entities.begin() + k);
+			}
+			else if (!isObjectInCoordsRadius(entity, m_updateCoordsRadius)) {
+				entities.erase(entities.begin() + k);
+				addObj(entity);
+			}
+			else {
+				entity.update(m_updateVectors.entities, m_updateVectors.basicBlocks);
+				k++;
+			}
+		}
+	}
+
+	for (size_t i{}; i < m_updateVectors.basicBlocks.size(); i++) {
+		auto& basicBlocks{ *m_updateVectors.basicBlocks[i] };
+		for (size_t k{}; k < basicBlocks.size();) {
+			BasicBlock& basicBlock{ *basicBlocks[k] };
+			if (basicBlock.isRemoveFromVector()) {
+				if (basicBlock.useDeleteWhenRemoved()) {
+					delete& basicBlock;
+				}
+				basicBlocks.erase(basicBlocks.begin() + k);
+			}
+			else if (!isObjectInCoordsRadius(basicBlock, m_updateCoordsRadius)) {
+				basicBlocks.erase(basicBlocks.begin() + k);
+				addObj(basicBlock);
+			}
+			else {
+				k++;
+			}
+		}
+	}
+
+	for (size_t i{}; i < m_updateVectors.texts.size(); i++) {
+		auto& texts{ *m_updateVectors.texts[i] };
+		for (size_t k{}; k < texts.size();) {
+			Text& text{ *texts[k] };
+			if (text.isRemoveFromVector()) {
+				if (text.useDeleteWhenRemoved()) {
+					delete& text;
+				}
+				texts.erase(texts.begin() + k);
+			}
+			else if (!isObjectInCoordsRadius(text, m_updateCoordsRadius)) {
+				texts.erase(texts.begin() + k);
+				addObj(text);
+			}
+			else {
+				k++;
+			}
+		}
+	}
+
+	if (!isObjectInCoordsRadius(*m_mainPlayer, m_updateCoordsRadius)) {
+		setCurrentZone(*m_mainPlayer);
+		std::cout << "moving\n";
+	}
+
+}
+
+bool Map::isObjectInCoordsRadius(const Object& obj, const Constants::ZoneCoords& coords) {
+	return (obj.x() <= m_updateCoordsRadius.x2 && obj.x() >= m_updateCoordsRadius.x &&
+		obj.y() <= m_updateCoordsRadius.y2 && obj.y() >= m_updateCoordsRadius.y);
 }

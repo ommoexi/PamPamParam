@@ -31,8 +31,11 @@ private:
 	Zone* m_south{};
 	Zone* m_west{};
 
-	Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, std::vector<Zone*>& lowestZones);
 	friend class Map;
+
+	Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, std::vector<Zone*>& lowestZones);
+	// default constructor only for mS_nullZone in map.h
+	Zone();
 
 	Zone& setNorth(Zone* zone) {
 		m_north = zone;
@@ -98,9 +101,6 @@ public:
 	void addObj(BasicBlock& basicBlock);
 	void addObj(Text& text);
 
-	void removeObj(Entity& entity);
-	void removeObj(BasicBlock& basicBlock);
-	void removeObj(Text& text);
 
 #ifdef _DEBUG
 private:

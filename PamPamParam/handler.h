@@ -11,15 +11,15 @@
 #include "basicBlock.h"
 #include "text.h"
 #include <array>
+#include "map.h"
 
 
 class Handler {
 private:
-	std::vector<Entity*> m_entities{};
-	std::vector<BasicBlock*> m_basicBlocks{};
-	std::vector<Text*> m_texts{};
 
-	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 5000};
+	Map* m_map{};
+
+	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 5000 };
 	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 5000 };
 
 protected:
@@ -29,16 +29,20 @@ public:
 	Handler();
 	~Handler();
 
-	void addObj(Entity& entity, const bool& useDeleteWhenRemoved);
+	/*void addObj(Entity& entity, const bool& useDeleteWhenRemoved);
 	void addObj(BasicBlock& basicBlock, const bool& useDeleteWhenRemoved);
 	void addObj(Text& text, const bool& useDeleteWhenRemoved);
 
 	void removeObj(Entity& entity);
 	void removeObj(BasicBlock& basicBlock);
-	void removeObj(Text& text);
+	void removeObj(Text& text);*/
 
 	void renderObjects();
 	void updateObjects();
+
+	void setMap(Map* map) {
+		m_map = map;
+	}
 
 #ifdef _DEBUG
 private:

@@ -18,6 +18,6 @@ Entity::~Entity() {
 #endif 
 }
 
-void Entity::update(std::vector<Entity*>& entities, std::vector<BasicBlock*>& basicBlocks) {
+void Entity::update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) {
 
 }

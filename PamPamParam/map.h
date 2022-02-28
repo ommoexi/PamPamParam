@@ -10,6 +10,8 @@
 class Map
 {
 private:
+	static inline Zone mS_nullZone{};
+
 	Constants::ZoneCoords m_coords;
 
 	Zone* m_currentZone{};
@@ -31,10 +33,19 @@ private:
 
 	//sorts m_lowestZones then links lowestsZones
 	void linkLowestZones();
+
 	void setCurrentZone(const Object& obj);
+
+	void setVectors(ZoneVectors& vectors, unsigned int radius);
+	void setVectorsEastZone(ZoneVectors& vectors, unsigned int radius, Zone* zone);
+	void setVectorsWestZone(ZoneVectors& vectors, unsigned int radius, Zone* zone);
+	void setVectorsZone(ZoneVectors& vectors, Zone* zone);
 	void setUpdateVectors();
 	void setRenderVectors();
-	void setVectors(ZoneVectors& vectors, unsigned int radius);
+
+	void addObj(Entity& entity);
+	void addObj(BasicBlock& basicBlock);
+	void addObj(Text& text);
 
 public:
 	~Map();
@@ -44,11 +55,6 @@ public:
 	Map(const Point& botLeft, const Point& topRight, const int& minCellSize, const unsigned int& updateRadius,
 		const unsigned int& renderRadius, Player* player);
 
-	void moveNorth();
-	void moveEast();
-	void moveSouth();
-	void moveWest();
-
 	void addObj(Entity& entity, const bool& useDeleteWhenRemoved);
 	void addObj(BasicBlock& basicBlock, const bool& useDeleteWhenRemoved);
 	void addObj(Text& text, const bool& useDeleteWhenRemoved);
@@ -56,6 +62,15 @@ public:
 	const Constants::ZoneCoords& coords() const {
 		return m_coords;
 	}
+
+	ZoneVectors& updateVectors() {
+		return m_updateVectors;
+	}
+	ZoneVectors& renderVectors() {
+		return m_renderVectors;
+	}
+
+	void update();
 
 	Zone* getZone(const Object& obj) const;
 

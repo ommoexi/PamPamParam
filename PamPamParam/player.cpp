@@ -11,7 +11,8 @@ Player::Player(const float& x, const float& y, const float& width, const float& 
 	setStandingAnimation(standingAnimation);
 }
 
-void Player::update(std::vector<Entity*>& entities, std::vector<BasicBlock*>& basicBlocks) {
+void Player::update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) {
+	//Entity::update(entities, basicBlocks);
 	updateAnimation(mS_standingAnimationString);
 }
 
