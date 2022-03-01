@@ -51,42 +51,32 @@ int main(int argc, char* argv[])
 	
 	Animation standingAnimation{ Textures::animations::animationVecDog, 8 };
 
-	Player player{ 0,0, 160, 80, standingAnimation};
-	Map basicMap{ Point{-2000, -2000}, Point{4000, 4000}, 50,
-		10, 10, &player };
-
+	Player player{ 500,500, 160, 80, standingAnimation, 5};
+	Map basicMap{ Point{-50000,-50000}, Point{50000, 50000}, static_cast<unsigned int>(Constants::width + Constants::height),
+		2,2, &player };
+	BasicBlock block{ 1000,1000,250,250, Textures::death };
 	basicMap.addObj(framerateText, false);
+	basicMap.addObj(block, false);
 	handler.setMap(&basicMap);
 
-	//for (size_t i{}; i < 2001; i += 50) {
-	//	for (size_t k{}; k < 2001; k+= 50) {
-	//		BasicBlock* b{ new BasicBlock(i, k, 50, 50, Textures::splitTest) };
-	//		basicMap.addObj(*b, true);
-	//	}
-	//}
-
-	float speed{ 5 };
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	while (true)
+	while (!input::keyExit)
 	{	
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		input::processInput();
-		if (input::keyW) {
-			player.setY(player.y() + speed);
-		}
-		else if (input::keyS) {
-			player.setY(player.y() - speed);
-		}
-		if (input::keyD) {
-			player.setX(player.x() + speed);
-		}
-		else if (input::keyA) {
-			player.setX(player.x() - speed);
-		}
-		if (input::keyExit) {
-			break;
-		}
+		//if (input::keyW) {
+		//	player.setY(player.y() + speed);
+		//}
+		//else if (input::keyS) {
+		//	player.setY(player.y() - speed);
+		//}
+		//if (input::keyD) {
+		//	player.setX(player.x() + speed);
+		//}
+		//else if (input::keyA) {
+		//	player.setX(player.x() - speed);
+		//}
 		framerate();
 
 		handler.updateObjects();

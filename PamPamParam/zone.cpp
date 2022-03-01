@@ -72,13 +72,18 @@ Zone::~Zone() {
 
 void Zone::addObj(Entity& entity) {
 	m_entities.push_back(&entity);
-	entity.setBottomLeftBounds()
+	entity.setBottomLeftBounds(m_coords.x, m_coords.y);
+	entity.setTopRightBounds(m_coords.x2, m_coords.y2);
 }
 void Zone::addObj(BasicBlock& basicBlock) {
 	m_basicBlocks.push_back(&basicBlock);
+	basicBlock.setBottomLeftBounds(m_coords.x, m_coords.y);
+	basicBlock.setTopRightBounds(m_coords.x2, m_coords.y2);
 }
 void Zone::addObj(Text& text) {
 	m_texts.push_back(&text);
+	text.setBottomLeftBounds(m_coords.x, m_coords.y);
+	text.setTopRightBounds(m_coords.x2, m_coords.y2);
 }
 
 Zone* Zone::getZone(const Object& obj) {
@@ -110,4 +115,8 @@ Zone* Zone::getZone(const Object& obj) {
 		}
 	}
 	return this;
+}
+
+bool Zone::isObjInBounds(const Object& obj) {
+	return (obj.x() <= m_coords.x2 && obj.x() >= m_coords.x && obj.y() <= m_coords.y2 && obj.y() >= m_coords.y);
 }

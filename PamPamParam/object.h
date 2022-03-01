@@ -17,8 +17,6 @@ private:
 	Constants::vec4 m_color;
 	const Shader::Attrib& m_attribConfig;
 	Mesh m_mesh{};  
-	float m_previousX{ m_x };
-	float m_previousY{ m_y };
 	Constants::vec4 m_colorNormalized{normalizeColor(m_color)};
 
 	bool m_removeFromVector{ false };
@@ -42,14 +40,6 @@ protected:
 	friend class Handler;
 	friend class Map;
 	friend class Zone;
-
-	/*Object& setIndex(const int& value) {
-		m_index = value;
-		return *this;
-	}
-	const int& index() const {
-		return m_index;
-	}*/
 
 	float transformX(const float& xCoord) const;
 	float transformY(const float& yCoord) const;
@@ -121,13 +111,6 @@ public:
 		return m_y;
 	}
 
-	const float& previousX() const {
-		return m_previousX;
-	}
-	const float& previousY() const {
-		return m_previousY;
-	}
-
 	const Constants::vec4& color() {
 		return m_color;
 	}
@@ -168,8 +151,6 @@ public:
 		return m_useDeleteWhenRemoved;
 	}
 
-	//m_bottomLeftBounds{};
-	//m_topRightBounds{};
 	const Point& bottomLeftBounds() const {
 		return m_bottomLeftBounds;
 	}
@@ -186,6 +167,8 @@ public:
 		m_topRightBounds.x = x;
 		m_topRightBounds.y = y;
 	}
+
+	bool isInBounds() const;
 
 #ifdef _DEBUG
 private:

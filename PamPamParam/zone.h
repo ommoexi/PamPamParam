@@ -101,6 +101,8 @@ public:
 	void addObj(BasicBlock& basicBlock);
 	void addObj(Text& text);
 
+	bool isObjInBounds(const Object& obj);
+
 
 #ifdef _DEBUG
 private:

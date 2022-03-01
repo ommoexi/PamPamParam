@@ -256,8 +256,9 @@ void Map::setRenderVectors() {
 	setVectors(m_renderVectors, m_renderRadius);
 }
 
+
 void Map::update() {
-	// am facut un rahat mare trebuie modificat
+
 	for (size_t i{}; i < m_updateVectors.entities.size(); i++) {
 		auto& entities{ *m_updateVectors.entities[i] };
 		for (size_t k{}; k < entities.size();) {
@@ -268,7 +269,7 @@ void Map::update() {
 				}
 				entities.erase(entities.begin() + k);
 			}
-			else if (!isObjectInCoordsRadius(entity, m_updateCoordsRadius)) {
+			else if (!entity.isInBounds()) {
 				entities.erase(entities.begin() + k);
 				addObj(entity);
 			}
@@ -289,7 +290,7 @@ void Map::update() {
 				}
 				basicBlocks.erase(basicBlocks.begin() + k);
 			}
-			else if (!isObjectInCoordsRadius(basicBlock, m_updateCoordsRadius)) {
+			else if (!basicBlock.isInBounds()) {
 				basicBlocks.erase(basicBlocks.begin() + k);
 				addObj(basicBlock);
 			}
@@ -309,7 +310,7 @@ void Map::update() {
 				}
 				texts.erase(texts.begin() + k);
 			}
-			else if (!isObjectInCoordsRadius(text, m_updateCoordsRadius)) {
+			else if (!text.isInBounds()) {
 				texts.erase(texts.begin() + k);
 				addObj(text);
 			}
@@ -319,14 +320,18 @@ void Map::update() {
 		}
 	}
 
-	if (!isObjectInCoordsRadius(*m_mainPlayer, m_updateCoordsRadius)) {
+	if (!m_currentZone->isObjInBounds(*m_mainPlayer)) {
 		setCurrentZone(*m_mainPlayer);
-		std::cout << "moving\n";
 	}
 
 }
 
-bool Map::isObjectInCoordsRadius(const Object& obj, const Constants::ZoneCoords& coords) {
-	return (obj.x() <= m_updateCoordsRadius.x2 && obj.x() >= m_updateCoordsRadius.x &&
-		obj.y() <= m_updateCoordsRadius.y2 && obj.y() >= m_updateCoordsRadius.y);
+
+void Map::setUpdateRadius(const unsigned int& radius) {
+	m_updateRadius = radius;
+	setUpdateVectors();
+}
+void Map::setRenderRadius(const unsigned int& radius) {
+	m_renderRadius = radius;
+	setRenderVectors();
 }

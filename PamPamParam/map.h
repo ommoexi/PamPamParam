@@ -74,6 +74,20 @@ public:
 
 	Zone* getZone(const Object& obj) const;
 
+	const unsigned int& updateRadius() const {
+		return m_updateRadius;
+	}
+	const unsigned int& renderRadius() const {
+		return m_renderRadius;
+	}
+
+	void setUpdateRadius(const unsigned int& radius);
+	void setRenderRadius(const unsigned int& radius);
+
+	Player& mainPlayer() {
+		return *m_mainPlayer;
+	}
+
 #ifdef _DEBUG
 private:
 	static inline ObjectsCount mS_objectsCount{};

@@ -39,11 +39,11 @@ float Object::transformY(const float& yCoord) const {
 
 
 Object& Object::setX(const float& x) {
-	m_previousX = m_x;
+	float previousX{ m_x };
 	m_x = x;
 	const int& stride{ m_attribConfig.stride() };
 	const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
-	float xDistance{ (m_x - m_previousX) / Constants::widthStretch };
+	float xDistance{ (m_x - previousX) / Constants::widthStretch };
 	const size_t& meshSize{ m_mesh.size() };
 	for (int i{}; i < meshSize; i += totalIndicesPerShape) {
 		m_mesh[i] += xDistance;
@@ -55,11 +55,11 @@ Object& Object::setX(const float& x) {
 }
 
 Object& Object::setY(const float& y) {
-	m_previousY = m_y;
+	float previousY{ m_y };
 	m_y = y;
 	const int& stride{ m_attribConfig.stride() };
 	const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
-	float yDistance{ (m_y - m_previousY) / Constants::widthStretch };
+	float yDistance{ (m_y - previousY) / Constants::widthStretch };
 	const size_t& meshSize{ m_mesh.size() };
 	for (int i{}; i < meshSize; i += totalIndicesPerShape) {
 		m_mesh[i + 1] += yDistance;
@@ -113,4 +113,8 @@ Object& Object::setColor(const Constants::vec4& color) {
 	m_colorNormalized.z = normalizeColor(color.z);
 	m_colorNormalized.w = normalizeColor(color.w);
 	return *this;
+}
+
+bool Object::isInBounds() const {
+	return (m_x <= m_topRightBounds.x && m_x >= m_bottomLeftBounds.x && m_y <= m_topRightBounds.y && m_y >= m_bottomLeftBounds.y);
 }

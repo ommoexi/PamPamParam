@@ -13,6 +13,8 @@ private:
 
 	float m_x2{x() + width()};
 	float m_y2{y() + height()};
+	float m_previousX{ x() };
+	float m_previousY{ y() };
 	float m_previousX2{m_x2};
 	float m_previousY2{m_y2};
 
@@ -94,6 +96,15 @@ public:
 	void updateAnimation(const std::string& animationName);
 	void setAnimationFramesPerTexture(const std::string& animationName, const unsigned int& framesPerTexture);
 	const unsigned int& animationFramesPerTexture(const std::string& animationName);
+
+	void updatePreviousX() {
+		m_previousX = x();
+		m_previousX2 = m_x2;
+	}
+	void updatePreviousY() {
+		m_previousY = y();
+		m_previousY2 = m_y2;
+	}
 
 #ifdef _DEBUG
 private:

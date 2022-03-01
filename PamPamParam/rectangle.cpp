@@ -192,13 +192,11 @@ bool Rectangle::isCollide(const Rectangle& rect) {
 }
 
 Rectangle& Rectangle::setX(const float& value) {
-	m_previousX2 = m_x2;
 	Object::setX(value);
 	m_x2 = value + width();
 	return *this;
 }
 Rectangle& Rectangle::setY(const float& value) {
-	m_previousY2 = m_y2;
 	Object::setY(value);
 	m_y2 = value + height();
 	return *this;

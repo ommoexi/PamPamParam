@@ -12,6 +12,7 @@
 #include "text.h"
 #include <array>
 #include "map.h"
+#include "input.h"
 
 
 class Handler {

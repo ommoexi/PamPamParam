@@ -9,24 +9,6 @@ Handler::~Handler() {
 	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::handler_cpp);
 #endif
 
-	//for (size_t i{}; i < m_entities.size(); i++) {
-	//	Entity*& entity{ m_entities[i] };
-	//	if (!entity->isDeleted() && entity->useDeleteWhenRemoved()) {
-	//		delete entity;
-	//	}
-	//}
-	//for (size_t i{}; i < m_basicBlocks.size(); i++) {
-	//	BasicBlock*& basicBlock{ m_basicBlocks[i] };
-	//	if (!basicBlock->isDeleted() && basicBlock->useDeleteWhenRemoved()) {
-	//		delete basicBlock;
-	//	}
-	//}
-	//for (size_t i{}; i < m_texts.size(); i++) {
-	//	Text*& text{ m_texts[i] };
-	//	if (!text->isDeleted() && text->useDeleteWhenRemoved()) {
-	//		delete text;
-	//	}
-	//}
 }
 
 //void Handler::addObj(Entity& entity, const bool& useDeleteWhenRemoved) {
@@ -131,49 +113,7 @@ void Handler::renderObjects() {
 	m_basicBatch.draw();
 }
 
-// momentan e ok vad mai tarziu
 void Handler::updateObjects() {
-
 	m_map->update();
-	/*auto& updateVectors{ m_map->updateVectors() };
-
-	for (size_t i{}; i < updateVectors.entities.size(); i++) {
-		auto& entities{ *updateVectors.entities[i] };
-		for (size_t k{}; k < entities.size();) {
-			Entity& entity{ *entities[k] };
-			if (false) {
-
-			}
-			else {
-				entity.update(updateVectors.entities, updateVectors.basicBlocks);
-				k++;
-			}
-		}*/
-		//if (entity->isRemoveFromHandler()) {
-		//	removeObj(*entity);
-		//}
-		//else {
-		//	entity->update(m_entities, m_basicBlocks);
-		//	i++;
-		//}
-	//}
-	/*for (size_t i{}; i < m_basicBlocks.size();) {
-		BasicBlock*& basicBlock{ m_basicBlocks[i] };
-		if (basicBlock->isRemoveFromHandler()) {
-			removeObj(*basicBlock);
-		}
-		else {
-			i++;
-		}
-	}
-	for (size_t i{}; i < m_texts.size();) {
-		Text*& text{ m_texts[i] };
-		if (text->isRemoveFromHandler()) {
-			removeObj(*text);
-		}
-		else {
-			i++;
-		}
-	}*/
 
 }
