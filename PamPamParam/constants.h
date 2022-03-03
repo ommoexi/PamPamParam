@@ -93,6 +93,8 @@ namespace Constants {
 		const inline std::string death_pngPath{ (texturesPath / death_pngFile).generic_string() };
 		const inline std::string splitTest_pngFile{ "splitTest.png" };
 		const inline std::string splitTest_pngPath{ (texturesPath / splitTest_pngFile).generic_string() };
+		const inline std::string collisionBox_pngFile{ "collisionBox.png" };
+		const inline std::string collisionBox_pngPath{ (texturesPath / collisionBox_pngFile).generic_string() };
 
 	}
 	namespace fonts {

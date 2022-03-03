@@ -191,11 +191,12 @@ Zone* Map::getZone(const Object& obj) const {
 Map::~Map() {
 #ifdef _DEBUG
 	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::map_cpp);
+#endif
+
 	delete m_subZoneBotLeft;
 	delete m_subZoneBotRight;
 	delete m_subZoneTopLeft;
 	delete m_subZoneTopRight;
-#endif
 }
 
 void Map::setVectorsEastZone(ZoneVectors& vectors, unsigned int radius, Zone* zone) {

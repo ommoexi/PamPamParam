@@ -44,6 +44,7 @@ Zone::Zone() {
 Zone::~Zone() {
 #ifdef _DEBUG
 	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::zone_cpp);
+#endif
 	delete m_subZoneBotLeft;
 	delete m_subZoneBotRight;
 	delete m_subZoneTopLeft;
@@ -67,7 +68,6 @@ Zone::~Zone() {
 			delete text;
 		}
 	}
-#endif
 }
 
 void Zone::addObj(Entity& entity) {

@@ -78,34 +78,28 @@ void Handler::renderObjects() {
 
 	auto& renderVectors{ m_map->renderVectors() };
 
-	int textOffset{};
 	m_charBatch.bindBuffer();
 	for (auto& texts : renderVectors.texts) {
 		for (auto& text : *texts) {
-			const Mesh& textMesh{ text->mesh() };
-			int verticesSize{ static_cast<int>(textMesh.size()) };
-			m_charBatch.setSubData(textOffset, textMesh);
-			textOffset += verticesSize;
+			m_charBatch.setSubData(text->mesh());
 		}
 	}
 
-	int objectOffset{};
 	m_basicBatch.bindBuffer();
 	for (auto& entities : renderVectors.entities) {
 		for (auto& entity : *entities) {
-			const Mesh& entityMesh{ entity->mesh() };
-			int verticesSize{ static_cast<int>(entityMesh.size()) };
-			m_basicBatch.setSubData(objectOffset, entityMesh);
-			objectOffset += verticesSize;
+			m_basicBatch.setSubData(entity->mesh());
+			/*m_basicBatch.setSubData(entity->topCollision().mesh());
+			m_basicBatch.setSubData(entity->rightCollision().mesh());
+			m_basicBatch.setSubData(entity->bottomCollision().mesh());
+			m_basicBatch.setSubData(entity->leftCollision().mesh());
+			m_basicBatch.setSubData(entity->hitCollision().mesh());*/
 		}
 	}
 
 	for (auto& basicBlocks : renderVectors.basicBlocks) {
 		for (auto& basicBlock : *basicBlocks) {
-			const Mesh& basicBlockMesh{ basicBlock->mesh() };
-			int verticesSize{ static_cast<int>(basicBlockMesh.size()) };
-			m_basicBatch.setSubData(objectOffset, basicBlockMesh);
-			objectOffset += verticesSize;
+			m_basicBatch.setSubData(basicBlock->mesh());
 		}
 	}
 

@@ -13,6 +13,7 @@ private:
 	unsigned int m_VBC;
 	int m_verticesSize{};
 	long long m_VBOByteSize{};
+	long long m_offset{};
 
 protected:
 public:
@@ -29,7 +30,7 @@ public:
 	void setVBOSize(const int& shapes);
 
 	// bind first
-	void setSubData(const int& offset, const Mesh& mesh);
+	void setSubData(const Mesh& mesh);
 
 	void draw() const;
 

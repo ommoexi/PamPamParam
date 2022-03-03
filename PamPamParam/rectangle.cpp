@@ -183,23 +183,19 @@ Rectangle& Rectangle::setTexture(const Texture* texture) {
 }
 
 bool Rectangle::isCollide(const Rectangle& rect) {
-	if (x2() >= rect.x() && x() <= rect.x2() && y2() >= rect.y() && y() <= rect.y2()) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return (x2() >= rect.x() && x() <= rect.x2() && y2() >= rect.y() && y() <= rect.y2());
+		
 }
 
-Rectangle& Rectangle::setX(const float& value) {
-	Object::setX(value);
+float Rectangle::setX(const float& value) {
+	float xDistance{ Object::setX(value) };
 	m_x2 = value + width();
-	return *this;
+	return xDistance;
 }
-Rectangle& Rectangle::setY(const float& value) {
-	Object::setY(value);
+float Rectangle::setY(const float& value) {
+	float yDistance{ Object::setY(value) };
 	m_y2 = value + height();
-	return *this;
+	return yDistance;
 }
 
 void Rectangle::updateAnimation(const std::string& animationName) {

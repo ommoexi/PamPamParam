@@ -9,7 +9,8 @@ private:
 
 public:
 	Player(const float& x, const float& y, const float& width, const float& height,const Animation& standingAnimation, 
-		const float& movementSpeed,const Constants::vec4& color = Colors::white);
+		const float& movementSpeed, Rectangle& topCollision, Rectangle& rightCollision, Rectangle& bottomCollision,
+		Rectangle& leftCollision, Rectangle& hitCollision, const Constants::vec4& color = Colors::white);
 	virtual ~Player();
 
 	void update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) override;

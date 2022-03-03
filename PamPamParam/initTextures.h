@@ -10,6 +10,7 @@ namespace Textures {
 		inline const std::string player{ "player" };
 		inline const std::string death{ "death" };
 		inline const std::string splitTest{ "splitTest" };
+		inline const std::string collisionBox{ "collisionBox" };
 	}
 
 	inline Font I_FONT{ Constants::fonts::gameFont, 64,64 };
@@ -22,6 +23,7 @@ namespace Textures {
 	inline const Texture* player{};
 	inline const Texture* death{};
 	inline const Texture* splitTest{};
+	inline const Texture* collisionBox{};
 
 	namespace animations {
 		inline std::vector<const Texture*> animationVecDog{};

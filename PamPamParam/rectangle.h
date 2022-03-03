@@ -72,8 +72,8 @@ public:
 		return m_previousY2;
 	}
 
-	Rectangle& setX(const float& value);
-	Rectangle& setY(const float& value);
+	float setX(const float& value);
+	float setY(const float& value);
 
 	// simple collision
 	bool isCollide(const Rectangle& rect);

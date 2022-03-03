@@ -43,15 +43,16 @@ void Batch::setVBOSize(const int& shapes) {
 
 }
 
-void Batch::setSubData(const int& offset, const Mesh& mesh) {
+void Batch::setSubData(const Mesh& mesh) {
 	long long size{ static_cast<long long>(mesh.size() * sizeof(float)) };
-	long long bytesOffset{ offset * sizeof(float) };
+	glBufferSubData(GL_ARRAY_BUFFER, m_offset, size , mesh.data());
+	m_offset += size;
+
 #ifdef _DEBUG
-	if (bytesOffset + size > m_VBOByteSize) {
+	if (m_offset > m_VBOByteSize) {
 		debugMessage("BATCH NOT ENOUGH SPACE FOR SUBDATA\n");
 	}
 #endif
-	glBufferSubData(GL_ARRAY_BUFFER,bytesOffset, size , mesh.data());
 }
 
 void Batch::bindBuffer() const{
@@ -80,5 +81,6 @@ void Batch::draw() const {
 void Batch::setAllDataVoid() {
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBindBuffer(GL_COPY_READ_BUFFER, m_VBC);
-	glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_ARRAY_BUFFER, 0, 0, m_VBOByteSize);
+	glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_ARRAY_BUFFER, 0, 0, m_offset);
+	m_offset = 0;
 }

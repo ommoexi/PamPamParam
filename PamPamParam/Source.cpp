@@ -41,6 +41,19 @@ namespace {
 
 }
 
+std::vector<std::vector<int>>t{
+	{0,0,0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,1,0,0},
+	{0,0,0,0,0,0,0,1,0,0},
+	{0,0,0,1,0,0,0,1,0,0},
+	{0,0,0,0,1,1,1,0,0,0},
+	{0,0,0,0,0,1,1,1,0,0},
+	{0,0,0,0,0,0,1,0,0,0},
+	{0,0,0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0,0,0},
+};
+
 #include "map.h"
 
 int main(int argc, char* argv[])
@@ -50,33 +63,35 @@ int main(int argc, char* argv[])
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	Animation standingAnimation{ Textures::animations::animationVecDog, 8 };
-
-	Player player{ 500,500, 160, 80, standingAnimation, 5};
+	Rectangle rect{ 20,60,140,25, Textures::collisionBox, Colors::red };
+	Rectangle rect2{ 140,0,20,75, Textures::collisionBox, Colors::red };
+	Rectangle rect3{ 20,-20,140,25, Textures::collisionBox, Colors::red };
+	Rectangle rect4{ 20,0,20,75, Textures::collisionBox, Colors::red };
+	Rectangle rect5{ 500,500,40,40, Textures::collisionBox, Colors::red };
+	Player player{ 500,500, 160, 80, standingAnimation, 5, rect, rect2, rect3, rect4 ,rect5};
 	Map basicMap{ Point{-50000,-50000}, Point{50000, 50000}, static_cast<unsigned int>(Constants::width + Constants::height),
 		2,2, &player };
-	BasicBlock block{ 1000,1000,250,250, Textures::death };
+	float y = -200;
+	for (auto& f : t) {
+		y += 200;
+		float x = -200;
+		for (auto& in : f) {
+			x += 200;
+			if (in == 1) {
+				BasicBlock* t{ new BasicBlock{x,y, 200, 200, Textures::death} };
+				basicMap.addObj(*t, true);
+			}
+		}
+	}
+
 	basicMap.addObj(framerateText, false);
-	basicMap.addObj(block, false);
 	handler.setMap(&basicMap);
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while (!input::keyExit)
 	{	
-
 		glClear(GL_COLOR_BUFFER_BIT);
 		input::processInput();
-		//if (input::keyW) {
-		//	player.setY(player.y() + speed);
-		//}
-		//else if (input::keyS) {
-		//	player.setY(player.y() - speed);
-		//}
-		//if (input::keyD) {
-		//	player.setX(player.x() + speed);
-		//}
-		//else if (input::keyA) {
-		//	player.setX(player.x() - speed);
-		//}
 		framerate();
 
 		handler.updateObjects();

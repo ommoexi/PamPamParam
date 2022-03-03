@@ -2,8 +2,10 @@
 
 
 Player::Player(const float& x, const float& y, const float& width, const float& height,const Animation& standingAnimation,
-	const float& movementSpeed, const Constants::vec4& color)
-	: Entity{x,y,width,height, &standingAnimation.currentTexture(), movementSpeed, color} {
+	const float& movementSpeed, Rectangle& topCollision, Rectangle& rightCollision, Rectangle& bottomCollision,
+	Rectangle& leftCollision, Rectangle& hitCollision, const Constants::vec4& color)
+	: Entity{x,y,width,height, &standingAnimation.currentTexture(), movementSpeed, topCollision, rightCollision,
+	bottomCollision, leftCollision, hitCollision, color} {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::player_cpp, &mS_objectsCount);
 #endif
@@ -13,13 +15,11 @@ Player::Player(const float& x, const float& y, const float& width, const float& 
 
 void Player::update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) {
 	setMovementByInput();
-	updateAnimation(mS_standingAnimationString);
 	Entity::update(entities, basicBlocks);
+	updateAnimation(mS_standingAnimationString);
 	for (auto& blocks : basicBlocks) {
 		for (auto& block : *blocks) {
-			if (isCollide(*block)) {
-				std::cout << "yes";
-			}
+			check(*block);
 		}
 	}
 }

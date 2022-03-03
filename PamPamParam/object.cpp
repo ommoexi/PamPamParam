@@ -38,35 +38,37 @@ float Object::transformY(const float& yCoord) const {
 }
 
 
-Object& Object::setX(const float& x) {
+float Object::setX(const float& x) {
 	float previousX{ m_x };
 	m_x = x;
 	const int& stride{ m_attribConfig.stride() };
 	const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
-	float xDistance{ (m_x - previousX) / Constants::widthStretch };
+	float xDistance{ (m_x - previousX) };
+	float xDistanceNormalized{ xDistance / Constants::widthStretch };
 	const size_t& meshSize{ m_mesh.size() };
 	for (int i{}; i < meshSize; i += totalIndicesPerShape) {
-		m_mesh[i] += xDistance;
-		m_mesh[i + stride] += xDistance;
-		m_mesh[i + stride * 2] += xDistance;
+		m_mesh[i] += xDistanceNormalized;
+		m_mesh[i + stride] += xDistanceNormalized;
+		m_mesh[i + stride * 2] += xDistanceNormalized;
 	}
+	return xDistance;
 
-	return *this;
 }
 
-Object& Object::setY(const float& y) {
+float Object::setY(const float& y) {
 	float previousY{ m_y };
 	m_y = y;
 	const int& stride{ m_attribConfig.stride() };
 	const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
-	float yDistance{ (m_y - previousY) / Constants::widthStretch };
+	float yDistance{ (m_y - previousY) };
+	float yDistanceNormalized{ yDistance / Constants::heightStretch };
 	const size_t& meshSize{ m_mesh.size() };
 	for (int i{}; i < meshSize; i += totalIndicesPerShape) {
-		m_mesh[i + 1] += yDistance;
-		m_mesh[i + 1 + stride] += yDistance;
-		m_mesh[i + 1 + stride * 2] += yDistance;
+		m_mesh[i + 1] += yDistanceNormalized;
+		m_mesh[i + 1 + stride] += yDistanceNormalized;
+		m_mesh[i + 1 + stride * 2] += yDistanceNormalized;
 	}
-	return *this;
+	return yDistance;
 }
 
 

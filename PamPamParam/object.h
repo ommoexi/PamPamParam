@@ -48,6 +48,10 @@ protected:
 		return m_mesh;
 	}
 
+	const Mesh& mesh() const {
+		return m_mesh;
+	}
+
 	const Constants::vec4& colorNormalized() {
 		return m_colorNormalized;
 	}
@@ -135,9 +139,9 @@ public:
 		return m_attribConfig;
 	}
 
-	Object& setX(const float& x);
+	float setX(const float& x);
 
-	Object& setY(const float& y);
+	float setY(const float& y);
 
 	const bool& isRemoveFromVector() const {
 		return m_removeFromVector;
