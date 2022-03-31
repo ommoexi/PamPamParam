@@ -142,6 +142,8 @@ enum class Header_Files {
 	includeEntities_h,
 	map_h,
 	zone_h,
+	collisionBox_h,
+	enemy_h,
 };
 
 enum class Source_Files {
@@ -168,6 +170,8 @@ enum class Source_Files {
 	input_cpp,
 	map_cpp,
 	zone_cpp,
+	collisionBox_cpp,
+	enemy_cpp,
 };
 #endif
 
@@ -179,3 +183,13 @@ namespace Colors {
 	const inline Constants::vec4 black{ 0.0f,0.0f, 0.0f, 255.0f };
 }
 
+namespace Directions {
+	const inline std::string UP{ "UP" };
+	const inline std::string RIGHT{ "RIGHT" };
+	const inline std::string DOWN{ "DOWN" };
+	const inline std::string LEFT{ "LEFT" };
+}
+
+namespace BasicNullTypes {
+	const inline std::string string{ "nullString" };
+}

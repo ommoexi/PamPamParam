@@ -35,6 +35,13 @@ private:
 	Point m_bottomLeftBounds{}; // for map only
 	Point m_topRightBounds{};   // for map only
 
+	float m_previousX{ m_x }; // for updateGraphicsX() only
+	float m_previousY{ m_y }; // for updateGraphicsY() only
+
+	void updateGraphicsX();
+	void updateGraphicsY();
+	void updateGraphics();
+
 protected:
 
 	friend class Handler;

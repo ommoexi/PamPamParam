@@ -1,5 +1,6 @@
 #pragma once
 #include "rectangle.h"
+#include "collisionBox.h"
 #include "basicBlock.h"
 #include <array>
 
@@ -10,26 +11,29 @@ private:
 	bool m_movementRight{ false };
 	bool m_movementDown{ false };
 	bool m_movementLeft{ false };
-
-	Rectangle* m_topCollision;		// unique deleted by destructor
-	Rectangle* m_rightCollision;	// unique deleted by destructor
-	Rectangle* m_bottomCollision;	// unique deleted by destructor
-	Rectangle* m_leftCollision;		// unique deleted by destructor
-	Rectangle* m_hitCollision;		// unique deleted by destructor
+	CollisionBox* m_hitCollision;		// unique deleted by destructor
+	bool m_isFalling{ true };
+	bool m_isJumping{ false };
+	float m_jumpSeconds{ 1.20f };
+	float m_currentJumpSeconds{ 0 };
+	float m_gravity{ 7.5 };
 
 	using Rectangle::setX;
 	using Rectangle::setY;
+	using Rectangle::setWidth;
+	using Rectangle::setHeight;
 
 protected:
 public:
 	Entity(const Entity& entity) = delete;
 	Entity& operator=(const Entity& entity) = delete;
 	Entity(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-		const float& movementSpeed, Rectangle& topCollision, Rectangle& rightCollision, Rectangle& bottomCollision,
-		Rectangle& leftCollision, Rectangle& hitCollision, const Constants::vec4& color = Colors::white);
+		const float& movementSpeed, CollisionBox& hitCollision, const Constants::vec4& color = Colors::white);
 	virtual ~Entity();
 
 	virtual void update(std::vector<std::vector<Entity*>*>& entities,std::vector<std::vector<BasicBlock*>*>& basicBlocks);
+	void moveHorizontally();
+	void moveVertically();
 
 	const bool& movementUp() const {
 		return m_movementUp;
@@ -57,26 +61,35 @@ public:
 		m_movementLeft = value;
 	}
 
-	const Rectangle& topCollision() const {
-		return *m_topCollision;
-	}
-	const Rectangle& rightCollision() const {
-		return *m_rightCollision;
-	}
-	const Rectangle& bottomCollision() const {
-		return *m_bottomCollision;
-	}
-	const Rectangle& leftCollision() const {
-		return *m_leftCollision;
-	}
-	const Rectangle& hitCollision() const {
+	CollisionBox& hitCollision() const {
 		return *m_hitCollision;
 	}
 	// checks and reacts to collision to basicBlock
-	void check(BasicBlock& basicBlock);
+	void checkHorizontally(BasicBlock& basicBlock);
+	void checkVertically(BasicBlock& basicBlock);
 
 	float setX(const float& x);
 	float setY(const float& y);
+	void setWidth(const float& width);
+	void setHeight(const float& height);
+
+	const bool& isJumping() const {
+		return m_isJumping;
+	}
+
+	const bool& isFalling() const {
+		return m_isFalling;
+	}
+
+	void setJump(const bool& value) {
+		m_isJumping = value;
+	}
+
+	void setJumpIfNotfalling() {
+		if (!m_isFalling && m_movementUp) {
+			m_isJumping = true;
+		}
+	}
 
 #ifdef _DEBUG
 private:

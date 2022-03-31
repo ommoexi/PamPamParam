@@ -25,7 +25,7 @@ public:
 	Camera(const Camera& camera) = delete;
 	Camera& operator=(const Camera& camera) = delete;
 
-	Camera(float x, float y, float z);
+	Camera(float x, float y);
 	virtual ~Camera();
 
 

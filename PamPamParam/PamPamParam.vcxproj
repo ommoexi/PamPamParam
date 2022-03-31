@@ -152,8 +152,10 @@
     <ClCompile Include="batch.cpp" />
     <ClCompile Include="basicBlock.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="collisionBox.cpp" />
     <ClCompile Include="constants.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="glad.c" />
@@ -177,8 +179,10 @@
     <ClInclude Include="Batch.h" />
     <ClInclude Include="basicBlock.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="collisionBox.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="includeBlocks.h" />

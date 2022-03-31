@@ -9,25 +9,25 @@
 
 class Window {
 private:
-	static inline float mS_width{ 1200 };
-	static inline float mS_height{ 800 };
-	static inline float mS_halfWidth{mS_width / 2};
-	static inline float mS_halfHeight{ mS_height / 2 };
+	float m_width{ };
+	float m_height{ };
+	float m_halfWidth{m_width / 2};
+	float m_halfHeight{ m_height / 2 };
 	std::string m_title;
 	SDL_Window* m_window;
 	SDL_GLContext m_context;
 
-	static const float& halfWidth() {
-		return mS_halfWidth;
+	const float& halfWidth() {
+		return m_halfWidth;
 	}
-	static const float& halfHeight() {
-		return mS_halfHeight;
+	const float& halfHeight() {
+		return m_halfHeight;
 	}
 
 protected:
 public:
 
-	Window(std::string_view title);
+	Window(const float& width, const float& height, std::string_view title);
 	virtual ~Window();
 	Window(const Window& window) = delete;
 	Window& operator=(const Window& window) = delete;
@@ -45,25 +45,23 @@ public:
 	}
 
 
-	static const float& width() {
-		return mS_width;
+	const float& width() const {
+		return m_width;
 	}
-	static const float& height() {
-		return mS_height;
+	const float& height() const {
+		return m_height;
 	}
 
 	const std::string& title() const {
 		return m_title;
 	}
 
-	static void setWidth(const float& value) {
-		mS_width = value;
-		mS_halfWidth = value / 2;
-	}
-
-	static void setHeight(const float& value) {
-		mS_height = value;
-		mS_halfHeight = value / 2;
+	void setWidth(const float& value);
+	void setHeight(const float& value);
+	void setWindowFullScreen();
+	void updateSize();
+	void exitFullScreen() {
+		SDL_SetWindowFullscreen(m_window, 0);
 	}
 
 #ifdef _DEBUG
@@ -73,4 +71,4 @@ private:
 
 };
 
-inline Window I_WIN{ "BestGameEver" };
+inline Window I_WIN{ 1600,800, "BestGameEver" };

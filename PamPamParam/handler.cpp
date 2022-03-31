@@ -81,6 +81,7 @@ void Handler::renderObjects() {
 	m_charBatch.bindBuffer();
 	for (auto& texts : renderVectors.texts) {
 		for (auto& text : *texts) {
+			text->updateGraphics();
 			m_charBatch.setSubData(text->mesh());
 		}
 	}
@@ -88,23 +89,26 @@ void Handler::renderObjects() {
 	m_basicBatch.bindBuffer();
 	for (auto& entities : renderVectors.entities) {
 		for (auto& entity : *entities) {
+			entity->updateGraphics();
 			m_basicBatch.setSubData(entity->mesh());
-			/*m_basicBatch.setSubData(entity->topCollision().mesh());
-			m_basicBatch.setSubData(entity->rightCollision().mesh());
-			m_basicBatch.setSubData(entity->bottomCollision().mesh());
-			m_basicBatch.setSubData(entity->leftCollision().mesh());
-			m_basicBatch.setSubData(entity->hitCollision().mesh());*/
+#ifdef _DEBUG
+			if (DebugSettings::I_SHOWCOLLISIONBOXES) {
+				entity->hitCollision().updateGraphics();
+				m_basicBatch.setSubData(entity->hitCollision().mesh());
+			}
+#endif
 		}
 	}
 
 	for (auto& basicBlocks : renderVectors.basicBlocks) {
 		for (auto& basicBlock : *basicBlocks) {
+			basicBlock->updateGraphics();
 			m_basicBatch.setSubData(basicBlock->mesh());
 		}
 	}
 
-	m_charBatch.draw();
 	m_basicBatch.draw();
+	m_charBatch.draw();
 }
 
 void Handler::updateObjects() {

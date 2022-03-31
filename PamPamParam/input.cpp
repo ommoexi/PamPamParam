@@ -4,7 +4,7 @@ namespace input {
 	void processInput() {
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
-			if (e.type == SDL_QUIT) {
+			if (e.type == SDL_QUIT || keyESC) {
 				keyExit = true;
 			}
 			else if (e.type == SDL_KEYDOWN)
@@ -24,6 +24,15 @@ namespace input {
 					break;
 				case SDLK_a:
 					keyA = true;
+					break;
+				case SDLK_e:
+					keyE = true;
+					break;
+				case SDLK_ESCAPE:
+					keyESC = true;
+					break;
+				case SDLK_SPACE:
+					keySPACE = true;
 					break;
 				case SDLK_UP:
 					keyUP = true;
@@ -58,6 +67,15 @@ namespace input {
 				case SDLK_a:
 					keyA = false;
 					break;
+				case SDLK_e:
+					keyE = false;
+					break;
+				case SDLK_ESCAPE:
+					keyESC = false;
+					break;
+				case SDLK_SPACE:
+					keySPACE = false;
+					break;
 				case SDLK_UP:
 					keyUP = false;
 					break;
@@ -73,6 +91,15 @@ namespace input {
 				default:
 					break;
 				}
+			}
+			if (e.type == SDL_WINDOWEVENT) {
+				switch (e.window.event) {
+				case SDL_WINDOWEVENT_SIZE_CHANGED:
+				case SDL_WINDOWEVENT_RESIZED:
+					I_WIN.updateSize();
+					break;
+				}
+
 			}
 		}
 	}

@@ -97,4 +97,8 @@ public:
 
 };
 
+namespace DebugSettings {
+	inline bool I_SHOWCOLLISIONBOXES{ false };
+}
+
 #endif

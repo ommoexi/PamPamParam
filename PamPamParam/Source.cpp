@@ -14,6 +14,7 @@
 #include "input.h"
 #include "includeBlocks.h"
 #include "includeEntities.h"
+#include "enemy.h"
 
 namespace {
 	
@@ -42,16 +43,26 @@ namespace {
 }
 
 std::vector<std::vector<int>>t{
-	{0,0,0,0,0,0,0,0,0,0},
-	{0,0,0,0,0,0,0,1,0,0},
-	{0,0,0,0,0,0,0,1,0,0},
-	{0,0,0,1,0,0,0,1,0,0},
-	{0,0,0,0,1,1,1,0,0,0},
-	{0,0,0,0,0,1,1,1,0,0},
-	{0,0,0,0,0,0,1,0,0,0},
-	{0,0,0,0,0,0,0,0,0,0},
-	{0,0,0,0,0,0,0,0,0,0},
-	{0,0,0,0,0,0,0,0,0,0},
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 };
 
 #include "map.h"
@@ -61,35 +72,60 @@ int main(int argc, char* argv[])
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
 	Animation standingAnimation{ Textures::animations::animationVecDog, 8 };
-	Rectangle rect{ 20,60,140,25, Textures::collisionBox, Colors::red };
-	Rectangle rect2{ 140,0,20,75, Textures::collisionBox, Colors::red };
-	Rectangle rect3{ 20,-20,140,25, Textures::collisionBox, Colors::red };
-	Rectangle rect4{ 20,0,20,75, Textures::collisionBox, Colors::red };
-	Rectangle rect5{ 500,500,40,40, Textures::collisionBox, Colors::red };
-	Player player{ 500,500, 160, 80, standingAnimation, 5, rect, rect2, rect3, rect4 ,rect5};
+#ifdef _DEBUG
+	CollisionBox* hitCollision{ new CollisionBox{30,20,155,180, Textures::collisionBox, Colors::red } };
+#else 
+	CollisionBox* hitCollision{ new CollisionBox{30,20,155,180 } };
+#endif
+	Player player{ 1000,1000 , 200, 200, standingAnimation, 5, *hitCollision};
+
 	Map basicMap{ Point{-50000,-50000}, Point{50000, 50000}, static_cast<unsigned int>(Constants::width + Constants::height),
 		2,2, &player };
-	float y = -200;
+	float y = -100;
 	for (auto& f : t) {
-		y += 200;
-		float x = -200;
+		y += 100;
+		float x = -100;
 		for (auto& in : f) {
-			x += 200;
+			x += 100;
 			if (in == 1) {
-				BasicBlock* t{ new BasicBlock{x,y, 200, 200, Textures::death} };
+				BasicBlock* t{ new BasicBlock{x,y, 100, 100, Textures::death} };
 				basicMap.addObj(*t, true);
 			}
 		}
+	}
+	for (int i{}; i < 10; i++) {
+#ifdef _DEBUG
+		CollisionBox* wowColl{ new CollisionBox{0,0,100,100, Textures::collisionBox, Colors::red } };
+#else 
+		CollisionBox* wowColl{ new CollisionBox{0,0,100,100 } };
+#endif
+		Enemy* enemy{ new Enemy{200,200,100,100, Textures::player, 5, *wowColl} };
+		basicMap.addObj(*enemy, true);
 	}
 
 	basicMap.addObj(framerateText, false);
 	handler.setMap(&basicMap);
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	bool enableDisableBlend{ false };
+	bool isFalse{ false };
+
+	Camera test{}
+
 	while (!input::keyExit)
 	{	
+#ifdef _DEBUG
+		if (input::keySPACE) {
+			DebugSettings::I_SHOWCOLLISIONBOXES = !DebugSettings::I_SHOWCOLLISIONBOXES;
+			input::keySPACE = false;
+			I_WIN.setWindowFullScreen();
+		}
+#endif
+		if (input::keyE) {
+			I_WIN.exitFullScreen();
+		}
+
 		glClear(GL_COLOR_BUFFER_BIT);
 		input::processInput();
 		framerate();

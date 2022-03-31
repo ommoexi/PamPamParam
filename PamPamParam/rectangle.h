@@ -10,7 +10,6 @@ namespace rectangle {
 
 class Rectangle : public Object {
 private:
-
 	float m_x2{x() + width()};
 	float m_y2{y() + height()};
 	float m_previousX{ x() };
@@ -35,6 +34,8 @@ private:
 	
 	using Object::setX;
 	using Object::setY;
+	using Object::setWidth;
+	using Object::setHeight;
 
 public:
 
@@ -65,6 +66,12 @@ public:
 	const float& y2() const {
 		return m_y2;
 	}
+	const float& previousX() const {
+		return m_previousX;
+	}
+	const float& previousY() const {
+		return m_previousY;
+	}
 	const float& previousX2() const {
 		return m_previousX2;
 	}
@@ -76,7 +83,10 @@ public:
 	float setY(const float& value);
 
 	// simple collision
-	bool isCollide(const Rectangle& rect);
+	bool isCollide(const Rectangle& rect) const ;
+
+	const std::string& isCollideAfterMovingHorizontally(const Rectangle& rect) const;
+	const std::string& isCollideAfterMovingVertically(const Rectangle& rect) const;
 
 	const std::map<std::string, Animation>& animations() const {
 		return m_animations;

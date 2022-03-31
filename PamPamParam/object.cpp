@@ -41,16 +41,7 @@ float Object::transformY(const float& yCoord) const {
 float Object::setX(const float& x) {
 	float previousX{ m_x };
 	m_x = x;
-	const int& stride{ m_attribConfig.stride() };
-	const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
-	float xDistance{ (m_x - previousX) };
-	float xDistanceNormalized{ xDistance / Constants::widthStretch };
-	const size_t& meshSize{ m_mesh.size() };
-	for (int i{}; i < meshSize; i += totalIndicesPerShape) {
-		m_mesh[i] += xDistanceNormalized;
-		m_mesh[i + stride] += xDistanceNormalized;
-		m_mesh[i + stride * 2] += xDistanceNormalized;
-	}
+	float xDistance{ (m_x - previousX) };	
 	return xDistance;
 
 }
@@ -58,24 +49,15 @@ float Object::setX(const float& x) {
 float Object::setY(const float& y) {
 	float previousY{ m_y };
 	m_y = y;
-	const int& stride{ m_attribConfig.stride() };
-	const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
 	float yDistance{ (m_y - previousY) };
-	float yDistanceNormalized{ yDistance / Constants::heightStretch };
-	const size_t& meshSize{ m_mesh.size() };
-	for (int i{}; i < meshSize; i += totalIndicesPerShape) {
-		m_mesh[i + 1] += yDistanceNormalized;
-		m_mesh[i + 1 + stride] += yDistanceNormalized;
-		m_mesh[i + 1 + stride * 2] += yDistanceNormalized;
-	}
 	return yDistance;
 }
 
 
 Object& Object::setWidth(const float& width) {
 #ifdef _DEBUG
-	if (width == 0) {
-		debugMessage("OBJECT WIDTH IS EQUAL TO 0 \n");
+	if (width <= 0) {
+		debugMessage("OBJECT WIDTH IS BELLOW 0. ERRORS WILL OCCUR \n");
 	}
 #endif
 	m_width = width;
@@ -85,8 +67,8 @@ Object& Object::setWidth(const float& width) {
 
 Object& Object::setHeight(const float& height) {
 #ifdef _DEBUG
-	if (height == 0) {
-		debugMessage("OBJECT HEIGHT IS EQUAL TO 0 \n");
+	if (height <= 0) {
+		debugMessage("OBJECT HEIGHT IS BELLOW 0. ERRORS WILL OCCUR \n");
 	}
 #endif
 	m_height = height;
@@ -119,4 +101,41 @@ Object& Object::setColor(const Constants::vec4& color) {
 
 bool Object::isInBounds() const {
 	return (m_x <= m_topRightBounds.x && m_x >= m_bottomLeftBounds.x && m_y <= m_topRightBounds.y && m_y >= m_bottomLeftBounds.y);
+}
+
+
+void Object::updateGraphicsX() {
+	if (m_previousX != m_x) {
+		const int& stride{ m_attribConfig.stride() };
+		const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
+		float xDistance{ (m_x - m_previousX) };
+		float xDistanceNormalized{ xDistance / Constants::widthStretch };
+		const size_t& meshSize{ m_mesh.size() };
+		for (int i{}; i < meshSize; i += totalIndicesPerShape) {
+			m_mesh[i] += xDistanceNormalized;
+			m_mesh[i + stride] += xDistanceNormalized;
+			m_mesh[i + stride * 2] += xDistanceNormalized;
+		}
+		m_previousX = m_x;
+	}
+}
+void Object::updateGraphicsY() {
+	if (m_previousY != m_y) {
+		const int& stride{ m_attribConfig.stride() };
+		const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
+		float yDistance{ (m_y - m_previousY) };
+		float yDistanceNormalized{ yDistance / Constants::heightStretch };
+		const size_t& meshSize{ m_mesh.size() };
+		for (int i{}; i < meshSize; i += totalIndicesPerShape) {
+			m_mesh[i + 1] += yDistanceNormalized;
+			m_mesh[i + 1 + stride] += yDistanceNormalized;
+			m_mesh[i + 1 + stride * 2] += yDistanceNormalized;
+		}
+		m_previousY = m_y;
+	}
+}
+
+void Object::updateGraphics() {
+	updateGraphicsX();
+	updateGraphicsY();
 }
