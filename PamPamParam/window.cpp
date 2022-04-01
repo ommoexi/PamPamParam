@@ -56,7 +56,9 @@ void Window::setWindowFullScreen() {
 void Window::updateSize() {
 	int width{}, height{};
 	SDL_GetWindowSize(m_window, &width, &height);
-	m_width = width;
-	m_height = height;
+	m_width = static_cast<float>(width);
+	m_height = static_cast<float>(height);
+	m_halfWidth = static_cast<float>(width / 2);
+	m_halfHeight = static_cast<float>(height / 2);
 	glViewport(0, 0, static_cast<int>(I_WIN.width()), static_cast<int>(I_WIN.height()));
 }

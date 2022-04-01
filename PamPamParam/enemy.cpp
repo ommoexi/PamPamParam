@@ -12,7 +12,7 @@ Enemy::Enemy(const float& x, const float& y, const float& width, const float& he
 Enemy::~Enemy() {
 #ifdef _DEBUG
 	if (debugDestructor()) {
-		DEBUG_DESTRUCTOR_OBJ(this, Source_Files::entity_cpp);
+		DEBUG_DESTRUCTOR_OBJ(this, Source_Files::enemy_cpp);
 		setDebugDestructor(false);
 	}
 #endif 

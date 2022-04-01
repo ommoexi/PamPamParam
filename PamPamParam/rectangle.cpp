@@ -4,27 +4,27 @@ namespace {
 
 	void setShaderColorR(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
 		const int& stride) {
-		rectMesh[index + 5] = colorNormalized.x;
-		rectMesh[index + stride + 5] = colorNormalized.x;
-		rectMesh[index + stride * 2 + 5] = colorNormalized.x;
+		rectMesh[index + 6] = colorNormalized.x;
+		rectMesh[index + stride + 6] = colorNormalized.x;
+		rectMesh[index + stride * 2 + 6] = colorNormalized.x;
 	}
 	void setShaderColorG(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
 		const int& stride) {
-		rectMesh[index + 6] = colorNormalized.y;
-		rectMesh[index + stride + 6] = colorNormalized.y;
-		rectMesh[index + stride * 2 + 6] = colorNormalized.y;
+		rectMesh[index + 7] = colorNormalized.y;
+		rectMesh[index + stride + 7] = colorNormalized.y;
+		rectMesh[index + stride * 2 + 7] = colorNormalized.y;
 	}
 	void setShaderColorB(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
 		const int& stride) {
-		rectMesh[index + 7] = colorNormalized.z;
-		rectMesh[index + stride + 7] = colorNormalized.z;
-		rectMesh[index + stride * 2 + 7] = colorNormalized.z;
+		rectMesh[index + 8] = colorNormalized.z;
+		rectMesh[index + stride + 8] = colorNormalized.z;
+		rectMesh[index + stride * 2 + 8] = colorNormalized.z;
 	}
 	void setShaderColorA(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
 		const int& stride) {
-		rectMesh[index + 8] = colorNormalized.w;
-		rectMesh[index + stride + 8] = colorNormalized.w;
-		rectMesh[index + stride * 2 + 8] = colorNormalized.w;
+		rectMesh[index + 9] = colorNormalized.w;
+		rectMesh[index + stride + 9] = colorNormalized.w;
+		rectMesh[index + stride * 2 + 9] = colorNormalized.w;
 	}
 
 	void setShaderColors(const int& index, Mesh& rectMesh, const Constants::vec4& colorNormalized,
@@ -37,9 +37,15 @@ namespace {
 
 }
 
+void Rectangle::setShaderIsAffectByCamera(const int& index, Mesh& rectMesh, const int& stride, const bool& value) {
+	rectMesh[index + 2] = static_cast<int>(value);
+	rectMesh[index + stride + 2] = static_cast<int>(value);
+	rectMesh[index + stride * 2 + 2] = static_cast<int>(value);
+}
+
 Rectangle::Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-	 const Constants::vec4& color) :
-	Object{ x, y, width, height, color, Shader::basicAttrib(), mS_rectangleMesh }, m_currentTexture{ texture } {
+	const bool& isAffectedByCamera,const Constants::vec4& color) :
+	Object{ x, y, width, height, color, Shader::basicAttrib(), isAffectedByCamera, mS_rectangleMesh}, m_currentTexture{ texture } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::rectangle_cpp, &mS_objectsCount);
 #endif
@@ -52,6 +58,7 @@ Rectangle::Rectangle(const float& x, const float& y, const float& width, const f
 	setShaderCoords(0, _mesh, stride);
 	setShaderTextures(0, _mesh, *m_currentTexture, stride);
 	setShaderColors(0, _mesh, _colorNormalized, stride);
+	setShaderIsAffectByCamera(0, _mesh, stride, isAffectedByCamera);
 }
 Rectangle::~Rectangle() {
 #ifdef _DEBUG
@@ -84,17 +91,17 @@ void Rectangle::setShaderCoords(const int& index, Mesh& rectMesh, const int& str
 }
 
 void Rectangle::setShaderTextures(const int& index, Mesh& rectMesh, const Texture& texture, const int& stride) {
-	rectMesh[index + 2] = texture.x1;
-	rectMesh[index + 3] = texture.y1;
-	rectMesh[index + 4] = texture.z;
+	rectMesh[index + 3] = texture.x1;
+	rectMesh[index + 4] = texture.y1;
+	rectMesh[index + 5] = texture.z;
 
-	rectMesh[index + stride + 2] = texture.x2;
-	rectMesh[index + stride + 3] = texture.y1;
-	rectMesh[index + stride + 4] = texture.z;
+	rectMesh[index + stride + 3] = texture.x2;
+	rectMesh[index + stride + 4] = texture.y1;
+	rectMesh[index + stride + 5] = texture.z;
 
-	rectMesh[index + stride * 2 + 2] = texture.x1;
-	rectMesh[index + stride * 2 + 3] = texture.y2;
-	rectMesh[index + stride * 2 + 4] = texture.z;
+	rectMesh[index + stride * 2 + 3] = texture.x1;
+	rectMesh[index + stride * 2 + 4] = texture.y2;
+	rectMesh[index + stride * 2 + 5] = texture.z;
 }
 
 
@@ -188,7 +195,7 @@ bool Rectangle::isCollide(const Rectangle& rect) const {
 	return (x2() >= rect.x() && x() <= rect.x2() && y2() >= rect.y() && y() <= rect.y2());
 		
 }
-const std::string& Rectangle::isCollideAfterMovingHorizontally(const Rectangle& rect) const {
+const Directions::Direction& Rectangle::isCollideAfterMovingHorizontally(const Rectangle& rect) const {
 	if (m_previousY < rect.y2() && m_previousY2 > rect.y()) { //check horizontally if 2 objects align
 		if (m_previousX2 < rect.x2() && m_x2 > rect.x()) { // self is left obj is right
 			return Directions::RIGHT;
@@ -198,9 +205,9 @@ const std::string& Rectangle::isCollideAfterMovingHorizontally(const Rectangle& 
 		
 		}
 	}
-	return BasicNullTypes::string;
+	return Directions::NODIRECTION;
 }
-const std::string& Rectangle::isCollideAfterMovingVertically(const Rectangle& rect) const {
+const Directions::Direction& Rectangle::isCollideAfterMovingVertically(const Rectangle& rect) const {
 	if (m_previousX < rect.x2() && m_previousX2 > rect.x()) { // check vertically if 2 objects align
 		if (m_previousY2 < rect.y2() && m_y2 > rect.y()) { // self is down object is up		
 			return Directions::UP;		
@@ -209,7 +216,7 @@ const std::string& Rectangle::isCollideAfterMovingVertically(const Rectangle& re
 			return Directions::DOWN;
 		}
 	}		
-	return BasicNullTypes::string;
+	return Directions::NODIRECTION;
 }
 
 float Rectangle::setX(const float& value) {

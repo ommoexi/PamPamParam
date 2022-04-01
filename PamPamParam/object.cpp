@@ -1,10 +1,9 @@
 #include "object.h"
 
 Object::Object(const float& x, const float& y, const float& width, const float& height,
-	const Constants::vec4& color, const Shader::Attrib& attribConfig,
-	const Mesh& mesh)
+	const Constants::vec4& color, const Shader::Attrib& attribConfig, const bool& isAffectedByCamera, const Mesh& mesh)
 	: m_x{ x }, m_y{ y }, m_width{ width }, m_height{ height },
-	m_color{ color }, m_attribConfig{ attribConfig }, m_mesh{ mesh }
+	m_color{ color }, m_attribConfig{ attribConfig }, m_mesh{ mesh }, m_isAffectedByCamera{ isAffectedByCamera }
 {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::object_cpp, &mS_objectsCount);
@@ -28,12 +27,12 @@ Object::~Object() {
 }
 
 float Object::transformX(const float& xCoord) const {
-	float transformedX{ -1 + (xCoord * m_width + m_x) / Constants::widthStretch };
+	float transformedX{ -1 + normalizeX(xCoord * m_width + m_x) };
 	return transformedX;
 }
 
 float Object::transformY(const float& yCoord) const {
-	float transformedY{ -1 + (yCoord * m_height + m_y) / Constants::heightStretch };
+	float transformedY{ -1 + normalizeY(yCoord * m_height + m_y) };
 	return transformedY;
 }
 
@@ -109,7 +108,7 @@ void Object::updateGraphicsX() {
 		const int& stride{ m_attribConfig.stride() };
 		const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
 		float xDistance{ (m_x - m_previousX) };
-		float xDistanceNormalized{ xDistance / Constants::widthStretch };
+		float xDistanceNormalized{ normalizeX(xDistance)  };
 		const size_t& meshSize{ m_mesh.size() };
 		for (int i{}; i < meshSize; i += totalIndicesPerShape) {
 			m_mesh[i] += xDistanceNormalized;
@@ -124,7 +123,7 @@ void Object::updateGraphicsY() {
 		const int& stride{ m_attribConfig.stride() };
 		const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
 		float yDistance{ (m_y - m_previousY) };
-		float yDistanceNormalized{ yDistance / Constants::heightStretch };
+		float yDistanceNormalized{ normalizeY(yDistance) };
 		const size_t& meshSize{ m_mesh.size() };
 		for (int i{}; i < meshSize; i += totalIndicesPerShape) {
 			m_mesh[i + 1] += yDistanceNormalized;

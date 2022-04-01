@@ -21,14 +21,16 @@ private:
 	std::map<std::string, Animation> m_animations{};
 
 	static inline Mesh mS_rectangleMesh{
-		//position coords		                            texture coords       color
-		Constants::pixelStart,  Constants::pixelStart,		0, 0, 1,             0,0,0,0,	         //left down
-		Constants::pixelEnd,    Constants::pixelStart, 		0, 0, 1,             0,0,0,0,            //right down
-		Constants::pixelStart,  Constants::pixelEnd, 		0, 0, 1,	         0,0,0,0,            //left up
+		//position coords		                      //isAfectedByCamera      texture coords       color
+		Constants::pixelStart,  Constants::pixelStart,	0,					   0, 0, 1,             0,0,0,0,	         //left down
+		Constants::pixelEnd,    Constants::pixelStart, 	0,					   0, 0, 1,             0,0,0,0,            //right down
+		Constants::pixelStart,  Constants::pixelEnd, 	0,					   0, 0, 1,	            0,0,0,0,            //left up
 	};
 
 	void setShaderCoords(const int& index, Mesh& rectMesh, const int& stride);
 	void setShaderTextures(const int& index, Mesh& rectMesh, const Texture& texture, const int& stride);
+
+	void setShaderIsAffectByCamera(const int& index, Mesh& rectMesh, const int& stride,  const bool& value);
 
 	void resize();
 	
@@ -42,7 +44,7 @@ public:
 	Rectangle(const Rectangle& rect) = delete;
 	Rectangle& operator=(const Rectangle& rect) = delete;
 	Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-		const Constants::vec4& color = Colors::white);
+		const bool& isAffectedByCamera, const Constants::vec4& color = Colors::white);
 	virtual ~Rectangle();
 
 	void setColorBody(rectangle::setShaderColorFunc* func);
@@ -85,8 +87,8 @@ public:
 	// simple collision
 	bool isCollide(const Rectangle& rect) const ;
 
-	const std::string& isCollideAfterMovingHorizontally(const Rectangle& rect) const;
-	const std::string& isCollideAfterMovingVertically(const Rectangle& rect) const;
+	const Directions::Direction& isCollideAfterMovingHorizontally(const Rectangle& rect) const;
+	const Directions::Direction& isCollideAfterMovingVertically(const Rectangle& rect) const;
 
 	const std::map<std::string, Animation>& animations() const {
 		return m_animations;

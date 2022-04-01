@@ -17,6 +17,7 @@ private:
 	Constants::vec4 m_color;
 	const Shader::Attrib& m_attribConfig;
 	Mesh m_mesh{};  
+	bool m_isAffectedByCamera{ false };
 	Constants::vec4 m_colorNormalized{normalizeColor(m_color)};
 
 	bool m_removeFromVector{ false };
@@ -47,6 +48,7 @@ protected:
 	friend class Handler;
 	friend class Map;
 	friend class Zone;
+	friend class Hud;
 
 	float transformX(const float& xCoord) const;
 	float transformY(const float& yCoord) const;
@@ -101,7 +103,7 @@ protected:
 public:
 
 	Object(const float& x, const float& y, const float& width, const float& height, const Constants::vec4& color,
-		const Shader::Attrib& attribConfig, const Mesh& mesh = {});
+		const Shader::Attrib& attribConfig, const bool& isAffectedByCamera, const Mesh& mesh = {});
 	virtual ~Object();
 	Object(const Object& other) = delete;
 	Object& operator=(const Object& other) = delete;
@@ -180,6 +182,14 @@ public:
 	}
 
 	bool isInBounds() const;
+
+	const bool& isAffectedByCamera()const {
+		return m_isAffectedByCamera;
+	}
+
+	void setIsAffectedByCamera(const bool& value) {
+		m_isAffectedByCamera = value;
+	}
 
 #ifdef _DEBUG
 private:

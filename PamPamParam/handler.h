@@ -13,6 +13,7 @@
 #include <array>
 #include "map.h"
 #include "input.h"
+#include "hud.h"
 
 
 class Handler {
@@ -23,6 +24,10 @@ private:
 	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 5000 };
 	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 15000 };
 
+	Hud m_hud{};
+	// de modificat mai tarziu
+	Camera m_cam{ 0,0 };
+
 protected:
 public:
 	Handler(const Handler& handler) = delete;
@@ -30,19 +35,15 @@ public:
 	Handler();
 	~Handler();
 
-	/*void addObj(Entity& entity, const bool& useDeleteWhenRemoved);
-	void addObj(BasicBlock& basicBlock, const bool& useDeleteWhenRemoved);
-	void addObj(Text& text, const bool& useDeleteWhenRemoved);
-
-	void removeObj(Entity& entity);
-	void removeObj(BasicBlock& basicBlock);
-	void removeObj(Text& text);*/
-
 	void renderObjects();
 	void updateObjects();
 
 	void setMap(Map* map) {
 		m_map = map;
+	}
+
+	Hud& hud() {
+		return m_hud;
 	}
 
 #ifdef _DEBUG

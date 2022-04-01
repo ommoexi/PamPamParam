@@ -29,6 +29,7 @@ private:
 	void setShaderCoords(const int& index, Mesh& textMesh, const Mesh& fontCharMesh, const float& xCursor,
 		const float& yCursor, const int& stride);
 	void setShaderTextures(const int& index, Mesh& textMesh, const Mesh& fontCharMesh, const int& stride);
+	void setShaderIsAffectByCamera(const int& index, Mesh& textMesh, const int& stride, const bool& value);
 
 	//returns true if new line
 	bool moveCursor(float& xCursor, float& yCursor, const Character& fontCharacter,
@@ -41,8 +42,8 @@ public:
 	Text& operator=(const Text& text) = delete;
 	Text(const float& x, const float& y, const float& letterWidth, const float& letterHeight, 
 		const Constants::vec4& color, std::string_view content,const Font& font,
-		const float& letterSpacingHorizontal, const float& maxPixelWidth = std::numeric_limits<float>::max(),
-		const float& letterSpacingVertical = 0);
+		const float& letterSpacingHorizontal, const bool& isAffectedByCamera = true,
+		const float& maxPixelWidth = std::numeric_limits<float>::max(), const float& letterSpacingVertical = 0);
 
 	const std::string& content() const {
 		return m_content;

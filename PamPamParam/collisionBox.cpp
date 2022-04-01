@@ -23,7 +23,7 @@ CollisionBox::~CollisionBox() {
 #endif
 }
 
-const std::string& CollisionBox::isCollideAfterMovingHorizontally(const Rectangle& rect) const {
+const Directions::Direction& CollisionBox::isCollideAfterMovingHorizontally(const Rectangle& rect) const {
 	if (m_previousY < rect.y2() && m_previousY2 > rect.y()) { //check horizontally if 2 objects align
 		if (m_previousX2 < rect.x2() && m_x2 > rect.x()) { // self is left obj is right
 			return Directions::RIGHT;
@@ -33,9 +33,9 @@ const std::string& CollisionBox::isCollideAfterMovingHorizontally(const Rectangl
 
 		}
 	}
-	return BasicNullTypes::string;
+	return Directions::NODIRECTION;
 }
-const std::string& CollisionBox::isCollideAfterMovingVertically(const Rectangle& rect) const {
+const Directions::Direction& CollisionBox::isCollideAfterMovingVertically(const Rectangle& rect) const {
 	if (m_previousX < rect.x2() && m_previousX2 > rect.x()) { // check vertically if 2 objects align
 		if (m_previousY2 < rect.y2() && m_y2 > rect.y()) { // self is down object is up
 			return Directions::UP;
@@ -44,9 +44,9 @@ const std::string& CollisionBox::isCollideAfterMovingVertically(const Rectangle&
 			return Directions::DOWN;
 		}
 	}
-	return BasicNullTypes::string;
+	return Directions::NODIRECTION;
 }
-const std::string& CollisionBox::isCollideAfterMovingHorizontally(const CollisionBox& collisionBox) const {
+const Directions::Direction& CollisionBox::isCollideAfterMovingHorizontally(const CollisionBox& collisionBox) const {
 	if (m_previousY < collisionBox.y2() && m_previousY2 > collisionBox.y()) { //check horizontally if 2 objects align
 		if (m_previousX2 < collisionBox.x2() && m_x2 > collisionBox.x()) { // self is left obj is right
 			return Directions::RIGHT;
@@ -56,9 +56,9 @@ const std::string& CollisionBox::isCollideAfterMovingHorizontally(const Collisio
 
 		}
 	}
-	return BasicNullTypes::string;
+	return Directions::NODIRECTION;
 }
-const std::string& CollisionBox::isCollideAfterMovingVertically(const CollisionBox& collisionBox) const {
+const Directions::Direction& CollisionBox::isCollideAfterMovingVertically(const CollisionBox& collisionBox) const {
 	if (m_previousX < collisionBox.x2() && m_previousX2 > collisionBox.x()) { // check vertically if 2 objects align
 		if (m_previousY2 < collisionBox.y2() && m_y2 > collisionBox.y()) { // self is down object is up
 			return Directions::UP;
@@ -67,6 +67,6 @@ const std::string& CollisionBox::isCollideAfterMovingVertically(const CollisionB
 			return Directions::DOWN;
 		}
 	}
-	return BasicNullTypes::string;
+	return Directions::NODIRECTION;
 }
 #endif

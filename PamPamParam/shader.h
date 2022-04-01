@@ -63,12 +63,12 @@ private:
 
 	static inline const unsigned int mS_charSizePerAttribute_SIZE{ 3 };
 	//2- pos; 3 - texture; 4 - color
-	static inline const int mS_charSizePerAttribute[mS_charSizePerAttribute_SIZE]{ 2,3, 4 };
+	static inline const int mS_charSizePerAttribute[mS_charSizePerAttribute_SIZE]{ 3,3, 4 };
 	static inline const Attrib mS_charAttrib{ mS_charSizePerAttribute, mS_charSizePerAttribute_SIZE, GL_TRIANGLES, 3 };
 
 	static inline const unsigned int mS_basicSizePerAttribute_SIZE{ 3 };
 	//2- pos; 3 - texture; 4 - color 
-	static inline const int mS_basicSizePerAttribute[mS_basicSizePerAttribute_SIZE]{ 2,3,4 };
+	static inline const int mS_basicSizePerAttribute[mS_basicSizePerAttribute_SIZE]{ 3,3,4 };
 
 	static inline const Attrib mS_basicAttrib{ mS_basicSizePerAttribute, mS_basicSizePerAttribute_SIZE, GL_TRIANGLES, 3 };
 
@@ -87,28 +87,36 @@ public:
 		return m_id;
 	}
 
+
+	// bind to use
 	float getFloat(std::string_view uniformName);
 
+	// bind to use
 	void setFloat(std::string_view uniformName, const float& value) { //must bind to use
 		int uniformLocation = glGetUniformLocation(m_id, uniformName.data());
 		glUniform1f(uniformLocation, value);
 	}
 
+	// bind to use
 	void setUniformIndex(std::string_view uniformName, const int& index) {
 		int uniformLocation = glGetUniformLocation(m_id, uniformName.data());
 		glUniform1i(uniformLocation, index); // set it manually
 	}
 
+	// bind to use
 	void setMat3(std::string_view uniformName, const float* value) {
 		int uniformLocation = glGetUniformLocation(m_id, uniformName.data());
 		glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, value);
 	}
 
 
+	// bind to use
 	void setVector2(std::string_view uniformName, const float& x, const float& y) {
 		int uniformLocation = glGetUniformLocation(m_id, uniformName.data());
 		glUniform2f(uniformLocation, x, y);
 	}
+
+	// bind to use
 	void setVector4(std::string_view uniformName, const float& x, const float& y, const float& z, const float& w) {
 		int uniformLocation = glGetUniformLocation(m_id, uniformName.data());
 		glUniform4f(uniformLocation, x, y, z, w);

@@ -59,3 +59,11 @@ inline float normalizeColor(const float& color) {
 
 
 using Mesh = std::vector<float>;
+
+inline float normalizeX(const float& x) {
+	return x / Constants::widthStretch;
+}
+
+inline float normalizeY(const float& y) {
+	return y / Constants::heightStretch;
+}

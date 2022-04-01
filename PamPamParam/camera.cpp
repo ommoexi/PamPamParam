@@ -12,3 +12,12 @@ Camera::~Camera() {
 	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::camera_cpp);
 #endif
 }
+
+void Camera::setX(const float& value) {
+	m_x = value;
+	m_transform[6] = -normalizeX(value);
+}
+void Camera::setY(const float& value) {
+	m_y = value;
+	m_transform[7] = -normalizeY(value);
+}

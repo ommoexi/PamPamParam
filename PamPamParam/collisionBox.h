@@ -84,10 +84,10 @@ public:
 	bool isCollide(const Rectangle& rect);
 	bool isCollide(const CollisionBox& collisionBox);
 
-	const std::string& isCollideAfterMovingHorizontally(const Rectangle& rect) const ;
-	const std::string& isCollideAfterMovingVertically(const Rectangle& rect) const ;
-	const std::string& isCollideAfterMovingHorizontally(const CollisionBox& collisionBox) const ;
-	const std::string& isCollideAfterMovingVertically(const CollisionBox& collisionBox) const;
+	const Directions::Direction& isCollideAfterMovingHorizontally(const Rectangle& rect) const ;
+	const Directions::Direction& isCollideAfterMovingVertically(const Rectangle& rect) const ;
+	const Directions::Direction& isCollideAfterMovingHorizontally(const CollisionBox& collisionBox) const ;
+	const Directions::Direction& isCollideAfterMovingVertically(const CollisionBox& collisionBox) const;
 #ifdef _DEBUG
 private:
 	static inline ObjectsCount mS_objectsCount{};

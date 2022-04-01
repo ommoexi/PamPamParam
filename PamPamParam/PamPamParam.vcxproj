@@ -158,7 +158,9 @@
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="font.cpp" />
+    <ClCompile Include="framerate.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="hud.cpp" />
     <ClCompile Include="initTextures.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="object.cpp" />
@@ -185,6 +187,8 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="font.h" />
+    <ClInclude Include="framerate.h" />
+    <ClInclude Include="hud.h" />
     <ClInclude Include="includeBlocks.h" />
     <ClInclude Include="includeEntities.h" />
     <ClInclude Include="initTextures.h" />

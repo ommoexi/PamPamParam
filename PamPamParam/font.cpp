@@ -25,10 +25,10 @@ void Font::setCharacter(const Texture& texture, const char& textureName, const i
 	}
 
 	Mesh charMesh{
-		//position coords		texture coords
-		x_pos_1, y_pos_1,		texture.x1, texture.y2, static_cast<float>(texture.z),	//left down
-		x_pos_2, y_pos_1, 		texture.x2, texture.y2, static_cast<float>(texture.z),	//right down
-		x_pos_1, y_pos_2, 		texture.x1, texture.y1, static_cast<float>(texture.z)	//left up
+		//position coords	isafectedByCamera			texture coords
+		x_pos_1, y_pos_1,	0,							texture.x1, texture.y2, static_cast<float>(texture.z),	//left down
+		x_pos_2, y_pos_1, 	0,							texture.x2, texture.y2, static_cast<float>(texture.z),	//right down
+		x_pos_1, y_pos_2, 	0,							texture.x1, texture.y1, static_cast<float>(texture.z)	//left up
 	};
 
 	m_characters.insert({ textureName , Character{glyphWidth, glyphHeight, charMesh} });

@@ -17,29 +17,7 @@
 #include "enemy.h"
 
 namespace {
-	
-	double previousTime = SDL_GetTicks();
 	Handler handler{};
-	int frameCount = 0;
-	Text framerateText{ Constants::width - framerateText.getPixelWidthFirstRow() - 10, 
-		Constants::height - framerateText.getPixelHeightFirstRow() -10,
-		20,20, Colors::black, "FPS" , Textures::I_FONT, 0};
-
-	void framerate() {
-		double currentTime = SDL_GetTicks();
-		frameCount++;
-		// If a second has passed.
-		if (currentTime - previousTime >= 1000)
-		{
-			framerateText.setContent(std::to_string(frameCount) + " FPS");
-			//std::cout << frameCount << '\n';
-			frameCount = 0;
-			previousTime = currentTime;
-			framerateText.setX(Constants::width - framerateText.getPixelWidthFirstRow() -10);
-			framerateText.setY(Constants::height - framerateText.getPixelHeightFirstRow() - 10);
-		}
-	}
-
 }
 
 std::vector<std::vector<int>>t{
@@ -74,11 +52,11 @@ int main(int argc, char* argv[])
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	Animation standingAnimation{ Textures::animations::animationVecDog, 8 };
 #ifdef _DEBUG
-	CollisionBox* hitCollision{ new CollisionBox{30,20,155,180, Textures::collisionBox, Colors::red } };
+	CollisionBox* hitCollision{ new CollisionBox{30,20,155,180, Textures::collisionBox,true, Colors::red } };
 #else 
 	CollisionBox* hitCollision{ new CollisionBox{30,20,155,180 } };
 #endif
-	Player player{ 1000,1000 , 200, 200, standingAnimation, 5, *hitCollision};
+	Player player{ 1000.544,1000 , 200, 200, standingAnimation, 5, *hitCollision };
 
 	Map basicMap{ Point{-50000,-50000}, Point{50000, 50000}, static_cast<unsigned int>(Constants::width + Constants::height),
 		2,2, &player };
@@ -94,9 +72,9 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
-	for (int i{}; i < 10; i++) {
+	for (int i{}; i < 3000; i++) {
 #ifdef _DEBUG
-		CollisionBox* wowColl{ new CollisionBox{0,0,100,100, Textures::collisionBox, Colors::red } };
+		CollisionBox* wowColl{ new CollisionBox{0,0,100,100, Textures::collisionBox, true, Colors::red } };
 #else 
 		CollisionBox* wowColl{ new CollisionBox{0,0,100,100 } };
 #endif
@@ -104,17 +82,13 @@ int main(int argc, char* argv[])
 		basicMap.addObj(*enemy, true);
 	}
 
-	basicMap.addObj(framerateText, false);
 	handler.setMap(&basicMap);
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	bool enableDisableBlend{ false };
-	bool isFalse{ false };
-
-	Camera test{}
 
 	while (!input::keyExit)
-	{	
+	{
+		
 #ifdef _DEBUG
 		if (input::keySPACE) {
 			DebugSettings::I_SHOWCOLLISIONBOXES = !DebugSettings::I_SHOWCOLLISIONBOXES;
@@ -128,7 +102,6 @@ int main(int argc, char* argv[])
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		input::processInput();
-		framerate();
 
 		handler.updateObjects();
 		handler.renderObjects();

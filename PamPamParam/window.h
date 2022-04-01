@@ -17,13 +17,6 @@ private:
 	SDL_Window* m_window;
 	SDL_GLContext m_context;
 
-	const float& halfWidth() {
-		return m_halfWidth;
-	}
-	const float& halfHeight() {
-		return m_halfHeight;
-	}
-
 protected:
 public:
 
@@ -36,20 +29,19 @@ public:
 		SDL_GL_SwapWindow(m_window);
 	}
 
-	const float normalizeX(const float& x) const {
-		return x / Constants::widthStretch;
-	}
-
-	const float normalizeY(const float& y) const {
-		return y / Constants::heightStretch;
-	}
-
-
 	const float& width() const {
 		return m_width;
 	}
 	const float& height() const {
 		return m_height;
+	}
+
+	const float& halfWidth() const {
+		return m_halfWidth;
+	}
+
+	const float& halfHeight() const {
+		return m_halfHeight;
 	}
 
 	const std::string& title() const {

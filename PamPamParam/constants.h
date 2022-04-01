@@ -10,8 +10,7 @@ struct Point
 
 namespace Constants {
 	namespace Uniforms {
-		inline const char* transform{ "transform" };
-		inline const char* color{ "color" };
+		inline const std::string camera{ "camera" };
 	}
 
 	const char pS = // path separator
@@ -58,8 +57,8 @@ namespace Constants {
 		float w;
 	};
 
-	const inline float pixelStart { 0 };
-	const inline float pixelEnd { 1 };
+	const inline float pixelStart{ 0 };
+	const inline float pixelEnd{ 1 };
 
 	const inline double PI{ 3.141592653589793238462643 };
 
@@ -67,7 +66,7 @@ namespace Constants {
 	const inline float width{ widthStretch * 2 };
 	const inline float heightStretch{ 1000 };
 	const inline float height{ heightStretch * 2 };
-	
+
 	const inline std::filesystem::path currentDirectoryPath{ std::filesystem::current_path() };
 
 	const inline std::string basic_fragFile{ "basic.frag" };
@@ -76,7 +75,7 @@ namespace Constants {
 	const inline std::string char_vertexFile{ "char.vertex" };
 	const inline std::string rect_geomFile{ "rect.geom" };
 
-	const inline std::string basic_fragPath{( currentDirectoryPath / basic_fragFile).generic_string() };
+	const inline std::string basic_fragPath{ (currentDirectoryPath / basic_fragFile).generic_string() };
 	const inline std::string basic_vertexPath{ (currentDirectoryPath / basic_vertexFile).generic_string() };
 	const inline std::string char_fragPath{ (currentDirectoryPath / char_fragFile).generic_string() };
 	const inline std::string char_vertexPath{ (currentDirectoryPath / char_vertexFile).generic_string() };
@@ -144,6 +143,8 @@ enum class Header_Files {
 	zone_h,
 	collisionBox_h,
 	enemy_h,
+	hud_h,
+	framerate_h,
 };
 
 enum class Source_Files {
@@ -172,6 +173,8 @@ enum class Source_Files {
 	zone_cpp,
 	collisionBox_cpp,
 	enemy_cpp,
+	hud_cpp,
+	framerate_cpp,
 };
 #endif
 
@@ -184,11 +187,22 @@ namespace Colors {
 }
 
 namespace Directions {
-	const inline std::string UP{ "UP" };
-	const inline std::string RIGHT{ "RIGHT" };
-	const inline std::string DOWN{ "DOWN" };
-	const inline std::string LEFT{ "LEFT" };
+	enum class Direction {
+		UP = 0,
+		RIGHT = 1,
+		DOWN = 2,
+		LEFT = 3,
+		NODIRECTION = 4,
+	};
+
+	const inline Direction UP{ Direction::UP };
+	const inline Direction RIGHT{ Direction::RIGHT };
+	const inline Direction DOWN{ Direction::DOWN };
+	const inline Direction LEFT{ Direction::LEFT };
+	const inline Direction NODIRECTION{ Direction::NODIRECTION };
 }
+
+
 
 namespace BasicNullTypes {
 	const inline std::string string{ "nullString" };

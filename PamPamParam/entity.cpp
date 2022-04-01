@@ -2,7 +2,7 @@
 #include <random>
 Entity::Entity(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
 	const float& movementSpeed, CollisionBox& hitCollision, const Constants::vec4& color) :
-	Rectangle{ x, y, width, height, texture, color }, m_movementSpeed{ movementSpeed },m_hitCollision{ &hitCollision } {
+	Rectangle{ x, y, width, height, texture, true, color }, m_movementSpeed{ movementSpeed },m_hitCollision{ &hitCollision } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::entity_cpp, &mS_objectsCount);
 #endif
@@ -84,22 +84,23 @@ void Entity::setHeight(const float& height) {
 }
 
 // checks and reacts to collision to basicBlock
+// daca e glitch verific
 void Entity::checkHorizontally(BasicBlock& basicBlock) {
-	const std::string& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
+	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
 	if (isCollide == Directions::LEFT) {
-		setX(basicBlock.x2() + x() - m_hitCollision->x() + 1);
+		setX(basicBlock.x2() + x() - m_hitCollision->x());
 	}
 	else if (isCollide == Directions::RIGHT) {
-		setX(basicBlock.x() - width() + x2() - m_hitCollision->x2() - 1 );
+		setX(basicBlock.x() - width() + x2() - m_hitCollision->x2() );
 	}
 }
 void Entity::checkVertically(BasicBlock& basicBlock) {
-	const std::string& isCollide{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };
+	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };
 	if (isCollide == Directions::UP) {
-		setY(basicBlock.y() - height() + y2() - m_hitCollision->y2() - 1);
+		setY(basicBlock.y() - height() + y2() - m_hitCollision->y2());
 	}
 	else if (isCollide == Directions::DOWN) {
-		setY(basicBlock.y2() + y() - m_hitCollision->y() + 1);
+		setY(basicBlock.y2() + y() - m_hitCollision->y());
 		m_isFalling = false;
 	}
 }

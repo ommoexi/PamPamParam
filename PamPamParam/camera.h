@@ -8,7 +8,6 @@ class Camera {
 private:
 	float m_x;
 	float m_y;
-	float m_z;
 
 	static inline const int mS_transformSize{ 9 };
 
@@ -54,6 +53,21 @@ public:
 		return *this;
 	}
 
+	void translate(const float& x, const float& y) {
+		m_transform[6] = x;
+		m_transform[7] = y;
+	}
+
+	const float& x() {
+		return m_x;
+	}
+
+	const float& y() {
+		return m_y;
+	}
+
+	void setX(const float& value);
+	void setY(const float& value);
 
 
 #ifdef _DEBUG
