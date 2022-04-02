@@ -7,11 +7,14 @@ Hud::Hud() {
 	m_framerate = new Framerate{0,0,20,20, Colors::black, "FPS" , Textures::I_FONT, 0, false } ;
 	m_framerate->setX(Constants::width - m_framerate->getPixelWidthFirstRow() - 10);
 	m_framerate->setY(Constants::height - m_framerate->getPixelHeightFirstRow() - 10);
+
 }
 Hud::~Hud() {
+#ifdef _DEBUG
 	if (m_debugDestructor) {
 		DEBUG_DESTRUCTOR_OBJ(this, Source_Files::hud_cpp);
 	}
+#endif
 
 	for (size_t i{}; i < m_texts.size(); i++) {
 		Text*& text{ m_texts[i] };
@@ -46,10 +49,10 @@ void Hud::removeObj(Text& text) {
 }
 
 void Hud::update() {
-	//m_framerate->update();
+	m_framerate->update();
 }
 
 void Hud::addToBatch(Batch& batch) {
-	//m_framerate->updateGraphics();
-	//batch.setSubData(m_framerate->mesh());
+	m_framerate->updateGraphics();
+	batch.setSubData(m_framerate->mesh());
 }

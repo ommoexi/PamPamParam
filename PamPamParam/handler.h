@@ -21,7 +21,7 @@ private:
 
 	Map* m_map{};
 
-	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 5000 };
+	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 15000 };
 	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 15000 };
 
 	Hud m_hud{};

@@ -123,6 +123,9 @@
     <ClCompile Include="framerate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="controls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -210,6 +213,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framerate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="controls.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

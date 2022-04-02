@@ -46,6 +46,42 @@ namespace input {
 				case SDLK_LEFT:
 					keyLEFT = true;
 					break;
+				case SDLK_F1:
+					keyF1 = true;
+					break;
+				case SDLK_F2:
+					keyF2 = true;
+					break;
+				case SDLK_F3:
+					keyF3 = true;
+					break;
+				case SDLK_F4:
+					keyF4 = true;
+					break;
+				case SDLK_F5:
+					keyF5 = true;
+					break;
+				case SDLK_F6:
+					keyF6 = true;
+					break;
+				case SDLK_F7:
+					keyF7 = true;
+					break;
+				case SDLK_F8:
+					keyF8 = true;
+					break;
+				case SDLK_F9:
+					keyF9 = true;
+					break;
+				case SDLK_F10:
+					keyF10 = true;
+					break;
+				case SDLK_F11:
+					keyF11 = true;
+					break;
+				case SDLK_F12:
+					keyF12 = true;
+					break;
 				default:
 					break;
 				}
@@ -87,6 +123,42 @@ namespace input {
 					break;
 				case SDLK_LEFT:
 					keyLEFT = false;
+					break;
+				case SDLK_F1:
+					keyF1 = false;
+					break;
+				case SDLK_F2:
+					keyF2 = false;
+					break;
+				case SDLK_F3:
+					keyF3 = false;
+					break;
+				case SDLK_F4:
+					keyF4 = false;
+					break;
+				case SDLK_F5:
+					keyF5 = false;
+					break;
+				case SDLK_F6:
+					keyF6 = false;
+					break;
+				case SDLK_F7:
+					keyF7 = false;
+					break;
+				case SDLK_F8:
+					keyF8 = false;
+					break;
+				case SDLK_F9:
+					keyF9 = false;
+					break;
+				case SDLK_F10:
+					keyF10 = false;
+					break;
+				case SDLK_F11:
+					keyF11 = false;
+					break;
+				case SDLK_F12:
+					keyF12 = false;
 					break;
 				default:
 					break;

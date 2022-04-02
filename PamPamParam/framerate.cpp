@@ -13,8 +13,10 @@ maxPixelWidth,letterSpacingHorizontal } {
 Framerate::~Framerate() {
 
 #ifdef _DEBUG
-	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::framerate_cpp);
-	setDebugDestructor(false);
+	if (debugDestructor()) {
+		DEBUG_DESTRUCTOR_OBJ(this, Source_Files::framerate_cpp);
+		setDebugDestructor(false);
+	}
 #endif
 }
 

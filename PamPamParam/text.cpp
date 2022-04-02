@@ -85,8 +85,10 @@ bool Text::moveCursor(float& xCursor, float& yCursor, const Character& fontChara
 
 Text::~Text() {
 #ifdef _DEBUG
-	DEBUG_DESTRUCTOR_OBJ(this, Source_Files::text_cpp);
-	setDebugDestructor(false);
+	if (debugDestructor()) {
+		DEBUG_DESTRUCTOR_OBJ(this, Source_Files::text_cpp);
+		setDebugDestructor(false);
+	}
 #endif
 }
 Text::Text(const float& x, const float& y, const float& letterWidth, const float& letterHeight,

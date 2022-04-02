@@ -1,7 +1,7 @@
 #include "window.h"
 
-Window::Window(const float& width, const float& height, std::string_view title) : m_width{ width }, m_height{height},
-m_title { title } {
+Window::Window(const float& width, const float& height, std::string_view title, const bool& isFullScreen) : 
+	m_width{ width }, m_height{ height }, m_title{ title }, m_isFullScreen{ isFullScreen } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::window_cpp, &mS_objectsCount);
 #endif
@@ -20,7 +20,9 @@ m_title { title } {
 
 	m_window = SDL_CreateWindow(title.data(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		static_cast<int>(width), static_cast<int>(height), SDL_WINDOW_OPENGL);
-	SDL_SetWindowResizable(m_window, SDL_TRUE);
+	if (m_isFullScreen) {
+		setWindowFullScreen();
+	}
 	m_context = SDL_GL_CreateContext(m_window);
 
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
@@ -51,6 +53,7 @@ void Window::setHeight(const float& value) {
 
 void Window::setWindowFullScreen() {
 	SDL_SetWindowFullscreen(m_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	m_isFullScreen = true;
 }
 
 void Window::updateSize() {
@@ -61,4 +64,9 @@ void Window::updateSize() {
 	m_halfWidth = static_cast<float>(width / 2);
 	m_halfHeight = static_cast<float>(height / 2);
 	glViewport(0, 0, static_cast<int>(I_WIN.width()), static_cast<int>(I_WIN.height()));
+}
+
+void Window::exitFullScreen() {
+	SDL_SetWindowFullscreen(m_window, 0);
+	m_isFullScreen = false;
 }

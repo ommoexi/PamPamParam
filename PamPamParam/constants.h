@@ -145,6 +145,7 @@ enum class Header_Files {
 	enemy_h,
 	hud_h,
 	framerate_h,
+	controls_h,
 };
 
 enum class Source_Files {
@@ -175,6 +176,7 @@ enum class Source_Files {
 	enemy_cpp,
 	hud_cpp,
 	framerate_cpp,
+	controls_cpp,
 };
 #endif
 

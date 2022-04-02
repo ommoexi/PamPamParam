@@ -154,6 +154,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collisionBox.cpp" />
     <ClCompile Include="constants.cpp" />
+    <ClCompile Include="controls.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="entity.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="collisionBox.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="controls.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="entity.h" />

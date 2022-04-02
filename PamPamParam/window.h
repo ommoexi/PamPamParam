@@ -16,11 +16,12 @@ private:
 	std::string m_title;
 	SDL_Window* m_window;
 	SDL_GLContext m_context;
+	bool m_isFullScreen{ false }; // desktop
 
 protected:
 public:
 
-	Window(const float& width, const float& height, std::string_view title);
+	Window(const float& width, const float& height, std::string_view title, const bool& isFullScreen);
 	virtual ~Window();
 	Window(const Window& window) = delete;
 	Window& operator=(const Window& window) = delete;
@@ -52,8 +53,10 @@ public:
 	void setHeight(const float& value);
 	void setWindowFullScreen();
 	void updateSize();
-	void exitFullScreen() {
-		SDL_SetWindowFullscreen(m_window, 0);
+	void exitFullScreen();
+
+	const bool& isFullScreen() const {
+		return m_isFullScreen;
 	}
 
 #ifdef _DEBUG
@@ -63,4 +66,4 @@ private:
 
 };
 
-inline Window I_WIN{ 1600,800, "BestGameEver" };
+inline Window I_WIN{ 1600,800, "BestGameEver", false };
