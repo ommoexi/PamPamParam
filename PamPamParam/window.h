@@ -55,6 +55,13 @@ public:
 	void updateSize();
 	void exitFullScreen();
 
+	float transformXMouseToWidthStretch(const float& x) const {
+		float normalizedX = denormalizeX(2.0f * x / m_width);
+		return normalizedX;
+	}
+
+	float transformYMouseToHeightStretch(const float& y);
+
 	const bool& isFullScreen() const {
 		return m_isFullScreen;
 	}

@@ -52,19 +52,19 @@ Zone::~Zone() {
 
 	for (size_t i{}; i < m_entities.size(); i++) {
 		Entity*& entity{ m_entities[i] };
-		if (!entity->isDeleted() && entity->useDeleteWhenRemoved()) {
+		if (entity->useDeleteWhenRemoved()) {
 			delete entity;
 		}
 	}
 	for (size_t i{}; i < m_basicBlocks.size(); i++) {
 		BasicBlock*& basicBlock{ m_basicBlocks[i] };
-		if (!basicBlock->isDeleted() && basicBlock->useDeleteWhenRemoved()) {
+		if (basicBlock->useDeleteWhenRemoved()) {
 			delete basicBlock;
 		}
 	}
 	for (size_t i{}; i < m_texts.size(); i++) {
 		Text*& text{ m_texts[i] };
-		if (!text->isDeleted() && text->useDeleteWhenRemoved()) {
+		if (text->useDeleteWhenRemoved()) {
 			delete text;
 		}
 	}

@@ -7,7 +7,6 @@
 #include <math.h>
 #include <vector>
 
-
 class Object {
 private:
 	float m_x; // bottom left corner
@@ -29,23 +28,20 @@ private:
 	}
 
 	bool m_deleted{ false }; // this variable is for handler only if it is on stack and it is deleted then it is true
-	const bool& isDeleted() const {
-		return m_deleted;
-	}
+
 
 	Point m_bottomLeftBounds{}; // for map only
 	Point m_topRightBounds{};   // for map only
 
 	float m_previousX{ m_x }; // for updateGraphicsX() only
 	float m_previousY{ m_y }; // for updateGraphicsY() only
-
-	void updateGraphicsX();
-	void updateGraphicsY();
-	void updateGraphics();
+	float m_previousWidth{ m_width }; // for updateGraphicsX Only in children
+	float m_previousHeight{ m_height }; // for updateGraphicsY Only in children
 
 protected:
 
-	friend class Handler;
+	friend void renderObjects();
+	friend void updateObjects();
 	friend class Map;
 	friend class Zone;
 	friend class Hud;
@@ -99,6 +95,26 @@ protected:
 	Object& setWidth(const float& width);
 	 
 	//
+
+	void updateGraphicsX();
+	void updateGraphicsY();
+	void updateGraphics();
+
+	const float& previousWidth() const {
+		return m_previousWidth;
+	}
+
+	const float& previousHeight() const {
+		return m_previousHeight;
+	}
+
+	void setPreviousWidth(const float& value) {
+		m_previousWidth = value;
+	}
+
+	void setPreviousHeight(const float& value) {
+		m_previousHeight = value;
+	}
 
 public:
 

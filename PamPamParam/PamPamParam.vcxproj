@@ -164,6 +164,7 @@
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="initTextures.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="mouse.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="handler.cpp" />
     <ClCompile Include="player.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="includeEntities.h" />
     <ClInclude Include="initTextures.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="mouse.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="handler.h" />
     <ClInclude Include="player.h" />

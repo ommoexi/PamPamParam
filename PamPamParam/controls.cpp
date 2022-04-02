@@ -3,8 +3,8 @@
 namespace Controls {
 
 	void globalControlsUpdate() {
-		if (input::keyF1) {
-			input::keyF1 = false;
+		if (Input::keyF1) {
+			Input::keyF1 = false;
 			if (I_WIN.isFullScreen()) {
 				I_WIN.exitFullScreen();
 			}
@@ -13,9 +13,9 @@ namespace Controls {
 			}
 		}
 #ifdef _DEBUG
-		if (input::keyF9) {
+		if (Input::keyF9) {
 			DebugSettings::I_SHOWCOLLISIONBOXES = !DebugSettings::I_SHOWCOLLISIONBOXES;
-			input::keyF9 = false;
+			Input::keyF9 = false;
 		}
 #endif
 	}

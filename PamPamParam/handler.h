@@ -12,43 +12,28 @@
 #include "text.h"
 #include <array>
 #include "map.h"
-#include "input.h"
 #include "hud.h"
+#include "input.h"
 
-
-class Handler {
-private:
-
-	Map* m_map{};
-
-	Batch m_charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 15000 };
-	Batch m_basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 15000 };
-
-	Hud m_hud{};
-	// de modificat mai tarziu
-	Camera m_cam{ 0,0 };
-
-protected:
-public:
-	Handler(const Handler& handler) = delete;
-	Handler& operator=(const Handler& handler) = delete;
-	Handler();
-	~Handler();
-
-	void renderObjects();
-	void updateObjects();
-
-	void setMap(Map* map) {
-		m_map = map;
-	}
-
-	Hud& hud() {
-		return m_hud;
-	}
+namespace Handler {
 
 #ifdef _DEBUG
-private:
-	static inline ObjectsCount mS_objectsCount{};
-
+	inline CollisionBox* playerHitCollision{ new CollisionBox{30,20,155,180, Textures::collisionBox,true, Colors::red } };
+#else 
+	inline CollisionBox* playerHitCollision{ new CollisionBox{30,20,155,180 } };
 #endif
-};
+	inline Animation standingAnimation{ Textures::animations::animationVecDog, 8 };
+	inline Player player{ 500,500 , 200, 200, standingAnimation, 5, *playerHitCollision };
+	inline Map map{ Point{-50000,-50000}, Point{50000, 50000}, static_cast<unsigned int>(Constants::width + Constants::height),
+		2,2, &player };
+
+	inline Batch charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 15000 };
+	inline Batch basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 15000 };
+
+	inline Hud hud{};
+
+}
+
+
+void renderObjects();
+void updateObjects();

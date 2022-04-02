@@ -193,20 +193,17 @@ void Text::resize(const float& width, const float& height) {
 
 Text& Text::setWidth(const float& width) {
 	Object::setWidth(width);
-	resize(width, height());
 	return *this;
 }
 
 Text& Text::setHeight(const float& height) {
 	Object::setHeight(height);
-	resize(width(), height);
 	return *this;
 }
 
 Text& Text::setSize(const float& width, const float& height) {
 	Object::setWidth(width);
 	Object::setHeight(height);
-	resize(width, height);
 	return *this;
 }
 
@@ -280,3 +277,11 @@ Text& Text::setColorA(const float& value){
 
 	return *this;
 	}
+
+
+void Text::updateGraphics() {
+	Object::updateGraphics();
+	if (width() != previousWidth()) {
+		resize(width(), height());
+	}
+}

@@ -67,3 +67,11 @@ inline float normalizeX(const float& x) {
 inline float normalizeY(const float& y) {
 	return y / Constants::heightStretch;
 }
+
+inline float denormalizeX(const float& x) {
+	return x * Constants::widthStretch;
+}
+
+inline float denormalizeY(const float& y) {
+	return y * Constants::heightStretch;
+}

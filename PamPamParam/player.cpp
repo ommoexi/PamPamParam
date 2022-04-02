@@ -14,9 +14,9 @@ Player::Player(const float& x, const float& y, const float& width, const float& 
 void Player::update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) {
 	Entity::update(entities, basicBlocks);
 	setMovementByInput();
-	moveHorizontally();
-	moveVertically();
 	updateAnimation(mS_standingAnimationString);
+	moveVertically();
+	moveHorizontally();
 	for (auto& blocks : basicBlocks) {
 		for (auto& block : *blocks) {
 			checkHorizontally(*block);
@@ -39,11 +39,11 @@ Player::~Player() {
 }
 
 void Player::setMovementByInput() {
-	if (input::keyW) {
+	if (Input::keyW) {
 		setMovementUp(true);
 		setMovementDown(false);
 	}
-	else if (input::keyS) {
+	else if (Input::keyS) {
 		setMovementUp(false);
 		setMovementDown(true);
 	}
@@ -51,11 +51,11 @@ void Player::setMovementByInput() {
 		setMovementUp(false);
 		setMovementDown(false);
 	}
-	if (input::keyA) {
+	if (Input::keyA) {
 		setMovementLeft(true);
 		setMovementRight(false);
 	}
-	else if (input::keyD) {
+	else if (Input::keyD) {
 		setMovementRight(true);
 		setMovementLeft(false);
 	}

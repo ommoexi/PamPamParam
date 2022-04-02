@@ -166,20 +166,17 @@ void Rectangle::resize() {
 
 Rectangle& Rectangle::setWidth(const float& width) {
 	Object::setWidth(width);
-	resize();
 	m_x2 = x() + width;
 	return *this;
 }
 Rectangle& Rectangle::setHeight(const float& height) {
 	Object::setHeight(height);
-	resize();
 	m_y2 = y() + height;
 	return *this;
 }
 Rectangle& Rectangle::setSize(const float& width, const float& height) {
 	Object::setWidth(width);
 	Object::setHeight(height);
-	resize();
 	return *this;
 }
 
@@ -195,6 +192,11 @@ bool Rectangle::isCollide(const Rectangle& rect) const {
 	return (x2() >= rect.x() && x() <= rect.x2() && y2() >= rect.y() && y() <= rect.y2());
 		
 }
+
+bool Rectangle::isCollide(const float& x, const float& y) {
+	return (x2() >= x && Rectangle::x() <= x && y2() >= y && Rectangle::y() <= y);
+}
+
 const Directions::Direction& Rectangle::isCollideAfterMovingHorizontally(const Rectangle& rect) const {
 	if (m_previousY < rect.y2() && m_previousY2 > rect.y()) { //check horizontally if 2 objects align
 		if (m_previousX2 < rect.x2() && m_x2 > rect.x()) { // self is left obj is right
@@ -286,4 +288,9 @@ const Animation& Rectangle::getAnimation(const std::string& animationName) {
 #endif
 	}
 	return nullAnimation;
+}
+
+void Rectangle::updateGraphics() {
+	Object::updateGraphics();
+	resize();
 }

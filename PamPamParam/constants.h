@@ -6,7 +6,13 @@ struct Point
 {
 	int x{};
 	int y{};
+	
 };
+
+inline std::ostream& operator<<(std::ostream& os, const Point& p) {
+	os << "x : " << p.x << " y : " << p.y << '\n';
+	return os;
+}
 
 namespace Constants {
 	namespace Uniforms {
@@ -146,6 +152,7 @@ enum class Header_Files {
 	hud_h,
 	framerate_h,
 	controls_h,
+	mouse_h,
 };
 
 enum class Source_Files {
@@ -177,6 +184,7 @@ enum class Source_Files {
 	hud_cpp,
 	framerate_cpp,
 	controls_cpp,
+	mouse_cpp,
 };
 #endif
 

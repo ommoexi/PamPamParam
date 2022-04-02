@@ -83,6 +83,7 @@ public:
 
 	bool isCollide(const Rectangle& rect);
 	bool isCollide(const CollisionBox& collisionBox);
+	bool isCollide(const float& x, const float& y);
 
 	const Directions::Direction& isCollideAfterMovingHorizontally(const Rectangle& rect) const ;
 	const Directions::Direction& isCollideAfterMovingVertically(const Rectangle& rect) const ;

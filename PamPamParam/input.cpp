@@ -1,13 +1,19 @@
 #include "input.h"
 
-namespace input {
+namespace Input {
 	void processInput() {
 		SDL_Event e;
+		int mouseX{};
+		int mouseY{};
+		SDL_GetMouseState(&mouseX, &mouseY);
+		mouse.setX(I_WIN.transformXMouseToWidthStretch(static_cast<float>(mouseX)));
+		mouse.setY(I_WIN.transformYMouseToHeightStretch(static_cast<float>(mouseY)));
+
 		while (SDL_PollEvent(&e)) {
 			if (e.type == SDL_QUIT || keyESC) {
 				keyExit = true;
 			}
-			else if (e.type == SDL_KEYDOWN)
+			if (e.type == SDL_KEYDOWN)
 			{
 				//Select surfaces based on key press
 				switch (e.key.keysym.sym)
@@ -173,6 +179,32 @@ namespace input {
 				}
 
 			}
+			if (e.type == SDL_MOUSEBUTTONDOWN) {
+				switch (e.button.button) {
+				case SDL_BUTTON_LEFT:
+					mouse.setLeftClick(true);
+					break;
+				case SDL_BUTTON_RIGHT:
+					mouse.setRightClick(true);
+					break;
+				default:
+					break;
+				}
+			}
+			if (e.type == SDL_MOUSEBUTTONUP) {
+				switch (e.button.button) {
+				case SDL_BUTTON_LEFT:
+					mouse.setLeftClick(false);
+					break;
+				case SDL_BUTTON_RIGHT:
+					mouse.setRightClick(false);
+					break;
+				default:
+					break;
+				}
+			}
+			
 		}
 	}
+
 }

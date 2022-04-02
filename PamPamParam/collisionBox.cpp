@@ -16,6 +16,10 @@ bool CollisionBox::isCollide(const CollisionBox& collisionBox) {
 	return (m_x2 >= collisionBox.x() && m_x <= collisionBox.x2() && m_y2 >= collisionBox.y() && m_y <= collisionBox.y2());
 }
 
+bool CollisionBox::isCollide(const float& x, const float& y) {
+	return (m_x2 >= x && m_x <= x && m_y2 >= y && m_y <= y);
+}
+
 CollisionBox::~CollisionBox() {
 #ifdef _DEBUG
 

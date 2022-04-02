@@ -38,6 +38,9 @@ private:
 	using Object::setY;
 	using Object::setWidth;
 	using Object::setHeight;
+	using Object::updateGraphics;
+	using Object::updateGraphicsX;
+	using Object::updateGraphicsY;
 
 public:
 
@@ -86,6 +89,7 @@ public:
 
 	// simple collision
 	bool isCollide(const Rectangle& rect) const ;
+	bool isCollide(const float& x, const float& y);
 
 	const Directions::Direction& isCollideAfterMovingHorizontally(const Rectangle& rect) const;
 	const Directions::Direction& isCollideAfterMovingVertically(const Rectangle& rect) const;
@@ -118,9 +122,10 @@ public:
 		m_previousY2 = m_y2;
 	}
 
+	void updateGraphics();
+
 #ifdef _DEBUG
 private:
 	static inline ObjectsCount mS_objectsCount{};
-
 #endif
 };

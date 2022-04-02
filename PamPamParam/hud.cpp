@@ -18,7 +18,7 @@ Hud::~Hud() {
 
 	for (size_t i{}; i < m_texts.size(); i++) {
 		Text*& text{ m_texts[i] };
-		if (!text->isDeleted() && text->useDeleteWhenRemoved()) {
+		if (text->useDeleteWhenRemoved()) {
 			delete text;
 		}
 	}

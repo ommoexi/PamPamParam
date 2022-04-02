@@ -64,6 +64,7 @@ float Entity::setY(const float& y) {
 	return yDistance;
 }
 
+// glitch cu collision daca nu e updatat
 void Entity::setWidth(const float& width) {
 	// de modificat mai tarziu
 	float diff{ width - Rectangle::width()  };
@@ -88,19 +89,19 @@ void Entity::setHeight(const float& height) {
 void Entity::checkHorizontally(BasicBlock& basicBlock) {
 	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
 	if (isCollide == Directions::LEFT) {
-		setX(basicBlock.x2() + x() - m_hitCollision->x());
+		setX(basicBlock.x2() + x() - m_hitCollision->x() + 1);
 	}
 	else if (isCollide == Directions::RIGHT) {
-		setX(basicBlock.x() - width() + x2() - m_hitCollision->x2() );
+		setX(basicBlock.x() - width() + x2() - m_hitCollision->x2() - 1);
 	}
 }
 void Entity::checkVertically(BasicBlock& basicBlock) {
 	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };
 	if (isCollide == Directions::UP) {
-		setY(basicBlock.y() - height() + y2() - m_hitCollision->y2());
+		setY(basicBlock.y() - height() + y2() - m_hitCollision->y2() - 1);
 	}
 	else if (isCollide == Directions::DOWN) {
-		setY(basicBlock.y2() + y() - m_hitCollision->y());
+		setY(basicBlock.y2() + y() - m_hitCollision->y() + 1);
 		m_isFalling = false;
 	}
 }

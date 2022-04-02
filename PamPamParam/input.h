@@ -3,10 +3,15 @@
 #include "window.h"
 #include <SDL_events.h>
 #include <map>
+#include "mouse.h"
+#include "camera.h"
 
-namespace input {
+namespace Handler {
+	inline Camera cam{ 0,0 };
+}
 
-	// these keys can be modified outside processInput but i advise not to
+namespace Input {
+
 	inline bool keyW{ false };
 	inline bool keyS{ false };
 	inline bool keyA{ false };
@@ -35,5 +40,8 @@ namespace input {
 	
 	inline bool keyExit{ false };
 
+	inline Mouse mouse{ Handler::cam };
+
 	void processInput();
+
 }

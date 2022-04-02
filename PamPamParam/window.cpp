@@ -70,3 +70,9 @@ void Window::exitFullScreen() {
 	SDL_SetWindowFullscreen(m_window, 0);
 	m_isFullScreen = false;
 }
+
+float Window::transformYMouseToHeightStretch(const float& y) {
+	float newY{ m_height - y }; // y is inverted
+	double normalizedY = denormalizeY(2.0 * newY / m_height);
+	return normalizedY;
+}

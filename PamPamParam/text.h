@@ -23,6 +23,10 @@ private:
 
 	std::map<int, int> m_linesCharacterCount{ };
 
+	using Object::updateGraphics;
+	using Object::updateGraphicsX;
+	using Object::updateGraphicsY;
+
 	void resize(const float& width, const float& height);
 	void setColorBody(text::setShaderColorFunc* func);
 
@@ -34,6 +38,7 @@ private:
 	//returns true if new line
 	bool moveCursor(float& xCursor, float& yCursor, const Character& fontCharacter,
 		const float& maxCharacterHeight, const float& width, const float& height, const char& letter);
+
 
 protected:
 
@@ -96,6 +101,7 @@ public:
 	// can't create setFont momentarily because i have to set batch texture as well
 	//Text& setFont(const Font* font);
 
+	void updateGraphics();
 
 
 	virtual ~Text();
