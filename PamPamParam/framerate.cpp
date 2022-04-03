@@ -30,7 +30,7 @@ void Framerate::update() {
 		//std::cout << frameCount << '\n';
 		m_frameCount = 0;
 		m_previousTime = currentTime;
-		setX(Constants::width - getPixelWidthFirstRow() - 10);
-		setY(Constants::height - getPixelHeightFirstRow() - 10);
+		setX(Constants::windowSizeStretched - getPixelWidthFirstRow() - 10);
+		setY(Constants::windowSizeStretched - getPixelHeightFirstRow() - 10);
 	}
 }

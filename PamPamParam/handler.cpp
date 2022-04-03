@@ -41,13 +41,21 @@ void renderObjects() {
 	Handler::basicBatch.draw();
 	Handler::charBatch.draw();
 }
+inline float x{ 1000 };
 void updateObjects() {
 	Handler::map.update();
 	Handler::hud.update();
 
-	// de modificat m_cam mai tarziu
-	Handler::cam.setX(Handler::player.x() - Constants::widthStretch + Handler::player.width() / 2);
-	Handler::cam.setY(Handler::player.y() - Constants::heightStretch / 1.5);
+	if (Input::keyUP) {
+		x += 10;
+	}
+	else if (Input::keyDOWN) {
+		x -= 10;
+	}
+	//Handler::cam.setX(Handler::player.x() - Constants::windowStretch + Handler::player.width() / 2);
+	//Handler::cam.setY(Handler::player.y() - Constants::windowStretch / 1.5);
+	Handler::cam.setZoom(x);
+
 	Shaders::I_basicShader.bind();
 	Shaders::I_basicShader.setMat3(Constants::Uniforms::camera, Handler::cam.transform());
 	Shaders::I_charShader.bind();

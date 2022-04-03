@@ -5,8 +5,8 @@ Hud::Hud() {
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::hud_cpp, &mS_objectsCount);
 #endif
 	m_framerate = new Framerate{0,0,20,20, Colors::black, "FPS" , Textures::I_FONT, 0, false } ;
-	m_framerate->setX(Constants::width - m_framerate->getPixelWidthFirstRow() - 10);
-	m_framerate->setY(Constants::height - m_framerate->getPixelHeightFirstRow() - 10);
+	m_framerate->setX(Constants::windowSizeStretched - m_framerate->getPixelWidthFirstRow() - 10);
+	m_framerate->setY(Constants::windowSizeStretched - m_framerate->getPixelHeightFirstRow() - 10);
 
 }
 Hud::~Hud() {

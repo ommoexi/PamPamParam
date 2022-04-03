@@ -60,18 +60,10 @@ inline float normalizeColor(const float& color) {
 
 using Mesh = std::vector<float>;
 
-inline float normalizeX(const float& x) {
-	return x / Constants::widthStretch;
+inline float normalizeCoord(const float& x) {
+	return x / Constants::windowStretch;
 }
 
-inline float normalizeY(const float& y) {
-	return y / Constants::heightStretch;
-}
-
-inline float denormalizeX(const float& x) {
-	return x * Constants::widthStretch;
-}
-
-inline float denormalizeY(const float& y) {
-	return y * Constants::heightStretch;
+inline float denormalizeCoord(const float& x) {
+	return x * Constants::windowStretch;
 }

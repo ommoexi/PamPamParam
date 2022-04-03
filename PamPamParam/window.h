@@ -56,7 +56,7 @@ public:
 	void exitFullScreen();
 
 	float transformXMouseToWidthStretch(const float& x) const {
-		float normalizedX = denormalizeX(2.0f * x / m_width);
+		float normalizedX = denormalizeCoord(2.0f * x / m_width);
 		return normalizedX;
 	}
 

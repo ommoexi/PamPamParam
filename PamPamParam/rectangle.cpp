@@ -55,7 +55,8 @@ Rectangle::Rectangle(const float& x, const float& y, const float& width, const f
 	const Constants::vec4& _colorNormalized{ colorNormalized() };
 
 
-	setShaderCoords(0, _mesh, stride);
+	setShaderCoordsX(0, _mesh, stride);
+	setShaderCoordsY(0, _mesh, stride);
 	setShaderTextures(0, _mesh, *m_currentTexture, stride);
 	setShaderColors(0, _mesh, _colorNormalized, stride);
 	setShaderIsAffectByCamera(0, _mesh, stride, isAffectedByCamera);
@@ -69,24 +70,22 @@ Rectangle::~Rectangle() {
 #endif
 }
 
-void Rectangle::setShaderCoords(const int& index, Mesh& rectMesh, const int& stride) {
-	
-	float& left_down_x { rectMesh[index] };
-	float& left_down_y { rectMesh[index + 1] };
-
+void Rectangle::setShaderCoordsX(const int& index, Mesh& rectMesh, const int& stride) {
+	float& left_down_x{ rectMesh[index] };
 	float& right_down_x{ rectMesh[index + stride] };
-	float& right_down_y{ rectMesh[index + stride + 1] };
-
 	float& left_up_x{ rectMesh[index + stride * 2] };
-	float& left_up_y{ rectMesh[index + stride * 2 + 1] };
 
 	left_down_x = transformX(mS_rectangleMesh[index]);
-	left_down_y = transformY(mS_rectangleMesh[index + 1]);
-
 	right_down_x = transformX(mS_rectangleMesh[index + stride]);
-	right_down_y = transformY(mS_rectangleMesh[index + stride + 1]);
-
 	left_up_x = transformX(mS_rectangleMesh[index + stride * 2]);
+}
+void Rectangle::setShaderCoordsY(const int& index, Mesh& rectMesh, const int& stride) {
+	float& left_down_y{ rectMesh[index + 1] };
+	float& right_down_y{ rectMesh[index + stride + 1] };
+	float& left_up_y{ rectMesh[index + stride * 2 + 1] };
+
+	left_down_y = transformY(mS_rectangleMesh[index + 1]);
+	right_down_y = transformY(mS_rectangleMesh[index + stride + 1]);
 	left_up_y = transformY(mS_rectangleMesh[index + stride * 2 + 1]);
 }
 
@@ -158,10 +157,15 @@ Rectangle& Rectangle::setColorA(const float& value) {
 	return *this;
 }
 
-void Rectangle::resize() {
+void Rectangle::resizeWidth() {
 	Mesh& _mesh{ Object::mesh() };
 	const int& stride{ attribConfig().stride() };
-	setShaderCoords(0, _mesh, stride);
+	setShaderCoordsX(0, _mesh, stride);
+}
+void Rectangle::resizeHeight() {
+	Mesh& _mesh{ Object::mesh() };
+	const int& stride{ attribConfig().stride() };
+	setShaderCoordsY(0, _mesh, stride);
 }
 
 Rectangle& Rectangle::setWidth(const float& width) {
@@ -292,5 +296,17 @@ const Animation& Rectangle::getAnimation(const std::string& animationName) {
 
 void Rectangle::updateGraphics() {
 	Object::updateGraphics();
-	resize();
+	if (width() != previousWidth()) {
+		resizeWidth();
+		setPreviousWidth(width());
+	}
+	if (height() != previousHeight()) {
+		resizeHeight();
+		setPreviousHeight(height());
+	}
+	else {
+		Object::updateGraphics();
+	}
+	
+	
 }

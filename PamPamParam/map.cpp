@@ -16,6 +16,9 @@ Map::Map(const Point& botLeft, const Point& topRight, const int& minCellSize, co
 		m_renderRadius = 1;
 	}
 
+	updateVectorsEachRadiusSizeUpdate();
+	renderVectorsEachRadiusSizeUpdate();
+
 	if (!(mainPlayer->x() >= m_coords.x && mainPlayer->x() < m_coords.x2 && mainPlayer->y() >= m_coords.y && mainPlayer->y() <= m_coords.y2)) {
 		mainPlayer->setX(static_cast<float>(m_coords.middleX));
 		mainPlayer->setY(static_cast<float>(m_coords.middleY));
@@ -199,68 +202,97 @@ Map::~Map() {
 	delete m_subZoneTopRight;
 }
 
-void Map::setVectorsEastZone(ZoneVectors& vectors, unsigned int radius, Zone* zone) {
+void Map::setVectorsEastZone(ZoneVectors& vectors, unsigned int radius, Zone* zone, int index, int counter,
+	std::vector<unsigned int>& vectorsEachRadiusTotalIndexLeft) {
 	Zone* currentZone{ zone };
 	while (radius && (currentZone = currentZone->east())) {
-		setVectorsZone(vectors, currentZone);
+		if (--counter < 0) {
+			index++;
+		}
+		unsigned int& currentIndex{ vectorsEachRadiusTotalIndexLeft[index] };
+		currentIndex--;
+		setVectorsZone(vectors, currentZone, currentIndex);
 		radius--;
 	}
 }
 
-void Map::setVectorsWestZone(ZoneVectors& vectors, unsigned int radius, Zone* zone) {
+void Map::setVectorsWestZone(ZoneVectors& vectors, unsigned int radius, Zone* zone, int index, int counter,
+	std::vector<unsigned int>& vectorsEachRadiusTotalIndexLeft) {
 	Zone* currentZone{ zone };
 	while (radius && (currentZone = currentZone->west())) {
-		setVectorsZone(vectors, currentZone);
+		if (--counter < 0) {
+			index++;
+		}
+		unsigned int& currentIndex{ vectorsEachRadiusTotalIndexLeft[index] };
+		currentIndex--;
+		setVectorsZone(vectors, currentZone, currentIndex);
 		radius--;
 	}
 }
-void Map::setVectorsZone(ZoneVectors& vectors, Zone* zone) {
-	vectors.basicBlocks.push_back(&zone->m_basicBlocks);
-	vectors.texts.push_back(&zone->m_texts);
-	vectors.entities.push_back(&zone->m_entities);
+void Map::setVectorsZone(ZoneVectors& vectors, Zone* zone, const int& index) {
+	vectors.basicBlocks[index] = &zone->m_basicBlocks;
+	vectors.texts[index] = &zone->m_texts;
+	vectors.entities[index] = &zone->m_entities;
 }
 
-void Map::setVectors(ZoneVectors& vectors, unsigned int radius) {
-	vectors.basicBlocks.clear();
-	vectors.entities.clear();
-	vectors.texts.clear();
+void Map::setVectors(ZoneVectors& vectors, const unsigned int& radius, const unsigned int& vectorsTotalSize,
+	std::vector<unsigned int>vectorsEachRadiusTotalSize) {
 
-	setVectorsZone(vectors, m_currentZone);
+	vectors.basicBlocks.resize(vectorsTotalSize);
+	vectors.entities.resize(vectorsTotalSize);
+	vectors.texts.resize(vectorsTotalSize);
+
+	int index{ 0 };
+	int counter{ 0 };
+	setVectorsZone(vectors, m_currentZone, index);
 	unsigned int westAndEastRadius{ radius - 1 };
-	setVectorsEastZone(vectors, westAndEastRadius, m_currentZone);
-	setVectorsWestZone(vectors, westAndEastRadius, m_currentZone);
 
-	Zone* upDownZone{ m_currentZone};
+	setVectorsEastZone(vectors, westAndEastRadius, m_currentZone, index, counter, vectorsEachRadiusTotalSize);
+	setVectorsWestZone(vectors, westAndEastRadius, m_currentZone, index, counter, vectorsEachRadiusTotalSize);
+
+	Zone* upDownZone{ m_currentZone };
 	unsigned int upDownRadius{ radius - 1 };
 	while (upDownRadius && (upDownZone = upDownZone->north())) {
-		setVectorsZone(vectors, upDownZone);
-		setVectorsEastZone(vectors, westAndEastRadius, upDownZone);
-		setVectorsWestZone(vectors, westAndEastRadius, upDownZone);
+		index++;
+		unsigned int& currentIndex{ vectorsEachRadiusTotalSize[index] };
+		currentIndex--;
+		counter++;
+		setVectorsZone(vectors, upDownZone, currentIndex);
+		setVectorsEastZone(vectors, westAndEastRadius, upDownZone, index, counter, vectorsEachRadiusTotalSize);
+		setVectorsWestZone(vectors, westAndEastRadius, upDownZone, index, counter, vectorsEachRadiusTotalSize);
 		upDownRadius--;
 	}
+
+	index = 0;
+	counter = 0;
 	upDownZone = m_currentZone;
 	upDownRadius = radius - 1;
 	while (upDownRadius && (upDownZone = upDownZone->south())) {
-		setVectorsZone(vectors, upDownZone);
-		setVectorsEastZone(vectors, westAndEastRadius, upDownZone);
-		setVectorsWestZone(vectors, westAndEastRadius, upDownZone);
+		index++;
+		unsigned int& currentIndex{ vectorsEachRadiusTotalSize[index] };
+		currentIndex--;
+		counter++;
+		setVectorsZone(vectors, upDownZone, currentIndex);
+		setVectorsEastZone(vectors, westAndEastRadius, upDownZone, index, counter, vectorsEachRadiusTotalSize);
+		setVectorsWestZone(vectors, westAndEastRadius, upDownZone, index, counter, vectorsEachRadiusTotalSize);
 		upDownRadius--;
 	}
+
 }
 
 
 void Map::setUpdateVectors() {
-	setVectors(m_updateVectors, m_updateRadius);
-
+	setVectors(m_updateVectors, m_updateRadius, m_updateVectorsTotalSize, m_updateVectorsEachRadiusTotalSize);
 }
 void Map::setRenderVectors() {
-	setVectors(m_renderVectors, m_renderRadius);
+	setVectors(m_renderVectors, m_renderRadius, m_renderVectorsTotalSize, m_renderVectorsEachRadiusTotalSize);
 }
 
 
 void Map::update() {
+	unsigned int& lastRing{ m_updateVectorsEachRadiusSize.back() };
 
-	for (size_t i{}; i < m_updateVectors.entities.size(); i++) {
+	for (size_t i{}; i < m_updateVectors.entities.size() - lastRing; i++) {
 		auto& entities{ *m_updateVectors.entities[i] };
 		for (size_t k{}; k < entities.size();) {
 			Entity& entity{ *entities[k] };
@@ -281,7 +313,7 @@ void Map::update() {
 		}
 	}
 
-	for (size_t i{}; i < m_updateVectors.basicBlocks.size(); i++) {
+	for (size_t i{}; i < m_updateVectors.basicBlocks.size() - lastRing; i++) {
 		auto& basicBlocks{ *m_updateVectors.basicBlocks[i] };
 		for (size_t k{}; k < basicBlocks.size();) {
 			BasicBlock& basicBlock{ *basicBlocks[k] };
@@ -304,7 +336,7 @@ void Map::update() {
 		}
 	}
 
-	for (size_t i{}; i < m_updateVectors.texts.size(); i++) {
+	for (size_t i{}; i < m_updateVectors.texts.size() - lastRing; i++) {
 		auto& texts{ *m_updateVectors.texts[i] };
 		for (size_t k{}; k < texts.size();) {
 			Text& text{ *texts[k] };
@@ -331,11 +363,47 @@ void Map::update() {
 }
 
 
+void Map::vectorsEachRadiusSizeUpdate(std::vector<unsigned int>& vectorsEachRadiusSize,
+	std::vector<unsigned int>& vectorsEachRadiusTotalSize, unsigned int& radius, unsigned int& vectorsTotalSize) {
+	vectorsEachRadiusSize.clear();
+	vectorsEachRadiusTotalSize.clear();
+	vectorsEachRadiusSize.push_back(1);
+	vectorsEachRadiusTotalSize.push_back(1);
+	vectorsTotalSize = 1;
+	for (unsigned int i{ 1 }; i < radius; i++) {
+		unsigned int value{ 8 * i };
+		vectorsEachRadiusSize.push_back(value);
+		vectorsEachRadiusTotalSize.push_back(vectorsEachRadiusTotalSize[i - 1] + value);
+		vectorsTotalSize += value;
+	}
+}
+
+void Map::updateVectorsEachRadiusSizeUpdate() {
+	vectorsEachRadiusSizeUpdate(m_updateVectorsEachRadiusSize, m_updateVectorsEachRadiusTotalSize, m_updateRadius, m_updateVectorsTotalSize);
+}
+
+
+void Map::renderVectorsEachRadiusSizeUpdate() {
+	vectorsEachRadiusSizeUpdate(m_renderVectorsEachRadiusSize, m_renderVectorsEachRadiusTotalSize, m_renderRadius, m_renderVectorsTotalSize);
+}
+
 void Map::setUpdateRadius(const unsigned int& radius) {
-	m_updateRadius = radius;
+	if (radius == 0) {
+		m_updateRadius = 1;
+	}
+	else {
+		m_updateRadius = radius;
+	}
+	updateVectorsEachRadiusSizeUpdate();
 	setUpdateVectors();
 }
 void Map::setRenderRadius(const unsigned int& radius) {
-	m_renderRadius = radius;
+	if (radius == 0) {
+		m_renderRadius = 1;
+	}
+	else {
+		m_renderRadius = radius;
+	}
+	renderVectorsEachRadiusSizeUpdate();
 	setRenderVectors();
 }

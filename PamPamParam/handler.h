@@ -23,9 +23,9 @@ namespace Handler {
 	inline CollisionBox* playerHitCollision{ new CollisionBox{30,20,155,180 } };
 #endif
 	inline Animation standingAnimation{ Textures::animations::animationVecDog, 8 };
-	inline Player player{ 500,500 , 200, 200, standingAnimation, 5, *playerHitCollision };
-	inline Map map{ Point{-50000,-50000}, Point{50000, 50000}, static_cast<unsigned int>(Constants::width + Constants::height),
-		2,2, &player };
+	inline Player player{ 500,500 , 200, 200, standingAnimation, 15, *playerHitCollision };
+	inline Map map{ Point{-50000,-50000}, Point{50000, 50000}, static_cast<unsigned int>(Constants::windowSizeStretched),
+		6,5, &player };
 
 	inline Batch charBatch{ Textures::I_FONT.atlas(), Shaders::I_charShader, 15000 };
 	inline Batch basicBatch{ Textures::I_ALLTEXTURES, Shaders::I_basicShader, 15000 };

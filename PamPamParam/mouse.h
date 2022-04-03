@@ -41,12 +41,12 @@ public:
 
 	void setX(const float& value) {
 		m_x = value;
-		m_xPerspective = value + m_cam->x();
+		m_xPerspective =  value * m_cam->zoomNormalized() /*+ m_cam->x()*/;
 	}
 
 	void setY(const float& value) {
 		m_y = value;
-		m_yPerspective = value + m_cam->y();
+		m_yPerspective = value * m_cam->zoomNormalized() /*+ m_cam->y()*/;
 	}
 
 	void setLeftClick(const bool& value) {

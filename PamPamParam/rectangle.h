@@ -27,12 +27,14 @@ private:
 		Constants::pixelStart,  Constants::pixelEnd, 	0,					   0, 0, 1,	            0,0,0,0,            //left up
 	};
 
-	void setShaderCoords(const int& index, Mesh& rectMesh, const int& stride);
+	void setShaderCoordsX(const int& index, Mesh& rectMesh, const int& stride);
+	void setShaderCoordsY(const int& index, Mesh& rectMesh, const int& stride);
 	void setShaderTextures(const int& index, Mesh& rectMesh, const Texture& texture, const int& stride);
 
 	void setShaderIsAffectByCamera(const int& index, Mesh& rectMesh, const int& stride,  const bool& value);
 
-	void resize();
+	void resizeWidth();
+	void resizeHeight();
 	
 	using Object::setX;
 	using Object::setY;

@@ -74,10 +74,10 @@ namespace {
 
 bool Text::moveCursor(float& xCursor, float& yCursor, const Character& fontCharacter,
 	const float& maxCharacterHeight, const float& width, const float& height, const char& letter) {
-	xCursor += normalizeX(fontCharacter.width * width + m_letterSpacingHorizontal);
-	if (letter == '\n' || (xCursor * Constants::widthStretch > m_maxPixelWidth && letter == ' ')) {
+	xCursor += normalizeCoord(fontCharacter.width * width + m_letterSpacingHorizontal);
+	if (letter == '\n' || (xCursor * Constants::windowStretch > m_maxPixelWidth && letter == ' ')) {
 		xCursor = 0;
-		yCursor -= normalizeY(maxCharacterHeight * height + m_letterSpacingVertical);
+		yCursor -= normalizeCoord(maxCharacterHeight * height + m_letterSpacingVertical);
 		return true;
 	}
 	return false;
@@ -280,8 +280,12 @@ Text& Text::setColorA(const float& value){
 
 
 void Text::updateGraphics() {
-	Object::updateGraphics();
-	if (width() != previousWidth()) {
+	if (width() != previousWidth() || height() != previousHeight()) {
 		resize(width(), height());
+		setPreviousWidth(width());
+		setPreviousHeight(height());
+	}
+	else {
+		Object::updateGraphics();
 	}
 }

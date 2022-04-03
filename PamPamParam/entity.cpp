@@ -64,7 +64,6 @@ float Entity::setY(const float& y) {
 	return yDistance;
 }
 
-// glitch cu collision daca nu e updatat
 void Entity::setWidth(const float& width) {
 	// de modificat mai tarziu
 	float diff{ width - Rectangle::width()  };
@@ -85,7 +84,7 @@ void Entity::setHeight(const float& height) {
 }
 
 // checks and reacts to collision to basicBlock
-// daca e glitch verific
+// glitch minor
 void Entity::checkHorizontally(BasicBlock& basicBlock) {
 	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
 	if (isCollide == Directions::LEFT) {

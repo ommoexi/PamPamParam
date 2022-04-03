@@ -27,12 +27,12 @@ Object::~Object() {
 }
 
 float Object::transformX(const float& xCoord) const {
-	float transformedX{ -1 + normalizeX(xCoord * m_width + m_x) };
+	float transformedX{ -1 + normalizeCoord(xCoord * m_width + m_x) };
 	return transformedX;
 }
 
 float Object::transformY(const float& yCoord) const {
-	float transformedY{ -1 + normalizeY(yCoord * m_height + m_y) };
+	float transformedY{ -1 + normalizeCoord(yCoord * m_height + m_y) };
 	return transformedY;
 }
 
@@ -108,7 +108,7 @@ void Object::updateGraphicsX() {
 		const int& stride{ m_attribConfig.stride() };
 		const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
 		float xDistance{ (m_x - m_previousX) };
-		float xDistanceNormalized{ normalizeX(xDistance)  };
+		float xDistanceNormalized{ normalizeCoord(xDistance)  };
 		const size_t& meshSize{ m_mesh.size() };
 		for (int i{}; i < meshSize; i += totalIndicesPerShape) {
 			m_mesh[i] += xDistanceNormalized;
@@ -123,7 +123,7 @@ void Object::updateGraphicsY() {
 		const int& stride{ m_attribConfig.stride() };
 		const int& totalIndicesPerShape{ attribConfig().totalIndicesPerShape() };
 		float yDistance{ (m_y - m_previousY) };
-		float yDistanceNormalized{ normalizeY(yDistance) };
+		float yDistanceNormalized{ normalizeCoord(yDistance) };
 		const size_t& meshSize{ m_mesh.size() };
 		for (int i{}; i < meshSize; i += totalIndicesPerShape) {
 			m_mesh[i + 1] += yDistanceNormalized;

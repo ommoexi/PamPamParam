@@ -29,17 +29,35 @@ private:
 	unsigned int m_renderRadius{};
 
 	ZoneVectors m_updateVectors{};
+
+	std::vector<unsigned int> m_updateVectorsEachRadiusSize{};
+	std::vector<unsigned int> m_updateVectorsEachRadiusTotalSize{}; // for indexes;
+	unsigned int m_updateVectorsTotalSize{};
+
 	ZoneVectors m_renderVectors{};
+
+	std::vector<unsigned int> m_renderVectorsEachRadiusSize{};
+	std::vector<unsigned int> m_renderVectorsEachRadiusTotalSize{};
+	unsigned int m_renderVectorsTotalSize{};
 
 	//sorts m_lowestZones then links lowestsZones
 	void linkLowestZones();
 
 	void setCurrentZone(const Object& obj);
 
-	void setVectors(ZoneVectors& vectors, unsigned int radius);
-	void setVectorsEastZone(ZoneVectors& vectors, unsigned int radius, Zone* zone);
-	void setVectorsWestZone(ZoneVectors& vectors, unsigned int radius, Zone* zone);
-	void setVectorsZone(ZoneVectors& vectors, Zone* zone);
+	void setVectors(ZoneVectors& vectors, const unsigned int& radius, const unsigned int& vectorsTotalSize, 
+		std::vector<unsigned int>vectorsEachRadiusTotalSize);
+	void setVectorsEastZone(ZoneVectors& vectors, unsigned int radius, Zone* zone, int index, int counter,
+		std::vector<unsigned int>& vectorsEachRadiusTotalIndexLeft);
+	void setVectorsWestZone(ZoneVectors& vectors, unsigned int radius, Zone* zone, int index, int counter,
+		std::vector<unsigned int>& vectorsEachRadiusTotalIndexLeft);
+	void setVectorsZone(ZoneVectors& vectors, Zone* zone, const int& index);
+
+	void vectorsEachRadiusSizeUpdate(std::vector<unsigned int>& vectorsEachRadiusSize, 
+		std::vector<unsigned int>& vectorsEachRadiusTotalSize, unsigned int& radius, unsigned int& vectorsTotalSize);
+	void updateVectorsEachRadiusSizeUpdate();
+	void renderVectorsEachRadiusSizeUpdate();
+
 	void setUpdateVectors();
 	void setRenderVectors();
 
