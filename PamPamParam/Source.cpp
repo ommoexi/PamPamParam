@@ -49,10 +49,10 @@ int main(int argc, char* argv[])
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
-	float y = -100;
+	float y = -1100;
 	for (auto& f : t) {
 		y += 100;
-		float x = -100;
+		float x = -1100;
 		for (auto& in : f) {
 			x += 100;
 			if (in == 1) {
@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
-	for (int i{}; i < 5; i++) {
+	for (int i{}; i < 0; i++) {
 #ifdef _DEBUG
 		CollisionBox* wowColl{ new CollisionBox{0,0,100,100, Textures::collisionBox, true, Colors::red } };
 #else 
@@ -96,10 +96,9 @@ int main(int argc, char* argv[])
 		}
 		if (Input::mouse.isRightClick()) {
 			Input::mouse.setRightClick(false);
-			BasicBlock* dfdf{ new BasicBlock{1000, 1000,1000,1000, Textures::death} };
+			BasicBlock* dfdf{ new BasicBlock{0, 0,1000,1000, Textures::death} };
 			Handler::map.addObj(*dfdf, true);
 		}
-		std::cout  << Input::mouse.xPerspective() << " " << Input::mouse.x() << " " << Handler::cam.zoomNormalized() << '\n';
 
 		I_WIN.swapBuffers();
 	}

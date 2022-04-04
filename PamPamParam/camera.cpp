@@ -31,14 +31,15 @@ void Camera::setZoom(const float& value) {
 	m_transform[4] = m_zoomNormalized;
 	m_transform[6] = -x;
 	m_transform[7] = -y;
-	updateXWithZoom();
-	updateYWithZoom();
+	m_xWithZoom = getXWithZoom(m_x, m_y);
+	m_yWithZoom = getYWithZoom(m_x, m_y);
 }
 
-
-void Camera::updateXWithZoom() {
-	m_xWithZoom = m_x * m_transform[0] + m_y * m_transform[3];
+// for mouse collision only
+float Camera::getXWithZoom(const float& x, const float& y) {
+	return m_transform[0] * x + m_transform[1] * y;
 }
-void Camera::updateYWithZoom() {
-	m_yWithZoom = m_y * m_transform[4] + m_x * m_transform[1];
+// for mouse collision only
+float Camera::getYWithZoom(const float& x, const float& y) {
+	return m_transform[4] * y + m_transform[3] * x;
 }

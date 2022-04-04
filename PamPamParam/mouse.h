@@ -1,14 +1,17 @@
 #pragma once
 #include "utils.h"
 #include "camera.h"
+#include "rectangle.h"
 
 class Mouse {
 private:
 	Camera* m_cam;
 	float m_x{};
 	float m_y{};
-	float m_xPerspective{m_x + m_cam->x()};
-	float m_yPerspective{m_y + m_cam->y()};
+	float m_xWithCam{m_x + m_cam->x()}; // with camMovement
+	float m_yWithCam{m_y + m_cam->y()}; // with camMovement
+	float m_xWithCamZoom{m_x + m_cam->xWithZoom()};
+	float m_yWithCamZoom{ m_x + m_cam->yWithZoom() };
 	bool m_leftClick{};
 	bool m_rightClick{};
 public:
@@ -23,12 +26,12 @@ public:
 		return m_y;
 	}
 
-	const float& xPerspective() const {
-		return m_xPerspective;
+	const float& xWithCam() const {
+		return m_xWithCam;
 	}
 
-	const float& yPerspective() const {
-		return m_yPerspective;
+	const float& yWithCam() const {
+		return m_yWithCam;
 	}
 
 	const bool& isLeftClick() const {
@@ -40,13 +43,15 @@ public:
 	}
 
 	void setX(const float& value) {
-		m_x = value;
-		m_xPerspective =  value * m_cam->zoomNormalized() /*+ m_cam->x()*/;
+		m_x = value - Constants::windowStretch;
+		m_xWithCam = m_x + m_cam->x();
+		m_xWithCamZoom = m_x + m_cam->xWithZoom();
 	}
 
 	void setY(const float& value) {
-		m_y = value;
-		m_yPerspective = value * m_cam->zoomNormalized() /*+ m_cam->y()*/;
+		m_y = value - Constants::windowStretch;
+		m_yWithCam =  m_y + m_cam->y();
+		m_yWithCamZoom = m_y + m_cam->yWithZoom();
 	}
 
 	void setLeftClick(const bool& value) {
@@ -56,6 +61,10 @@ public:
 	void setRightClick(const bool& value) {
 		m_rightClick = value;
 	}
+
+	bool isCollide(const Rectangle& rect);
+	bool isCollideWithCam(const Rectangle& rect);
+	bool isCollideWithCamAndZoom(const Rectangle& rect);
 
 
 #ifdef _DEBUG

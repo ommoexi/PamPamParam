@@ -329,7 +329,7 @@ void Map::update() {
 			}
 			else {
 				k++;
-				if (basicBlock.isCollide(Input::mouse.xPerspective(), Input::mouse.yPerspective()) && Input::mouse.isLeftClick()) {
+				if (Input::mouse.isLeftClick() && Input::mouse.isCollideWithCamAndZoom(basicBlock)) {
 					basicBlock.setRemoveFromVector(true);
 				}
 			}

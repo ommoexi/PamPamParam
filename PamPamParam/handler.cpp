@@ -52,8 +52,8 @@ void updateObjects() {
 	else if (Input::keyDOWN) {
 		x -= 10;
 	}
-	//Handler::cam.setX(Handler::player.x() - Constants::windowStretch + Handler::player.width() / 2);
-	//Handler::cam.setY(Handler::player.y() - Constants::windowStretch / 1.5);
+	Handler::cam.setX(Handler::player.x() + Handler::player.width() / 2);
+	Handler::cam.setY(Handler::player.y());
 	Handler::cam.setZoom(x);
 
 	Shaders::I_basicShader.bind();

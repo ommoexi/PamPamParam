@@ -23,7 +23,7 @@ namespace Handler {
 	inline CollisionBox* playerHitCollision{ new CollisionBox{30,20,155,180 } };
 #endif
 	inline Animation standingAnimation{ Textures::animations::animationVecDog, 8 };
-	inline Player player{ 500,500 , 200, 200, standingAnimation, 15, *playerHitCollision };
+	inline Player player{ -500,-500 , 200, 200, standingAnimation, 15, *playerHitCollision };
 	inline Map map{ Point{-50000,-50000}, Point{50000, 50000}, static_cast<unsigned int>(Constants::windowSizeStretched),
 		6,5, &player };
 

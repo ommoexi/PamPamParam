@@ -8,6 +8,8 @@ class Camera {
 private:
 	float m_x;
 	float m_y;
+	float m_xWithZoom;
+	float m_yWithZoom;
 	float m_zoom{Constants::windowStretch };
 	float m_zoomNormalized{ normalizeCoord(m_zoom) };
 	float m_xNormalized{ normalizeCoord(m_x) };
@@ -20,12 +22,6 @@ private:
 		0.0f, 1.0f, 0.0f, //y 
 		0.0f, 0.0f, 1.0f //w
 	};
-
-	float m_xWithZoom{m_x};
-	float m_yWithZoom{m_y};
-
-	void updateXWithZoom();
-	void updateYWithZoom();
 
 	using transformArray = float[mS_transformSize];
 
@@ -97,6 +93,10 @@ public:
 	void setX(const float& value);
 	void setY(const float& value);
 
+	// for mouse collision only
+	float getXWithZoom(const float& x, const float& y); 
+	// for mouse collision only
+	float getYWithZoom(const float& x, const float& y);
 	
 
 

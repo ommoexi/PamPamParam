@@ -27,12 +27,12 @@ Object::~Object() {
 }
 
 float Object::transformX(const float& xCoord) const {
-	float transformedX{ -1 + normalizeCoord(xCoord * m_width + m_x) };
+	float transformedX{ normalizeCoord(xCoord * m_width + m_x) };
 	return transformedX;
 }
 
 float Object::transformY(const float& yCoord) const {
-	float transformedY{ -1 + normalizeCoord(yCoord * m_height + m_y) };
+	float transformedY{ normalizeCoord(yCoord * m_height + m_y) };
 	return transformedY;
 }
 
