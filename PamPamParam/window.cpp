@@ -73,6 +73,6 @@ void Window::exitFullScreen() {
 
 float Window::transformYMouseToHeightStretch(const float& y) {
 	float newY{ m_height - y }; // y is inverted
-	double normalizedY = denormalizeCoord(2.0 * newY / m_height);
+	float normalizedY = denormalizeCoord(2.0 * newY / m_height);
 	return normalizedY;
 }

@@ -5,6 +5,7 @@ class BasicBlock : public Rectangle {
 private:
 protected:
 public:
+	int life{ 3 };
 	BasicBlock(const BasicBlock& basicBlock) = delete;
 	BasicBlock& operator=(const BasicBlock& basicBlock) = delete;
 	BasicBlock(const float& x, const float& y, const float& width, const float& height, const Texture* texture,

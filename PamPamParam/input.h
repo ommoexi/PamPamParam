@@ -40,7 +40,7 @@ namespace Input {
 	
 	inline bool keyExit{ false };
 
-	inline Mouse mouse{ Handler::cam };
+	inline Mouse mouse{ };
 
 	void processInput();
 

@@ -94,6 +94,10 @@ namespace Constants {
 		const inline std::string player_pngPath{ (texturesPath / player_pngFile).generic_string() };
 		const inline std::string death_pngFile{ "death.png" };
 		const inline std::string death_pngPath{ (texturesPath / death_pngFile).generic_string() };
+		const inline std::string death2_pngFile{ "death 2.png" };
+		const inline std::string death2_pngPath{ (texturesPath / death2_pngFile).generic_string() };
+		const inline std::string death3_pngFile{ "death 3.png" };
+		const inline std::string death3_pngPath{ (texturesPath / death3_pngFile).generic_string() };
 		const inline std::string splitTest_pngFile{ "splitTest.png" };
 		const inline std::string splitTest_pngPath{ (texturesPath / splitTest_pngFile).generic_string() };
 		const inline std::string collisionBox_pngFile{ "collisionBox.png" };

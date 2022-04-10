@@ -41,20 +41,23 @@ void renderObjects() {
 	Handler::basicBatch.draw();
 	Handler::charBatch.draw();
 }
-inline float x{ 1000 };
+
 void updateObjects() {
 	Handler::map.update();
 	Handler::hud.update();
 
+	Handler::cam.setX(Handler::player.x() + Handler::player.width() / 2);
+	Handler::cam.setY(Handler::player.y() + Constants::windowStretch / 2);
 	if (Input::keyUP) {
-		x += 10;
+		Handler::cam.setZoom(Handler::cam.zoom() + 10);
 	}
 	else if (Input::keyDOWN) {
-		x -= 10;
+		Handler::cam.setZoom(Handler::cam.zoom() - 10);
 	}
-	Handler::cam.setX(Handler::player.x() + Handler::player.width() / 2);
-	Handler::cam.setY(Handler::player.y());
-	Handler::cam.setZoom(x);
+	else {
+		Handler::cam.setZoom(Handler::cam.zoom());
+	}
+
 
 	Shaders::I_basicShader.bind();
 	Shaders::I_basicShader.setMat3(Constants::Uniforms::camera, Handler::cam.transform());

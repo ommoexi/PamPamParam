@@ -329,8 +329,18 @@ void Map::update() {
 			}
 			else {
 				k++;
-				if (Input::mouse.isLeftClick() && Input::mouse.isCollideWithCamAndZoom(basicBlock)) {
+				if (basicBlock.life < 1) {
 					basicBlock.setRemoveFromVector(true);
+				}
+				if (Input::mouse.isLeftClick() && Input::mouse.isCollideWithCamMovementAndZoom(basicBlock, Handler::cam)) {
+					Input::mouse.setLeftClick(false);
+					basicBlock.life--;
+					if (basicBlock.life == 2) {
+						basicBlock.setTexture(Textures::death2);
+					}
+					else if (basicBlock.life == 1) {
+						basicBlock.setTexture(Textures::death3);
+					}
 				}
 			}
 		}

@@ -94,9 +94,9 @@ public:
 	void setY(const float& value);
 
 	// for mouse collision only
-	float getXWithZoom(const float& x, const float& y); 
+	float getXWithZoom(const float& x, const float& y) const ; 
 	// for mouse collision only
-	float getYWithZoom(const float& x, const float& y);
+	float getYWithZoom(const float& x, const float& y) const;
 	
 
 

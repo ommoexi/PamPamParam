@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
-	for (int i{}; i < 0; i++) {
+	for (int i{}; i < 10; i++) {
 #ifdef _DEBUG
 		CollisionBox* wowColl{ new CollisionBox{0,0,100,100, Textures::collisionBox, true, Colors::red } };
 #else 
@@ -83,22 +83,6 @@ int main(int argc, char* argv[])
 
 		updateObjects();
 		renderObjects();
-
-		if (Input::keyF5) {
-			Input::keyF5 = false;
-			Handler::map.setUpdateRadius(Handler::map.updateRadius() + 1);
-			Handler::map.setRenderRadius(Handler::map.renderRadius() + 1);
-		}
-		else if (Input::keyF6) {
-			Input::keyF6 = false;
-			Handler::map.setUpdateRadius(Handler::map.updateRadius() - 1);
-			Handler::map.setRenderRadius(Handler::map.renderRadius() - 1);
-		}
-		if (Input::mouse.isRightClick()) {
-			Input::mouse.setRightClick(false);
-			BasicBlock* dfdf{ new BasicBlock{0, 0,1000,1000, Textures::death} };
-			Handler::map.addObj(*dfdf, true);
-		}
 
 		I_WIN.swapBuffers();
 	}

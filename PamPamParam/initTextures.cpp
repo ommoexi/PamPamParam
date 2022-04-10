@@ -8,6 +8,8 @@ namespace Textures {
 		std::vector<Image> images{};
 		images.push_back(image::loadImage(Constants::textures::player_pngPath, string::player, unpack_alignment));
 		images.push_back(image::loadImage(Constants::textures::death_pngPath, string::death, unpack_alignment));
+		images.push_back(image::loadImage(Constants::textures::death2_pngPath, string::death2, unpack_alignment));
+		images.push_back(image::loadImage(Constants::textures::death3_pngPath, string::death3, unpack_alignment));
 		images.push_back(image::loadImage(Constants::textures::splitTest_pngPath, string::splitTest, unpack_alignment));
 		images.push_back(image::loadImage(Constants::textures::collisionBox_pngPath, string::collisionBox, unpack_alignment));
 		images.push_back(image::loadImage("E:\\Andrei\\andrei\\PamPamParam\\PamPamParam\\textures\\craftpix-net-672711-free-street-animal-pixel-art-asset-pack\\1 Dog\\Walk.png", "dog", unpack_alignment, 6, 0));
@@ -19,6 +21,8 @@ namespace Textures {
 
 		Textures::player = &I_ALLTEXTURES->getTexture(Textures::string::player);
 		Textures::death = &I_ALLTEXTURES->getTexture(Textures::string::death);
+		Textures::death2 = &I_ALLTEXTURES->getTexture(Textures::string::death2);
+		Textures::death3 = &I_ALLTEXTURES->getTexture(Textures::string::death3);
 		Textures::splitTest = &I_ALLTEXTURES->getTexture(Textures::string::splitTest);
 		Textures::collisionBox = &I_ALLTEXTURES->getTexture(Textures::string::collisionBox);
 

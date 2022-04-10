@@ -36,10 +36,10 @@ void Camera::setZoom(const float& value) {
 }
 
 // for mouse collision only
-float Camera::getXWithZoom(const float& x, const float& y) {
+float Camera::getXWithZoom(const float& x, const float& y) const {
 	return m_transform[0] * x + m_transform[1] * y;
 }
 // for mouse collision only
-float Camera::getYWithZoom(const float& x, const float& y) {
+float Camera::getYWithZoom(const float& x, const float& y) const {
 	return m_transform[4] * y + m_transform[3] * x;
 }
