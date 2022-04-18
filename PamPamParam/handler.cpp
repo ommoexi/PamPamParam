@@ -2,9 +2,6 @@
 
 void renderObjects() {
 
-	Handler::charBatch.setAllDataVoid();
-	Handler::basicBatch.setAllDataVoid();
-
 	auto& renderVectors{ Handler::map.renderVectors() };
 
 	Handler::charBatch.bindBuffer();
@@ -14,7 +11,6 @@ void renderObjects() {
 			Handler::charBatch.setSubData(text->mesh());
 		}
 	}
-
 	Handler::hud.addToBatch(Handler::charBatch);
 
 	Handler::basicBatch.bindBuffer();
@@ -40,6 +36,9 @@ void renderObjects() {
 
 	Handler::basicBatch.draw();
 	Handler::charBatch.draw();
+
+	Handler::charBatch.setAllDataVoid();
+	Handler::basicBatch.setAllDataVoid();
 }
 
 void updateObjects() {
@@ -53,6 +52,12 @@ void updateObjects() {
 	}
 	else if (Input::keyDOWN) {
 		Handler::cam.setZoom(Handler::cam.zoom() - 10);
+	}
+	if (Input::keyLEFT) {
+
+	}
+	else if (Input::keyRIGHT) {
+
 	}
 	else {
 		Handler::cam.setZoom(Handler::cam.zoom());

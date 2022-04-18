@@ -8,7 +8,6 @@
 class Hud {
 private:
 	std::vector<Text*> m_texts;
-	int i{};
 	Framerate* m_framerate;
 public:
 	Hud();

@@ -13,7 +13,7 @@ private:
 	unsigned int m_VBC;
 	int m_verticesSize{};
 	long long m_VBOByteSize{};
-	long long m_offset{};
+	long long m_size{};
 
 protected:
 public:

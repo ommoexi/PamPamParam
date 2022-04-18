@@ -8,8 +8,8 @@ class Camera {
 private:
 	float m_x;
 	float m_y;
-	float m_xWithZoom;
-	float m_yWithZoom;
+	float m_xWithZoom{m_x};
+	float m_yWithZoom{m_y};
 	float m_zoom{Constants::windowStretch };
 	float m_zoomNormalized{ normalizeCoord(m_zoom) };
 	float m_xNormalized{ normalizeCoord(m_x) };

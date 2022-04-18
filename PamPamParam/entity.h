@@ -17,6 +17,7 @@ private:
 	float m_jumpSeconds{ 1.20f };
 	float m_currentJumpSeconds{ 0 };
 	float m_gravity{ 7.5 };
+	float m_jumpAcceleration{};
 
 	using Rectangle::setX;
 	using Rectangle::setY;

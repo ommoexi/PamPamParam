@@ -8,7 +8,7 @@ private:
 public:
 	Framerate(const float& x, const float& y, const float& letterWidth, const float& letterHeight,
 		const Constants::vec4& color, std::string_view content, const Font& font,
-		const float& letterSpacingHorizontal, const bool& isAffectedByCamera = true,
+		const float& letterSpacingHorizontal, const bool& isAffectedByCamera = false,
 		const float& maxPixelWidth = std::numeric_limits<float>::max(), const float& letterSpacingVertical = 0);
 	virtual ~Framerate();
 
