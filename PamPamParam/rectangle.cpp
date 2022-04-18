@@ -44,8 +44,8 @@ void Rectangle::setShaderIsAffectByCamera(const int& index, Mesh& rectMesh, cons
 }
 
 Rectangle::Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-	const bool& isAffectedByCamera,const Constants::vec4& color) :
-	Object{ x, y, width, height, color, Shader::basicAttrib(), isAffectedByCamera, mS_rectangleMesh}, m_currentTexture{ texture } {
+	const bool& isAffectedByCamera, const Constants::vec4& color) :
+	Object{ x, y, width, height, color, Shader::basicAttrib(), isAffectedByCamera, mS_rectangleMesh }, m_currentTexture{ texture } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::rectangle_cpp, &mS_objectsCount);
 #endif
@@ -194,7 +194,7 @@ Rectangle& Rectangle::setTexture(const Texture* texture) {
 
 bool Rectangle::isCollide(const Rectangle& rect) const {
 	return (x2() >= rect.x() && x() <= rect.x2() && y2() >= rect.y() && y() <= rect.y2());
-		
+
 }
 
 bool Rectangle::isCollide(const float& x, const float& y) {
@@ -208,7 +208,7 @@ const Directions::Direction& Rectangle::isCollideAfterMovingHorizontally(const R
 		}
 		else if (m_previousX > rect.x() && x() < rect.x2()) { // self is right obj is left
 			return Directions::LEFT;
-		
+
 		}
 	}
 	return Directions::NODIRECTION;
@@ -216,12 +216,12 @@ const Directions::Direction& Rectangle::isCollideAfterMovingHorizontally(const R
 const Directions::Direction& Rectangle::isCollideAfterMovingVertically(const Rectangle& rect) const {
 	if (m_previousX < rect.x2() && m_previousX2 > rect.x()) { // check vertically if 2 objects align
 		if (m_previousY2 < rect.y2() && m_y2 > rect.y()) { // self is down object is up		
-			return Directions::UP;		
+			return Directions::UP;
 		}
-		else if(m_previousY > rect.y() && y() < rect.y2()) {  //self is up object is down
+		else if (m_previousY > rect.y() && y() < rect.y2()) {  //self is up object is down
 			return Directions::DOWN;
 		}
-	}		
+	}
 	return Directions::NODIRECTION;
 }
 
@@ -236,75 +236,82 @@ float Rectangle::setY(const float& value) {
 	return yDistance;
 }
 
-void Rectangle::updateAnimation(const std::string& animationName) {
-	try {
-		auto& animation{ m_animations.at(animationName) };
-		auto& texture{ animation.nextTexture() };
-		if (m_currentTexture != &texture) {
-			setTexture(&texture);
-		}
-	}
-	catch (...) {
-#ifdef _DEBUG
-		debugMessage("Rectangle animation not found!\n");
-#endif
+void Rectangle::updateAnimation(const Animation& animation) {
+	auto& texture{ animation.nextTexture() };
+	if (m_currentTexture != &texture) {
+		setTexture(&texture);
 	}
 }
 
-void Rectangle::resetAnimation(const std::string& animationName) {
-	try {
-		auto& animation{ m_animations.at(animationName) };
-		animation.reset();
-	}
-	catch (...) {
-#ifdef _DEBUG
-		debugMessage("Rectangle animation not found!\n");
-#endif
-	}
-}
-
-void Rectangle::setAnimationFramesPerTexture(const std::string& animationName, const unsigned int& framesPerTexture) {
-	try {
-		auto& animation{ m_animations.at(animationName) };
-		animation.setFramesPerTexture(framesPerTexture);
-	}
-	catch (...) {
-#ifdef _DEBUG
-		debugMessage("Rectangle animation not found!\n");
-#endif
-	}
-}
-
-namespace {
-	unsigned int nullUInt{};
-	Animation nullAnimation{};
-}
-
-const unsigned int& Rectangle::animationFramesPerTexture(const std::string& animationName) {
-	try {
-		auto& animation{ m_animations.at(animationName) };
-		return animation.framesPerTextures();
-	}
-	catch (...) {
-#ifdef _DEBUG
-		debugMessage("Rectangle animation not found!\n");
-#endif
-	}
-	return nullUInt;
-}
-
-const Animation& Rectangle::getAnimation(const std::string& animationName) {
-	try {
-		auto& animation{ m_animations.at(animationName) };
-		return animation;
-	}
-	catch (...) {
-#ifdef _DEBUG
-		debugMessage("Rectangle animation not found!\n");
-#endif
-	}
-	return nullAnimation;
-}
+//void Rectangle::updateAnimation(const std::string& animationName) {
+//	try {
+//		auto& animation{ m_animations.at(animationName) };
+//		auto& texture{ animation.nextTexture() };
+//		if (m_currentTexture != &texture) {
+//			setTexture(&texture);
+//		}
+//	}
+//	catch (...) {
+//#ifdef _DEBUG
+//		debugMessage("Rectangle animation not found!\n");
+//#endif
+//	}
+//}
+//
+//void Rectangle::resetAnimation(const std::string& animationName) {
+//	try {
+//		auto& animation{ m_animations.at(animationName) };
+//		animation.reset();
+//	}
+//	catch (...) {
+//#ifdef _DEBUG
+//		debugMessage("Rectangle animation not found!\n");
+//#endif
+//	}
+//}
+//
+//void Rectangle::setAnimationFramesPerTexture(const std::string& animationName, const unsigned int& framesPerTexture) {
+//	try {
+//		auto& animation{ m_animations.at(animationName) };
+//		animation.setFramesPerTexture(framesPerTexture);
+//	}
+//	catch (...) {
+//#ifdef _DEBUG
+//		debugMessage("Rectangle animation not found!\n");
+//#endif
+//	}
+//}
+//
+//namespace {
+//	unsigned int nullUInt{};
+//	Animation nullAnimation{};
+//}
+//
+//const unsigned int& Rectangle::animationFramesPerTexture(const std::string& animationName) {
+//	try {
+//		auto& animation{ m_animations.at(animationName) };
+//		return animation.framesPerTextures();
+//	}
+//	catch (...) {
+//#ifdef _DEBUG
+//		debugMessage("Rectangle animation not found!\n");
+//#endif
+//	}
+//	return nullUInt;
+//}
+//
+//const Animation& Rectangle::getAnimation(const std::string& animationName) {
+//	try {
+//		auto& animation{ m_animations.at(animationName) };
+//		return animation;
+//	}
+//	catch (...) {
+//#ifdef _DEBUG
+//		debugMessage("Rectangle animation not found!\n");
+//#endif
+//	}
+//	return nullAnimation;
+//}
 
 void Rectangle::updateGraphics() {
 	Object::updateGraphics();
@@ -319,6 +326,6 @@ void Rectangle::updateGraphics() {
 	else {
 		Object::updateGraphics();
 	}
-	
-	
+
+
 }

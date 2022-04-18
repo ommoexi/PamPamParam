@@ -20,6 +20,11 @@ private:
 	float m_gravity{ 7.5 };
 	float m_jumpAcceleration{};
 
+	Animation m_moveLeftAnimation;
+	Animation m_moveRightAnimation;
+	Animation m_idleLeftAnimation;
+	Animation m_idleRightAnimation;
+
 	using Rectangle::setX;
 	using Rectangle::setY;
 	using Rectangle::setWidth;
@@ -29,8 +34,9 @@ protected:
 public:
 	Entity(const Entity& entity) = delete;
 	Entity& operator=(const Entity& entity) = delete;
-	Entity(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-		const float& movementSpeed, CollisionBox& hitCollision, const Constants::vec4& color = Colors::white);
+	Entity(const float& x, const float& y, const float& width, const float& height, const float& movementSpeed, 
+		CollisionBox& hitCollision, const Animation& moveLeftAnim, const Animation& moveRightAnim, const Animation& idleLeftAnim,
+		const Animation& idleRightAnim);
 	virtual ~Entity();
 
 	virtual void update(std::vector<std::vector<Entity*>*>& entities,std::vector<std::vector<BasicBlock*>*>& basicBlocks);
@@ -93,12 +99,6 @@ public:
 
 	void setJump(const bool& value) {
 		m_isJumping = value;
-	}
-
-	void setJumpIfNotfalling() {
-		if (!m_isFalling && m_movementUp) {
-			m_isJumping = true;
-		}
 	}
 
 	void setJumpFalse() {

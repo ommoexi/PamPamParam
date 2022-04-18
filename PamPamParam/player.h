@@ -3,17 +3,10 @@
 #include "input.h"
 class Player : public Entity {
 private:
-	// must implement these animations when creating a new player or crash 
-
-	const static inline std::string mS_idleRightAnimationString{"idleRight"};
-	const static inline std::string mS_idleLeftAnimationString{ "idleLeft" };
-	const static inline std::string mS_walkRightAnimationString{ "walkRight" };
-	const static inline std::string mS_walkLeftAnimationString{ "walkLeft" };
 
 public:
-	Player(const float& x, const float& y, const float& width, const float& height, const Animation& rightWalk,const Animation& leftWalk,
-		const Animation& idleRight, const Animation& idleLeft, const float& movementSpeed, CollisionBox& hitCollision, 
-		const Constants::vec4& color = Colors::white);
+	Player(const float& x, const float& y, const float& width, const float& height, const float& movementSpeed, 
+		CollisionBox& hitCollision);
 	virtual ~Player();
 
 	void update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) override;

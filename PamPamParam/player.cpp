@@ -1,44 +1,20 @@
 #include "player.h"
 
 
-Player::Player(const float& x, const float& y, const float& width, const float& height,const Animation& rightWalk,const Animation& leftWalk,
-	const Animation& idleRight, const Animation& idleLeft, const float& movementSpeed, CollisionBox& hitCollision, 
-	const Constants::vec4& color)
-	: Entity{x,y,width,height, &idleRight.currentTexture(), movementSpeed, hitCollision, color} {
+Player::Player(const float& x, const float& y, const float& width, const float& height,const float& movementSpeed, 
+	CollisionBox& hitCollision)
+	: Entity{x,y,width,height, movementSpeed, hitCollision, Textures::animations::dogWalkingLeft,
+Textures::animations::dogWalkingRight, Textures::animations::dogIdleLeft, Textures::animations::dogIdleRight } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::player_cpp, &mS_objectsCount);
 #endif
 
-	setAnimation(leftWalk, mS_walkLeftAnimationString);
-	setAnimation(rightWalk, mS_walkRightAnimationString);
-	setAnimation(idleRight, mS_idleRightAnimationString);
-	setAnimation(idleLeft, mS_idleLeftAnimationString);
 }
 
 void Player::update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) {
-	Entity::update(entities, basicBlocks);
 	setMovementByInput();
-	if (movementLeft()) {
-		updateAnimation(mS_walkLeftAnimationString);
-	}
-	else if (movementRight()) {
-		updateAnimation(mS_walkRightAnimationString);
-	}
-	else if(isFacingRight()) {
-		updateAnimation(mS_idleRightAnimationString);
-	}
-	else {
-		updateAnimation(mS_idleLeftAnimationString);
-	}
-	moveVertically();
-	moveHorizontally();
-	for (auto& blocks : basicBlocks) {
-		for (auto& block : *blocks) {
-			checkHorizontally(*block);
-			checkVertically(*block);
-		}
-	}
-	setJumpIfNotfalling();
+	Entity::update(entities, basicBlocks);
+
 	hitCollision().updatePreviousX();
 	hitCollision().updatePreviousY();
 }

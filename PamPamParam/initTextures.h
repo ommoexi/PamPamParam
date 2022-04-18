@@ -29,11 +29,18 @@ namespace Textures {
 	inline const Texture* splitTest{};
 	inline const Texture* collisionBox{};
 
-	namespace animations {
-		inline std::vector<const Texture*> animationVecDogWalkingRight{};
-		inline std::vector<const Texture*> animationVecDogWalkingLeft{};
-		inline std::vector<const Texture*> animationVecDogIdleRight{};
-		inline std::vector<const Texture*> animationVecDogIdleLeft{};
+	namespace animationV {
+		inline std::vector<const Texture*> dogWalkingRight{};
+		inline std::vector<const Texture*> dogWalkingLeft{};
+		inline std::vector<const Texture*> dogIdleRight{};
+		inline std::vector<const Texture*> dogIdleLeft{};
+	}
+
+	namespace animations{
+		inline Animation dogWalkingRight{ animationV::dogWalkingRight, 12 };
+		inline Animation dogWalkingLeft{ animationV::dogWalkingLeft, 12 };
+		inline Animation dogIdleRight{ animationV::dogIdleRight, 12 };
+		inline Animation dogIdleLeft{ animationV::dogIdleLeft, 12 };
 	}
 
 

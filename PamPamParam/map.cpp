@@ -237,7 +237,7 @@ void Map::setVectorsZone(ZoneVectors& vectors, Zone* zone, const int& index) {
 
 void Map::setVectors(ZoneVectors& vectors, const unsigned int& radius, const unsigned int& vectorsTotalSize,
 	std::vector<unsigned int>vectorsEachRadiusTotalSize) {
-
+	// de implementat mai tarziu o alta versiune !!!!!!!!!!! cu un vector in plus sau poate ca nu
 	vectors.basicBlocks.resize(vectorsTotalSize);
 	vectors.entities.resize(vectorsTotalSize);
 	vectors.texts.resize(vectorsTotalSize);

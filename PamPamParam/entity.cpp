@@ -1,8 +1,11 @@
 #include "entity.h"
 #include <random>
-Entity::Entity(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
-	const float& movementSpeed, CollisionBox& hitCollision, const Constants::vec4& color) :
-	Rectangle{ x, y, width, height, texture, true, color }, m_movementSpeed{ movementSpeed },m_hitCollision{ &hitCollision } {
+Entity::Entity(const float& x, const float& y, const float& width, const float& height, const float& movementSpeed,
+	CollisionBox& hitCollision, const Animation& moveLeftAnim, const Animation& moveRightAnim, const Animation& idleLeftAnim,
+	const Animation& idleRightAnim) :
+	Rectangle{ x, y, width, height, &idleRightAnim.currentTexture(), true, Colors::white }, m_movementSpeed{ movementSpeed },
+	m_hitCollision{ &hitCollision }, m_moveLeftAnimation{ moveLeftAnim }, m_moveRightAnimation{ moveRightAnim },
+	m_idleLeftAnimation{ idleLeftAnim }, m_idleRightAnimation{ idleRightAnim } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::entity_cpp, &mS_objectsCount);
 #endif
@@ -24,9 +27,36 @@ Entity::~Entity() {
 }
 
 void Entity::update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) {
-	if (!m_isJumping) {
+	if (movementLeft()) {
+		updateAnimation(m_moveLeftAnimation);
+	}
+	else if (movementRight()) {
+		updateAnimation(m_moveRightAnimation);
+	}
+	else if (isFacingRight()) {
+		updateAnimation(m_idleRightAnimation);
+	}
+	else {
+		updateAnimation(m_idleLeftAnimation);
+	}
+
+	moveVertically();
+	moveHorizontally();
+	// be sure not to iterate basicBlock on children
+	for (auto& blocks : basicBlocks) {
+		for (auto& block : *blocks) {
+			checkHorizontally(*block);
+			checkVertically(*block);
+		}
+	}
+
+	if (!m_isFalling && m_movementUp) {
+		m_isJumping = true;
+	}
+	else if (!m_isJumping) {
 		m_isFalling = true;
 	}
+
 }
 
 void Entity::moveHorizontally() {
@@ -64,9 +94,9 @@ float Entity::setY(const float& y) {
 
 void Entity::setWidth(const float& width) {
 	// de modificat mai tarziu
-	float diff{ width - Rectangle::width()  };
-	float yesyesYes{ (m_hitCollision->x() - x() ) / Rectangle::width() * diff };
-	float nonono{ (x2() - m_hitCollision->x2() ) / Rectangle::width() * diff };
+	float diff{ width - Rectangle::width() };
+	float yesyesYes{ (m_hitCollision->x() - x()) / Rectangle::width() * diff };
+	float nonono{ (x2() - m_hitCollision->x2()) / Rectangle::width() * diff };
 	m_hitCollision->setWidth(m_hitCollision->width() - yesyesYes - nonono + diff);
 	m_hitCollision->setX(m_hitCollision->x() + yesyesYes);
 	Rectangle::setWidth(width);

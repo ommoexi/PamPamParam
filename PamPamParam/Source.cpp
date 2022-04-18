@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
-	for (int i{}; i < 10; i++) {
+	/*for (int i{}; i < 10; i++) {
 #ifdef _DEBUG
 		CollisionBox* wowColl{ new CollisionBox{0,0,100,100, Textures::collisionBox, true, Colors::red } };
 #else 
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
 #endif
 		Enemy* enemy{ new Enemy{200,200,100,100, Textures::player, 5, *wowColl} };
 		Handler::map.addObj(*enemy, true);
-	}
+	}*/
 	Text* d{ new Text{0,0,10,10, Colors::black, "asdfasdfadsgadg", Textures::I_FONT, 0 } };
 	Handler::map.addObj(*d, true);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

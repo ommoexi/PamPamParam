@@ -28,7 +28,7 @@ namespace Textures {
 		Textures::splitTest = &I_ALLTEXTURES->getTexture(Textures::string::splitTest);
 		Textures::collisionBox = &I_ALLTEXTURES->getTexture(Textures::string::collisionBox);
 
-		animations::animationVecDogWalkingRight = std::vector<const Texture*>{ 
+		animationV::dogWalkingRight = std::vector<const Texture*>{ 
 		&I_ALLTEXTURES->getTexture(splitTextureName("dogwalk", 1,1)),
 		&I_ALLTEXTURES->getTexture(splitTextureName("dogwalk", 1,2)) ,
 		&I_ALLTEXTURES->getTexture(splitTextureName("dogwalk", 1,3)) ,
@@ -36,7 +36,7 @@ namespace Textures {
 		&I_ALLTEXTURES->getTexture(splitTextureName("dogwalk", 1,5)) ,
 		&I_ALLTEXTURES->getTexture(splitTextureName("dogwalk", 1,6)) };
 
-		animations::animationVecDogWalkingLeft = std::vector<const Texture*>{
+		animationV::dogWalkingLeft = std::vector<const Texture*>{
 		I_ALLTEXTURES->getTexture(splitTextureName("dogwalk", 1,1)).reverseXAxis(),
 		I_ALLTEXTURES->getTexture(splitTextureName("dogwalk", 1,2)).reverseXAxis(),
 		I_ALLTEXTURES->getTexture(splitTextureName("dogwalk", 1,3)).reverseXAxis(),
@@ -44,13 +44,13 @@ namespace Textures {
 		I_ALLTEXTURES->getTexture(splitTextureName("dogwalk", 1,5)).reverseXAxis(),
 		I_ALLTEXTURES->getTexture(splitTextureName("dogwalk", 1,6)).reverseXAxis() };
 
-		animations::animationVecDogIdleRight = std::vector<const Texture*>{
+		animationV::dogIdleRight = std::vector<const Texture*>{
 		&I_ALLTEXTURES->getTexture(splitTextureName("dogidle", 1,1)),
 		&I_ALLTEXTURES->getTexture(splitTextureName("dogidle", 1,2)),
 		&I_ALLTEXTURES->getTexture(splitTextureName("dogidle", 1,3)),
 		&I_ALLTEXTURES->getTexture(splitTextureName("dogidle", 1,4)), };
 
-		animations::animationVecDogIdleLeft = std::vector<const Texture*>{
+		animationV::dogIdleLeft = std::vector<const Texture*>{
 		I_ALLTEXTURES->getTexture(splitTextureName("dogidle", 1,1)).reverseXAxis(),
 		I_ALLTEXTURES->getTexture(splitTextureName("dogidle", 1,2)).reverseXAxis(),
 		I_ALLTEXTURES->getTexture(splitTextureName("dogidle", 1,3)).reverseXAxis(),
@@ -62,10 +62,10 @@ namespace Textures {
 	void deleteAllTextures() {
 		delete I_ALLTEXTURES;
 		I_ALLTEXTURES = nullptr;
-		for (auto& tex : animations::animationVecDogWalkingLeft) {
+		for (auto& tex : animationV::dogWalkingLeft) {
 			delete tex;
 		}
-		for (auto& tex : animations::animationVecDogIdleLeft) {
+		for (auto& tex : animationV::dogIdleLeft) {
 			delete tex;
 		}
 	}

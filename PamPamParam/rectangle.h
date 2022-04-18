@@ -18,7 +18,7 @@ private:
 	float m_previousY2{m_y2};
 
 	const Texture* m_currentTexture{};
-	std::map<std::string, Animation> m_animations{};
+	//std::map<std::string, Animation> m_animations{};
 
 	static inline Mesh mS_rectangleMesh{
 		//position coords		                      //isAfectedByCamera      texture coords       color
@@ -96,25 +96,27 @@ public:
 	const Directions::Direction& isCollideAfterMovingHorizontally(const Rectangle& rect) const;
 	const Directions::Direction& isCollideAfterMovingVertically(const Rectangle& rect) const;
 
-	const std::map<std::string, Animation>& animations() const {
-		return m_animations;
-	}
-	Rectangle& setAllAnimations(const std::map<std::string, Animation>& value) {
-		m_animations = value;
-		return *this;
-	}
+	void updateAnimation(const Animation& animation);
 
-	Rectangle& setAnimation(const Animation& animation, const std::string& animationName) {
-		m_animations[animationName] = animation;
-		return *this;
-	}
+	//const std::map<std::string, Animation>& animations() const {
+	//	return m_animations;
+	//}
+	//Rectangle& setAllAnimations(const std::map<std::string, Animation>& value) {
+	//	m_animations = value;
+	//	return *this;
+	//}
 
-	const Animation& getAnimation(const std::string& animationName);
+	//Rectangle& setAnimation(const Animation& animation, const std::string& animationName) {
+	//	m_animations[animationName] = animation;
+	//	return *this;
+	//}
+
+	/*const Animation& getAnimation(const std::string& animationName);
 
 	void updateAnimation(const std::string& animationName);
 	void resetAnimation(const std::string& animationName);
 	void setAnimationFramesPerTexture(const std::string& animationName, const unsigned int& framesPerTexture);
-	const unsigned int& animationFramesPerTexture(const std::string& animationName);
+	const unsigned int& animationFramesPerTexture(const std::string& animationName);*/
 
 	void updatePreviousX() {
 		m_previousX = x();
