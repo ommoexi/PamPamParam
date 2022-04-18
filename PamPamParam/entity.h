@@ -11,11 +11,12 @@ private:
 	bool m_movementRight{ false };
 	bool m_movementDown{ false };
 	bool m_movementLeft{ false };
+	bool m_facingRight{true};
 	CollisionBox* m_hitCollision;		// unique deleted by destructor
 	bool m_isFalling{ true };
 	bool m_isJumping{ false };
 	float m_jumpSeconds{ 1.20f };
-	float m_currentJumpSeconds{ 0 };
+	float m_currentJumpSeconds{ m_jumpSeconds };
 	float m_gravity{ 7.5 };
 	float m_jumpAcceleration{};
 
@@ -49,6 +50,10 @@ public:
 		return m_movementLeft;
 	}
 
+	const bool& isFacingRight() const {
+		return m_facingRight;
+	}
+
 	void setMovementUp(const bool& value) {
 		m_movementUp = value;
 	}
@@ -60,6 +65,10 @@ public:
 	}
 	void setMovementLeft(const bool& value) {
 		m_movementLeft = value;
+	}
+
+	void setFacingRight(const bool& value) {
+		m_facingRight = value;
 	}
 
 	CollisionBox& hitCollision() const {
@@ -95,7 +104,7 @@ public:
 	void setJumpFalse() {
 		m_isJumping = false;
 		m_isFalling = true;
-		m_currentJumpSeconds = 0;
+		m_currentJumpSeconds = m_jumpSeconds;
 	}
 
 #ifdef _DEBUG

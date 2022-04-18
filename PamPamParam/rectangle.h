@@ -112,6 +112,7 @@ public:
 	const Animation& getAnimation(const std::string& animationName);
 
 	void updateAnimation(const std::string& animationName);
+	void resetAnimation(const std::string& animationName);
 	void setAnimationFramesPerTexture(const std::string& animationName, const unsigned int& framesPerTexture);
 	const unsigned int& animationFramesPerTexture(const std::string& animationName);
 

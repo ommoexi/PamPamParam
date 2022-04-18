@@ -1,9 +1,9 @@
 #include "text.h"
 
 void Text::setShaderIsAffectByCamera(const int& index, Mesh& textMesh, const int& stride, const bool& value) {
-	textMesh[index + 2] = static_cast<int>(value);
-	textMesh[index + stride + 2] = static_cast<int>(value);
-	textMesh[index + stride * 2 + 2] = static_cast<int>(value);
+	textMesh[index + 2] = static_cast<float>(value);
+	textMesh[index + stride + 2] = static_cast<float>(value);
+	textMesh[index + stride * 2 + 2] = static_cast<float>(value);
 }
 
 void Text::setShaderCoords(const int& index, Mesh& textMesh, const Mesh& fontCharMesh, const float& xCursor, 

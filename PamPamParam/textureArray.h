@@ -15,6 +15,20 @@ struct Texture {
 	int width;
 	int height;
 
+	// must be deleted when no longer used!!!!!
+	Texture* reverseXAxis() const {
+		return new Texture{ x2, x1, y1, y2, z, width, height };
+	}
+
+	// must be deleted when no longer used!!!!!
+	Texture* reverseYAxis() const {
+		return new Texture{ x1, x2, y2, y1, z, width, height };
+	}
+
+	// must be deleted when no longer used!!!!!
+	Texture* reverseXYAxis() const {
+		return new Texture{ x2,x1, y2,y1,z, width, height };
+	}
 };
 
 

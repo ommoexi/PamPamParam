@@ -26,6 +26,11 @@ const Texture& Animation::currentTexture() const {
 	return *(*m_textures)[m_currentIndex];
 }
 
+void Animation::reset() const {
+	m_timer = m_framersPerTexture;
+	m_currentIndex = 0;
+}
+
 Animation::Animation() {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::animation_cpp, &mS_objectsCount);

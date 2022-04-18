@@ -38,9 +38,9 @@ namespace {
 }
 
 void Rectangle::setShaderIsAffectByCamera(const int& index, Mesh& rectMesh, const int& stride, const bool& value) {
-	rectMesh[index + 2] = static_cast<int>(value);
-	rectMesh[index + stride + 2] = static_cast<int>(value);
-	rectMesh[index + stride * 2 + 2] = static_cast<int>(value);
+	rectMesh[index + 2] = static_cast<float>(value);
+	rectMesh[index + stride + 2] = static_cast<float>(value);
+	rectMesh[index + stride * 2 + 2] = static_cast<float>(value);
 }
 
 Rectangle::Rectangle(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
@@ -92,15 +92,15 @@ void Rectangle::setShaderCoordsY(const int& index, Mesh& rectMesh, const int& st
 void Rectangle::setShaderTextures(const int& index, Mesh& rectMesh, const Texture& texture, const int& stride) {
 	rectMesh[index + 3] = texture.x1;
 	rectMesh[index + 4] = texture.y1;
-	rectMesh[index + 5] = texture.z;
+	rectMesh[index + 5] = static_cast<float>(texture.z);
 
 	rectMesh[index + stride + 3] = texture.x2;
 	rectMesh[index + stride + 4] = texture.y1;
-	rectMesh[index + stride + 5] = texture.z;
+	rectMesh[index + stride + 5] = static_cast<float>(texture.z);
 
 	rectMesh[index + stride * 2 + 3] = texture.x1;
 	rectMesh[index + stride * 2 + 4] = texture.y2;
-	rectMesh[index + stride * 2 + 5] = texture.z;
+	rectMesh[index + stride * 2 + 5] = static_cast<float>(texture.z);
 }
 
 
@@ -243,6 +243,18 @@ void Rectangle::updateAnimation(const std::string& animationName) {
 		if (m_currentTexture != &texture) {
 			setTexture(&texture);
 		}
+	}
+	catch (...) {
+#ifdef _DEBUG
+		debugMessage("Rectangle animation not found!\n");
+#endif
+	}
+}
+
+void Rectangle::resetAnimation(const std::string& animationName) {
+	try {
+		auto& animation{ m_animations.at(animationName) };
+		animation.reset();
 	}
 	catch (...) {
 #ifdef _DEBUG

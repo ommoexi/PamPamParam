@@ -27,6 +27,7 @@ public:
 
 	const Texture& nextTexture() const;
 	const Texture& currentTexture() const;
+	void reset() const;
 
 
 #ifdef _DEBUG

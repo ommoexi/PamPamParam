@@ -78,7 +78,7 @@ void Batch::draw() const {
 	m_shader->bind();
 
 	glBindVertexArray(m_VAO);
-	glDrawArrays(m_shader->attribShader().mode(), 0, m_offset);
+	glDrawArrays(m_shader->attribShader().mode(), 0, static_cast<int>(m_offset));
 }
 
 // not a really good method but it will suffice for now

@@ -30,7 +30,10 @@ namespace Textures {
 	inline const Texture* collisionBox{};
 
 	namespace animations {
-		inline std::vector<const Texture*> animationVecDog{};
+		inline std::vector<const Texture*> animationVecDogWalkingRight{};
+		inline std::vector<const Texture*> animationVecDogWalkingLeft{};
+		inline std::vector<const Texture*> animationVecDogIdleRight{};
+		inline std::vector<const Texture*> animationVecDogIdleLeft{};
 	}
 
 

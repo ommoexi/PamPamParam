@@ -41,10 +41,10 @@ void Entity::moveVertically() {
 	if (m_isFalling && !m_isJumping) {
 		setY(y() - m_gravity);
 	}
-	else if (m_isJumping && (m_currentJumpSeconds < m_jumpSeconds)) {
-		m_currentJumpSeconds += 0.01f;
-		setY(y() + m_jumpSeconds * (m_movementSpeed));
-		if (m_currentJumpSeconds >= m_jumpSeconds) {
+	else if (m_isJumping && (m_currentJumpSeconds > 0)) {
+		m_currentJumpSeconds -= 0.01f;
+		setY(y() + m_currentJumpSeconds * (m_movementSpeed));
+		if (m_currentJumpSeconds <= 0) {
 			setJumpFalse();
 		}
 	}
