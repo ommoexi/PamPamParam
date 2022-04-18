@@ -43,11 +43,9 @@ void Entity::moveVertically() {
 	}
 	else if (m_isJumping && (m_currentJumpSeconds < m_jumpSeconds)) {
 		m_currentJumpSeconds += 0.01f;
-		setY(y() + m_movementSpeed);
+		setY(y() + m_jumpSeconds * (m_movementSpeed));
 		if (m_currentJumpSeconds >= m_jumpSeconds) {
-			m_isJumping = false;
-			m_isFalling = true;
-			m_currentJumpSeconds = 0;
+			setJumpFalse();
 		}
 	}
 
@@ -84,7 +82,7 @@ void Entity::setHeight(const float& height) {
 }
 
 // checks and reacts to collision to basicBlock
-// glitch minor
+// glitch minor la miscare
 void Entity::checkHorizontally(BasicBlock& basicBlock) {
 	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
 	if (isCollide == Directions::LEFT) {
@@ -98,6 +96,7 @@ void Entity::checkVertically(BasicBlock& basicBlock) {
 	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };
 	if (isCollide == Directions::UP) {
 		setY(basicBlock.y() - height() + y2() - m_hitCollision->y2() - 1);
+		setJumpFalse();
 	}
 	else if (isCollide == Directions::DOWN) {
 		setY(basicBlock.y2() + y() - m_hitCollision->y() + 1);

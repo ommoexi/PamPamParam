@@ -92,6 +92,12 @@ public:
 		}
 	}
 
+	void setJumpFalse() {
+		m_isJumping = false;
+		m_isFalling = true;
+		m_currentJumpSeconds = 0;
+	}
+
 #ifdef _DEBUG
 private:
 	static inline ObjectsCount mS_objectsCount{};

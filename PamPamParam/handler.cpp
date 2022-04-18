@@ -46,7 +46,7 @@ void updateObjects() {
 	Handler::hud.update();
 
 	Handler::cam.setX(Handler::player.x() + Handler::player.width() / 2);
-	Handler::cam.setY(Handler::player.y() + Constants::windowStretch / 2);
+	Handler::cam.setY(Handler::player.y() + Handler::player.height() / 2);
 	if (Input::keyUP) {
 		Handler::cam.setZoom(Handler::cam.zoom() + 10);
 	}
@@ -62,7 +62,6 @@ void updateObjects() {
 	else {
 		Handler::cam.setZoom(Handler::cam.zoom());
 	}
-
 
 	Shaders::I_basicShader.bind();
 	Shaders::I_basicShader.setMat3(Constants::Uniforms::camera, Handler::cam.transform());

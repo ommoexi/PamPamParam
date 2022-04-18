@@ -8,13 +8,15 @@ Batch::Batch(TextureArray* texture, Shader& shader, const int& shapes) : m_textu
 	const Shader::Attrib& attribShader{ shader.attribShader() };
 
 	int sizeOfFloat{ static_cast<int>(sizeof(float)) };
+	
+	glGenBuffers(1, &m_VBC);
+	glBindBuffer(GL_COPY_READ_BUFFER, m_VBC);
+
 	glGenVertexArrays(1, &m_VAO);
 	glBindVertexArray(m_VAO);
 
 	glGenBuffers(1, &m_VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-
-	glGenBuffers(1, &m_VBC);
 
 	int stride{ attribShader.stride() * sizeOfFloat};
 
@@ -45,11 +47,13 @@ void Batch::setVBOSize(const int& shapes) {
 
 void Batch::setSubData(const Mesh& mesh) {
 	long long size{ static_cast<long long>(mesh.size() * sizeof(float)) };
-	glBufferSubData(GL_ARRAY_BUFFER, m_size, size , mesh.data());
-	m_size += size;
 
+	if (m_offset + size <= m_VBOByteSize) {
+		glBufferSubData(GL_ARRAY_BUFFER, m_offset, size, mesh.data());
+		m_offset += size;
+	}
 #ifdef _DEBUG
-	if (m_size > m_VBOByteSize) {
+	else {
 		debugMessage("BATCH NOT ENOUGH SPACE FOR SUBDATA\n");
 	}
 #endif
@@ -74,13 +78,13 @@ void Batch::draw() const {
 	m_shader->bind();
 
 	glBindVertexArray(m_VAO);
-	glDrawArrays(m_shader->attribShader().mode(), 0, m_verticesSize);
+	glDrawArrays(m_shader->attribShader().mode(), 0, m_offset);
 }
 
 // not a really good method but it will suffice for now
 void Batch::setAllDataVoid() {
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBindBuffer(GL_COPY_READ_BUFFER, m_VBC);
-	glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_ARRAY_BUFFER, 0, 0, m_size);
-	m_size = 0;
+	glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_ARRAY_BUFFER, 0, 0, m_offset);
+	m_offset = 0;
 }
