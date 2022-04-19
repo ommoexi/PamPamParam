@@ -11,6 +11,8 @@ public:
 		const Constants::vec4& color = Colors::white);
 	virtual ~BasicBlock();
 
+
+
 #ifdef _DEBUG
 private:
 	static inline ObjectsCount mS_objectsCount{};

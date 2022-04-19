@@ -42,7 +42,7 @@ void Entity::update(std::vector<std::vector<Entity*>*>& entities, std::vector<st
 
 	moveVertically();
 	moveHorizontally();
-	// be sure not to iterate basicBlock on children
+	//be sure not to iterate basicBlock on children
 	for (auto& blocks : basicBlocks) {
 		for (auto& block : *blocks) {
 			checkHorizontally(*block);
@@ -81,6 +81,7 @@ void Entity::moveVertically() {
 
 }
 
+
 float Entity::setX(const float& x) {
 	float xDistance{ Rectangle::setX(x) };
 	m_hitCollision->setX(m_hitCollision->x() + xDistance);
@@ -90,6 +91,16 @@ float Entity::setY(const float& y) {
 	float yDistance{ Rectangle::setY(y) };
 	m_hitCollision->setY(m_hitCollision->y() + yDistance);
 	return yDistance;
+}
+
+void Entity::setHitCollisionX(const float& x) {
+	float xDistance{ m_hitCollision->setX(x) };
+	Rectangle::setX(Entity::x() + xDistance);
+
+}
+void Entity::setHitCollisionY(const float& y) {
+	float xDistance{ m_hitCollision->setY(y) };
+	Rectangle::setY(Entity::y() + xDistance);
 }
 
 void Entity::setWidth(const float& width) {
@@ -111,8 +122,8 @@ void Entity::setHeight(const float& height) {
 	Rectangle::setHeight(height);
 }
 
-// checks and reacts to collision to basicBlock
-// glitch minor la miscare
+//checks and reacts to collision to basicBlock
+//glitch minor la miscare
 void Entity::checkHorizontally(BasicBlock& basicBlock) {
 	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
 	if (isCollide == Directions::LEFT) {

@@ -179,8 +179,8 @@ Rectangle& Rectangle::setHeight(const float& height) {
 	return *this;
 }
 Rectangle& Rectangle::setSize(const float& width, const float& height) {
-	Object::setWidth(width);
-	Object::setHeight(height);
+	setWidth(width);
+	setHeight(height);
 	return *this;
 }
 
@@ -242,76 +242,6 @@ void Rectangle::updateAnimation(const Animation& animation) {
 		setTexture(&texture);
 	}
 }
-
-//void Rectangle::updateAnimation(const std::string& animationName) {
-//	try {
-//		auto& animation{ m_animations.at(animationName) };
-//		auto& texture{ animation.nextTexture() };
-//		if (m_currentTexture != &texture) {
-//			setTexture(&texture);
-//		}
-//	}
-//	catch (...) {
-//#ifdef _DEBUG
-//		debugMessage("Rectangle animation not found!\n");
-//#endif
-//	}
-//}
-//
-//void Rectangle::resetAnimation(const std::string& animationName) {
-//	try {
-//		auto& animation{ m_animations.at(animationName) };
-//		animation.reset();
-//	}
-//	catch (...) {
-//#ifdef _DEBUG
-//		debugMessage("Rectangle animation not found!\n");
-//#endif
-//	}
-//}
-//
-//void Rectangle::setAnimationFramesPerTexture(const std::string& animationName, const unsigned int& framesPerTexture) {
-//	try {
-//		auto& animation{ m_animations.at(animationName) };
-//		animation.setFramesPerTexture(framesPerTexture);
-//	}
-//	catch (...) {
-//#ifdef _DEBUG
-//		debugMessage("Rectangle animation not found!\n");
-//#endif
-//	}
-//}
-//
-//namespace {
-//	unsigned int nullUInt{};
-//	Animation nullAnimation{};
-//}
-//
-//const unsigned int& Rectangle::animationFramesPerTexture(const std::string& animationName) {
-//	try {
-//		auto& animation{ m_animations.at(animationName) };
-//		return animation.framesPerTextures();
-//	}
-//	catch (...) {
-//#ifdef _DEBUG
-//		debugMessage("Rectangle animation not found!\n");
-//#endif
-//	}
-//	return nullUInt;
-//}
-//
-//const Animation& Rectangle::getAnimation(const std::string& animationName) {
-//	try {
-//		auto& animation{ m_animations.at(animationName) };
-//		return animation;
-//	}
-//	catch (...) {
-//#ifdef _DEBUG
-//		debugMessage("Rectangle animation not found!\n");
-//#endif
-//	}
-//	return nullAnimation;
-//}
 
 void Rectangle::updateGraphics() {
 	Object::updateGraphics();

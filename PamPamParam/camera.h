@@ -8,6 +8,8 @@ class Camera {
 private:
 	float m_x;
 	float m_y;
+	float m_previousX{ m_x };
+	float m_previousY{ m_y };
 	float m_xWithZoom{m_x};
 	float m_yWithZoom{m_y};
 	float m_zoom{Constants::windowStretch };
@@ -38,31 +40,12 @@ public:
 		return m_transform;
 	}
 
-	Camera& setTransformX(const float& x, const float& y, const float& w = 0.f) {
-		m_transform[0] = x;
-		m_transform[1] = y;
-		m_transform[2] = w;
-		return *this;
-	}
-
-	Camera& setTransformY(const float& x, const float& y, const float& w = 0.f) {
-		m_transform[3] = x;
-		m_transform[4] = y;
-		m_transform[5] = w;
-		return *this;
-	}
-
-	Camera& setTransformW(const float& x, const float& y, const float& w = 1.f) {
-		m_transform[6] = x;
-		m_transform[7] = y;
-		m_transform[8] = w;
-		return *this;
-	}
-
 	void translate(const float& x, const float& y) {
 		m_transform[6] = x;
 		m_transform[7] = y;
 	}
+
+	void setZoom(const float& value);
 
 	const float& zoom() const {
 		return m_zoom;
@@ -72,14 +55,20 @@ public:
 		return m_zoomNormalized;
 	}
 
-	void setZoom(const float& value);
-
 	const float& x() const {
 		return m_x;
 	}
 
 	const float& y() const {
 		return m_y;
+	}
+
+	const float& previousX() const {
+		return m_previousX;
+	}
+
+	const float& previousY() const {
+		return m_previousY;
 	}
 
 	const float& xWithZoom() const {
@@ -90,15 +79,22 @@ public:
 		return m_yWithZoom;
 	}
 
+	void update();
+
 	void setX(const float& value);
 	void setY(const float& value);
 
 	// for mouse collision only
-	float getXWithZoom(const float& x, const float& y) const ; 
+	float getXWithZoom(const float& x) const ; 
 	// for mouse collision only
-	float getYWithZoom(const float& x, const float& y) const;
-	
+	float getYWithZoom(const float& y) const;
 
+	float divideByZoomX(const float& x) const {
+		return x / m_transform[0];
+	}
+	float divideByZoomY(const float& y) const {
+		return y / m_transform[4];
+	}
 
 #ifdef _DEBUG
 private:

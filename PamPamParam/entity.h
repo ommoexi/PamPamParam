@@ -1,8 +1,8 @@
 #pragma once
 #include "rectangle.h"
 #include "collisionBox.h"
-#include "basicBlock.h"
 #include <array>
+#include "basicBlock.h"
 
 class Entity :public Rectangle {
 private:
@@ -17,18 +17,20 @@ private:
 	bool m_isJumping{ false };
 	float m_jumpSeconds{ 1.20f };
 	float m_currentJumpSeconds{ m_jumpSeconds };
-	float m_gravity{ 7.5 };
+	float m_gravity{ 7.5};
 	float m_jumpAcceleration{};
 
 	Animation m_moveLeftAnimation;
 	Animation m_moveRightAnimation;
 	Animation m_idleLeftAnimation;
 	Animation m_idleRightAnimation;
-
+	
 	using Rectangle::setX;
 	using Rectangle::setY;
 	using Rectangle::setWidth;
 	using Rectangle::setHeight;
+
+
 
 protected:
 public:
@@ -39,7 +41,7 @@ public:
 		const Animation& idleRightAnim);
 	virtual ~Entity();
 
-	virtual void update(std::vector<std::vector<Entity*>*>& entities,std::vector<std::vector<BasicBlock*>*>& basicBlocks);
+	virtual void update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks);
 	void moveHorizontally();
 	void moveVertically();
 
@@ -86,6 +88,8 @@ public:
 
 	float setX(const float& x);
 	float setY(const float& y);
+	void setHitCollisionX(const float& x);
+	void setHitCollisionY(const float& y);
 	void setWidth(const float& width);
 	void setHeight(const float& height);
 
@@ -99,6 +103,10 @@ public:
 
 	void setJump(const bool& value) {
 		m_isJumping = value;
+	}
+
+	void setIsFalling(const bool& value) {
+		m_isFalling = value;
 	}
 
 	void setJumpFalse() {

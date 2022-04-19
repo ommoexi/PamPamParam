@@ -7,7 +7,7 @@
 #include "camera.h"
 
 namespace Handler {
-	inline Camera cam{ 0,0, 800 };
+	inline Camera cam{ 0,0, 1000 };
 }
 
 namespace Input {

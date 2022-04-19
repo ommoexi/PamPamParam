@@ -98,26 +98,6 @@ public:
 
 	void updateAnimation(const Animation& animation);
 
-	//const std::map<std::string, Animation>& animations() const {
-	//	return m_animations;
-	//}
-	//Rectangle& setAllAnimations(const std::map<std::string, Animation>& value) {
-	//	m_animations = value;
-	//	return *this;
-	//}
-
-	//Rectangle& setAnimation(const Animation& animation, const std::string& animationName) {
-	//	m_animations[animationName] = animation;
-	//	return *this;
-	//}
-
-	/*const Animation& getAnimation(const std::string& animationName);
-
-	void updateAnimation(const std::string& animationName);
-	void resetAnimation(const std::string& animationName);
-	void setAnimationFramesPerTexture(const std::string& animationName, const unsigned int& framesPerTexture);
-	const unsigned int& animationFramesPerTexture(const std::string& animationName);*/
-
 	void updatePreviousX() {
 		m_previousX = x();
 		m_previousX2 = m_x2;

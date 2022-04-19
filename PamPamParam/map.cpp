@@ -292,6 +292,27 @@ void Map::setRenderVectors() {
 void Map::update() {
 	unsigned int& lastRing{ m_updateVectorsEachRadiusSize.back() };
 
+	for (size_t i{}; i < m_updateVectors.basicBlocks.size() - lastRing; i++) {
+		auto& basicBlocks{ *m_updateVectors.basicBlocks[i] };
+		for (size_t k{}; k < basicBlocks.size();) {
+			BasicBlock& basicBlock{ *basicBlocks[k] };
+			if (basicBlock.isRemoveFromVector()) {
+				if (basicBlock.useDeleteWhenRemoved()) {
+					delete& basicBlock;
+				}
+				basicBlocks.erase(basicBlocks.begin() + k);
+			}
+			else if (!basicBlock.isInBounds()) {
+				basicBlocks.erase(basicBlocks.begin() + k);
+				addObj(basicBlock);
+			}
+			else {
+				Input::mouse.dragRect(basicBlock, Handler::cam);
+				k++;			
+			}
+		}
+	}
+
 	for (size_t i{}; i < m_updateVectors.entities.size() - lastRing; i++) {
 		auto& entities{ *m_updateVectors.entities[i] };
 		for (size_t k{}; k < entities.size();) {
@@ -309,26 +330,6 @@ void Map::update() {
 			else {
 				entity.update(m_updateVectors.entities, m_updateVectors.basicBlocks);
 				k++;
-			}
-		}
-	}
-
-	for (size_t i{}; i < m_updateVectors.basicBlocks.size() - lastRing; i++) {
-		auto& basicBlocks{ *m_updateVectors.basicBlocks[i] };
-		for (size_t k{}; k < basicBlocks.size();) {
-			BasicBlock& basicBlock{ *basicBlocks[k] };
-			if (basicBlock.isRemoveFromVector()) {
-				if (basicBlock.useDeleteWhenRemoved()) {
-					delete& basicBlock;
-				}
-				basicBlocks.erase(basicBlocks.begin() + k);
-			}
-			else if (!basicBlock.isInBounds()) {
-				basicBlocks.erase(basicBlocks.begin() + k);
-				addObj(basicBlock);
-			}
-			else {
-				k++;			
 			}
 		}
 	}

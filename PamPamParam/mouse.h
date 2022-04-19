@@ -7,8 +7,11 @@ class Mouse {
 private:
 	float m_x{};
 	float m_y{};
+	float m_previousX{ m_x };
+	float m_previousY{ m_y };
 	bool m_leftClick{};
 	bool m_rightClick{};
+	Rectangle* m_dragRect{ nullptr };
 public:
 	Mouse();
 	virtual ~Mouse();
@@ -30,10 +33,12 @@ public:
 	}
 
 	void setX(const float& value) {
+		m_previousX = m_x;
 		m_x = value - Constants::windowStretch;
 	}
 
 	void setY(const float& value) {
+		m_previousY = m_y;
 		m_y = value - Constants::windowStretch;
 	}
 
@@ -48,6 +53,10 @@ public:
 	bool isCollide(const Rectangle& rect);
 	bool isCollideWithCamMovement(const Rectangle& rect, const Camera& cam);
 	bool isCollideWithCamMovementAndZoom(const Rectangle& rect, const Camera& cam);
+
+
+	void dragRect(Rectangle& rect, const Camera& cam);
+	void update(const Camera& cam);
 
 
 #ifdef _DEBUG
