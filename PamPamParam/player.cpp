@@ -14,9 +14,6 @@ Textures::animations::dogWalkingRight, Textures::animations::dogIdleLeft, Textur
 void Player::update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) {
 	setMovementByInput();
 	Entity::update(entities, basicBlocks);
-
-	hitCollision().updatePreviousX();
-	hitCollision().updatePreviousY();
 }
 
 Player::~Player() {

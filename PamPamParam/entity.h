@@ -31,7 +31,6 @@ private:
 	using Rectangle::setHeight;
 
 
-
 protected:
 public:
 	Entity(const Entity& entity) = delete;
@@ -85,6 +84,7 @@ public:
 	// checks and reacts to collision to basicBlock
 	void checkHorizontally(BasicBlock& basicBlock);
 	void checkVertically(BasicBlock& basicBlock);
+	//void check(BasicBlock& basicBlock);
 
 	float setX(const float& x);
 	float setY(const float& y);

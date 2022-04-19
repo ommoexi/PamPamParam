@@ -33,8 +33,8 @@ private:
 	Point m_bottomLeftBounds{}; // for map only
 	Point m_topRightBounds{};   // for map only
 
-	float m_previousX{ m_x }; // for updateGraphicsX() only
-	float m_previousY{ m_y }; // for updateGraphicsY() only
+	float m_previousX{ m_x }; // for updateGraphicsX() and setX distance return only
+	float m_previousY{ m_y }; // for updateGraphicsY() and setY distance return only
 	float m_previousWidth{ m_width }; // for updateGraphicsX Only in children
 	float m_previousHeight{ m_height }; // for updateGraphicsY Only in children
 

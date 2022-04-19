@@ -308,7 +308,8 @@ void Map::update() {
 			}
 			else {
 				Input::mouse.dragRect(basicBlock, Handler::cam);
-				k++;			
+				basicBlock.update();
+				k++;
 			}
 		}
 	}

@@ -16,3 +16,8 @@ BasicBlock::~BasicBlock() {
 	}
 #endif 
 }
+
+void BasicBlock::update() {
+	//updatePreviousX();
+	//updatePreviousY();
+}

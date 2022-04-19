@@ -95,6 +95,8 @@ public:
 
 	const Directions::Direction& isCollideAfterMovingHorizontally(const Rectangle& rect) const;
 	const Directions::Direction& isCollideAfterMovingVertically(const Rectangle& rect) const;
+	const Directions::Direction& reversed1(const Rectangle& rect) const;
+	const Directions::Direction& reversed2(const Rectangle& rect) const;
 
 	void updateAnimation(const Animation& animation);
 

@@ -219,3 +219,22 @@ namespace Directions {
 namespace BasicNullTypes {
 	const inline std::string string{ "nullString" };
 }
+
+inline std::string directionsDecifer(const int& val) {
+	if (val == 0) {
+		return "UP";
+	}
+	else if (val == 1) {
+		return "RIGHT";
+	}
+	else if (val == 2) {
+		return "DOWN";
+	}
+	else if (val == 3) {
+		return "LEFT";
+	}
+	else if (val == 4) {
+		return "NO DIRECTION";
+	}
+	return "";
+}

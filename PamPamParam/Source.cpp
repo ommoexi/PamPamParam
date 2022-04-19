@@ -73,12 +73,31 @@ int main(int argc, char* argv[])
 	Handler::map.addObj(*d, true);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-
+	BasicBlock* newBlock{ new BasicBlock{2000,500, 200, 800, Textures::death} };
+	BasicBlock* movingBlock{ new BasicBlock{500,-500, 150, 300, Textures::death} };
+	Handler::map.addObj(*newBlock, true);
+	Handler::map.addObj(*movingBlock, true);
+	int speed{ 5 };
+	int value{ -1 };
+	bool v{};
 	while (!Input::keyExit)
 	{
+
 		glClear(GL_COLOR_BUFFER_BIT);
 		Input::processInput();
 		Controls::globalControlsUpdate();
+		movingBlock->updatePreviousX();
+		movingBlock->updatePreviousY();
+		if (v == true) {
+			movingBlock->setX(movingBlock->x() + speed);
+		}
+		else {
+			movingBlock->setX(movingBlock->x() - speed);
+		}
+		if (movingBlock->x() >= 2000 || movingBlock->x() <= 0) {
+			v = !v;
+		}
+
 		updateObjects();
 		renderObjects();
 

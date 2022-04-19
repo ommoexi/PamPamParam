@@ -27,6 +27,8 @@ Entity::~Entity() {
 }
 
 void Entity::update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) {
+	hitCollision().updatePreviousX();
+	hitCollision().updatePreviousY();
 	if (movementLeft()) {
 		updateAnimation(m_moveLeftAnimation);
 	}
@@ -41,12 +43,16 @@ void Entity::update(std::vector<std::vector<Entity*>*>& entities, std::vector<st
 	}
 
 	moveVertically();
-	moveHorizontally();
 	//be sure not to iterate basicBlock on children
 	for (auto& blocks : basicBlocks) {
 		for (auto& block : *blocks) {
-			checkHorizontally(*block);
 			checkVertically(*block);
+		}
+	}
+	moveHorizontally();
+	for (auto& blocks : basicBlocks) {
+		for (auto& block : *blocks) {
+			checkHorizontally(*block);
 		}
 	}
 
@@ -125,6 +131,7 @@ void Entity::setHeight(const float& height) {
 //checks and reacts to collision to basicBlock
 //glitch minor la miscare
 void Entity::checkHorizontally(BasicBlock& basicBlock) {
+	//const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
 	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
 	if (isCollide == Directions::LEFT) {
 		setX(basicBlock.x2() + x() - m_hitCollision->x() + 1);
@@ -144,3 +151,32 @@ void Entity::checkVertically(BasicBlock& basicBlock) {
 		m_isFalling = false;
 	}
 }
+
+//void Entity::check(BasicBlock& basicBlock) {
+//	const Directions::Direction& entIsCollideHorizontally{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
+//	const Directions::Direction& entIsCollideVertically{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };
+//	const Directions::Direction& blockIsCollideHorizontally{ basicBlock.isCollideAfterMovingHorizontally(*m_hitCollision) };
+//	const Directions::Direction& blockIsCollideVertically{ basicBlock.isCollideAfterMovingVertically(*m_hitCollision) };
+//	if (static_cast<int>(blockIsCollideHorizontally) != 4) {
+//		std::cout << directionsDecifer(static_cast<int>(blockIsCollideHorizontally));
+//	}
+//	if (static_cast<int>(blockIsCollideVertically) != 4) {
+//		std::cout << "|| " << directionsDecifer(static_cast<int>(blockIsCollideVertically)) << '\n';
+//	}
+//
+//	if (entIsCollideHorizontally == Directions::LEFT ) {
+//		setX(basicBlock.x2() + x() - m_hitCollision->x() + 1);
+//	}
+//	else if (entIsCollideHorizontally == Directions::RIGHT ) {
+//		setX(basicBlock.x() - width() + x2() - m_hitCollision->x2() - 1);
+//	}
+//	if (entIsCollideVertically == Directions::UP ) {
+//		setY(basicBlock.y() - height() + y2() - m_hitCollision->y2() - 1);
+//		setJumpFalse();
+//	}
+//	else if (entIsCollideVertically == Directions::DOWN ) {
+//		setY(basicBlock.y2() + y() - m_hitCollision->y() + 1);
+//		m_isFalling = false;
+//	}
+//}
+

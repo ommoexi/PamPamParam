@@ -11,6 +11,7 @@ public:
 		const Constants::vec4& color = Colors::white);
 	virtual ~BasicBlock();
 
+	void update();
 
 
 #ifdef _DEBUG
