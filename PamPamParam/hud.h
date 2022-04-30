@@ -4,11 +4,13 @@
 #include "framerate.h"
 #include "initTextures.h"
 #include "Batch.h"
+#include "rectangle.h"
 
 class Hud {
 private:
 	std::vector<Text*> m_texts;
 	Framerate* m_framerate;
+	Rectangle* m_background;
 public:
 	Hud();
 	virtual ~Hud();
@@ -21,7 +23,8 @@ public:
 	void removeObj(Text& text);
 	void update();
 
-	void addToBatch(Batch& batch);
+	void addToTextBatch(Batch& batch);
+	void addToBasicBatch(Batch& batch);
 
 #ifdef _DEBUG
 private:

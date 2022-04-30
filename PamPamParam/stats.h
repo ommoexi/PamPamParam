@@ -7,6 +7,7 @@ private:
 	float m_jumpSpeed{};
 public:
 	Stats();
+	Stats(const Stats& other);
 	Stats(const float& movementSpeed, const float& jumpSpeed);
 	virtual ~Stats();
 

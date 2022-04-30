@@ -11,9 +11,10 @@ void renderObjects() {
 			Handler::charBatch.setSubData(text->mesh());
 		}
 	}
-	Handler::hud.addToBatch(Handler::charBatch);
+	Handler::hud.addToTextBatch(Handler::charBatch);
 
 	Handler::basicBatch.bindBuffer();
+	Handler::hud.addToBasicBatch(Handler::basicBatch);
 	for (auto& entities : renderVectors.entities) {
 		for (auto& entity : *entities) {
 			entity->updateGraphics();

@@ -8,9 +8,9 @@ namespace Textures {
 
 	namespace string {
 		inline const std::string player{ "player" };
-		inline const std::string death{ "death" };
-		inline const std::string death2{ "death 2" };
-		inline const std::string death3{ "death 3" };
+		inline const std::string grass{ "grass" };
+		inline const std::string background{ "background" };
+		inline const std::string grassland{ "grassland" };
 		inline const std::string splitTest{ "splitTest" };
 		inline const std::string collisionBox{ "collisionBox" };
 	}

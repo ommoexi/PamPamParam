@@ -7,6 +7,7 @@ Hud::Hud() {
 	m_framerate = new Framerate{0,0,20,20, Colors::black, "FPS" , Textures::I_FONT, 0, false } ;
 	m_framerate->setX(Constants::windowStretch - m_framerate->getPixelWidthFirstRow() - 10);
 	m_framerate->setY(Constants::windowStretch- m_framerate->getPixelHeightFirstRow() - 10);
+	m_background = new Rectangle{ -1000,-1000, 2000, 2000, Textures::death2, false };
 
 }
 Hud::~Hud() {
@@ -23,6 +24,7 @@ Hud::~Hud() {
 		}
 	}
 	delete m_framerate;
+	delete m_background;
 }
 
 void Hud::addObj(Text& text, const bool& useDeleteWhenRemoved) {
@@ -52,7 +54,10 @@ void Hud::update() {
 	m_framerate->update();
 }
 
-void Hud::addToBatch(Batch& batch) {
+void Hud::addToTextBatch(Batch& batch) {
 	m_framerate->updateGraphics();
 	batch.setSubData(m_framerate->mesh());
+}
+void Hud::addToBasicBatch(Batch& batch) {
+	batch.setSubData(m_background->mesh());
 }
