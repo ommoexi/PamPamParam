@@ -3,10 +3,11 @@
 #include "collisionBox.h"
 #include <array>
 #include "basicBlock.h"
+#include "stats.h"
 
 class Entity :public Rectangle {
 private:
-	float m_movementSpeed;
+	Stats m_stats;
 	bool m_movementUp{ false };
 	bool m_movementRight{ false };
 	bool m_movementDown{ false };
@@ -15,15 +16,18 @@ private:
 	CollisionBox* m_hitCollision;		// unique deleted by destructor
 	bool m_isFalling{ true };
 	bool m_isJumping{ false };
-	float m_jumpSeconds{ 1.20f };
+	float m_jumpSeconds{ 1.5f };
 	float m_currentJumpSeconds{ m_jumpSeconds };
-	float m_gravity{ 7.5};
-	float m_jumpAcceleration{};
+	float m_gravity{ 10};
 
 	Animation m_moveLeftAnimation;
 	Animation m_moveRightAnimation;
 	Animation m_idleLeftAnimation;
 	Animation m_idleRightAnimation;
+	const Texture* m_jumpTextureRight;
+	const Texture* m_fallTextureRight;
+	const Texture* m_jumpTextureLeft;
+	const Texture* m_fallTextureLeft;
 	
 	using Rectangle::setX;
 	using Rectangle::setY;
@@ -35,14 +39,23 @@ protected:
 public:
 	Entity(const Entity& entity) = delete;
 	Entity& operator=(const Entity& entity) = delete;
-	Entity(const float& x, const float& y, const float& width, const float& height, const float& movementSpeed, 
+	Entity(const float& x, const float& y, const float& width, const float& height, const Stats& stats,
 		CollisionBox& hitCollision, const Animation& moveLeftAnim, const Animation& moveRightAnim, const Animation& idleLeftAnim,
-		const Animation& idleRightAnim);
+		const Animation& idleRightAnim, const Texture& jumpTextureRight, const Texture& fallTextureRight,
+		const Texture& jumpTextureLeft, const Texture& fallTextureLeft);
 	virtual ~Entity();
 
 	virtual void update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks);
 	void moveHorizontally();
 	void moveVertically();
+
+	const Stats& stats() const {
+		return m_stats;
+	}
+
+	Stats& stats() {
+		return m_stats;
+	}
 
 	const bool& movementUp() const {
 		return m_movementUp;
@@ -84,12 +97,12 @@ public:
 	// checks and reacts to collision to basicBlock
 	void checkHorizontally(BasicBlock& basicBlock);
 	void checkVertically(BasicBlock& basicBlock);
-	//void check(BasicBlock& basicBlock);
+	void check(BasicBlock& basicBlock);
 
 	float setX(const float& x);
 	float setY(const float& y);
-	void setHitCollisionX(const float& x);
-	void setHitCollisionY(const float& y);
+	//void setHitCollisionX(const float& x);
+	//void setHitCollisionY(const float& y);
 	void setWidth(const float& width);
 	void setHeight(const float& height);
 

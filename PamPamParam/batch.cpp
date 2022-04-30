@@ -9,9 +9,6 @@ Batch::Batch(TextureArray* texture, Shader& shader, const int& shapes) : m_textu
 
 	int sizeOfFloat{ static_cast<int>(sizeof(float)) };
 	
-	glGenBuffers(1, &m_VBC);
-	glBindBuffer(GL_COPY_READ_BUFFER, m_VBC);
-
 	glGenVertexArrays(1, &m_VAO);
 	glBindVertexArray(m_VAO);
 
@@ -40,7 +37,6 @@ void Batch::setVBOSize(const int& shapes) {
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
     glBufferData(GL_ARRAY_BUFFER, m_VBOByteSize, nullptr, GL_DYNAMIC_DRAW);
 
-	glBindBuffer(GL_COPY_READ_BUFFER, m_VBC);
 	glBufferData(GL_COPY_READ_BUFFER, m_VBOByteSize, nullptr, GL_DYNAMIC_DRAW);
 
 }
@@ -51,6 +47,7 @@ void Batch::setSubData(const Mesh& mesh) {
 	if (m_offset + size <= m_VBOByteSize) {
 		glBufferSubData(GL_ARRAY_BUFFER, m_offset, size, mesh.data());
 		m_offset += size;
+		m_totalVertexPointsToBeDrawn += static_cast<int>(mesh.size() / m_shader->attribShader().stride());
 	}
 #ifdef _DEBUG
 	else {
@@ -69,7 +66,6 @@ Batch::~Batch() {
 #endif
 
 	glDeleteBuffers(1, &m_VBO);
-	glDeleteBuffers(1, &m_VBC);
 	glDeleteVertexArrays(1, &m_VAO);
 }
 
@@ -78,13 +74,8 @@ void Batch::draw() const {
 	m_shader->bind();
 
 	glBindVertexArray(m_VAO);
-	glDrawArrays(m_shader->attribShader().mode(), 0, static_cast<int>(m_offset));
+	glDrawArrays(m_shader->attribShader().mode(), 0, m_totalVertexPointsToBeDrawn);
+	m_offset = 0;
+	m_totalVertexPointsToBeDrawn = 0;
 }
 
-// not a really good method but it will suffice for now
-void Batch::setAllDataVoid() {
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	glBindBuffer(GL_COPY_READ_BUFFER, m_VBC);
-	glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_ARRAY_BUFFER, 0, 0, m_offset);
-	m_offset = 0;
-}

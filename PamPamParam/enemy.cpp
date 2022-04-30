@@ -1,8 +1,9 @@
 //#include "enemy.h"
 //
-//Enemy::Enemy(const float& x, const float& y, const float& width, const float& height, const Texture* texture,
+//Enemy::Enemy(const float& x, const float& y, const float& width, const float& height,
 //	const float& movementSpeed, CollisionBox& hitCollision, const Constants::vec4& color) :
-//	Entity{ x,y,width,height,texture,movementSpeed, hitCollision, color }
+//	Entity{ x,y,width,height, movementSpeed, hitCollision, Textures::animations::dogWalkingLeft,
+//Textures::animations::dogWalkingRight, Textures::animations::dogIdleLeft, Textures::animations::dogIdleRight }
 //{
 //#ifdef _DEBUG
 //	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::enemy_cpp, &mS_objectsCount);
@@ -41,15 +42,4 @@
 //	else {
 //		setMovementUp(false);
 //	}
-//	moveHorizontally();
-//	moveVertically();
-//	for (auto& blocks : basicBlocks) {
-//		for (auto& block : *blocks) {
-//			checkHorizontally(*block);
-//			checkVertically(*block);
-//		}
-//	}
-//	setJumpIfNotfalling();
-//	hitCollision().updatePreviousX();
-//	hitCollision().updatePreviousY();
 //}

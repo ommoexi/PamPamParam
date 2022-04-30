@@ -167,11 +167,13 @@
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="handler.cpp" />
+    <ClCompile Include="physicsStats.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="rectangle.cpp" />
+    <ClCompile Include="stats.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="textureArray.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -199,11 +201,13 @@
     <ClInclude Include="mouse.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="handler.h" />
+    <ClInclude Include="physicsStats.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="rectangle.h" />
     <ClInclude Include="shaders.h" />
+    <ClInclude Include="stats.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="textureArray.h" />

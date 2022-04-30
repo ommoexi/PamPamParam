@@ -202,8 +202,8 @@ bool Rectangle::isCollide(const float& x, const float& y) {
 }
 
 const Directions::Direction& Rectangle::isCollideAfterMovingHorizontally(const Rectangle& rect) const {
-	if (y() < rect.y2() && y2() > rect.y()){ // this one is without glitch corner but needs more processing power
-	//if (m_previousY < rect.y2() && m_previousY2 > rect.y()) { //check horizontally if 2 objects align
+	//if (y() < rect.y2() && y2() > rect.y()){ // this one is without glitch corner but needs more processing power
+	if (m_previousY < rect.y2() && m_previousY2 > rect.y()) { //check horizontally if 2 objects align
 		if (m_previousX2 < rect.x2() && m_x2 > rect.x()) { // self is left obj is right
 			return Directions::RIGHT;
 		}
@@ -215,8 +215,8 @@ const Directions::Direction& Rectangle::isCollideAfterMovingHorizontally(const R
 	return Directions::NODIRECTION;
 }
 const Directions::Direction& Rectangle::isCollideAfterMovingVertically(const Rectangle& rect) const {
-	if (x() < rect.x2() && x2() > rect.x()) { // this one is without glitch corner but needs more processing power
-	//if (m_previousX < rect.x2() && m_previousX2 > rect.x()) { // check vertically if 2 objects align
+	//if (x() < rect.x2() && x2() > rect.x()) { // this one is without glitch corner but needs more processing power
+	if (m_previousX < rect.x2() && m_previousX2 > rect.x()) { // check vertically if 2 objects align
 		if (m_previousY2 < rect.y2() && m_y2 > rect.y()) { // self is down object is up		
 			return Directions::UP;
 		}

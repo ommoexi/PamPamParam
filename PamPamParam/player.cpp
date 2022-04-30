@@ -1,10 +1,12 @@
 #include "player.h"
 
 
-Player::Player(const float& x, const float& y, const float& width, const float& height,const float& movementSpeed, 
+Player::Player(const float& x, const float& y, const float& width, const float& height,const Stats& stats, 
 	CollisionBox& hitCollision)
-	: Entity{x,y,width,height, movementSpeed, hitCollision, Textures::animations::dogWalkingLeft,
-Textures::animations::dogWalkingRight, Textures::animations::dogIdleLeft, Textures::animations::dogIdleRight } {
+	: Entity{x,y,width,height, stats, hitCollision, Textures::animations::dogWalkingLeft,
+Textures::animations::dogWalkingRight, Textures::animations::dogIdleLeft, Textures::animations::dogIdleRight,
+*Textures::animationV::dogWalkingRight[4], *Textures::animationV::dogWalkingRight[4], 
+*Textures::animationV::dogWalkingLeft[4], *Textures::animationV::dogWalkingLeft[4] } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::player_cpp, &mS_objectsCount);
 #endif
@@ -42,12 +44,10 @@ void Player::setMovementByInput() {
 	if (Input::keyA) {
 		setMovementLeft(true);
 		setMovementRight(false);
-		setFacingRight(false);
 	}
 	else if (Input::keyD) {
 		setMovementRight(true);
 		setMovementLeft(false);
-		setFacingRight(true);
 	}
 	else {
 		setMovementRight(false);

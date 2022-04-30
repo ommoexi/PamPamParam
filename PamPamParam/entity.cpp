@@ -1,11 +1,13 @@
 #include "entity.h"
 #include <random>
-Entity::Entity(const float& x, const float& y, const float& width, const float& height, const float& movementSpeed,
+Entity::Entity(const float& x, const float& y, const float& width, const float& height, const Stats& stats,
 	CollisionBox& hitCollision, const Animation& moveLeftAnim, const Animation& moveRightAnim, const Animation& idleLeftAnim,
-	const Animation& idleRightAnim) :
-	Rectangle{ x, y, width, height, &idleRightAnim.currentTexture(), true, Colors::white }, m_movementSpeed{ movementSpeed },
+	const Animation& idleRightAnim, const Texture& jumpTextureRight, const Texture& fallTextureRight, const Texture& jumpTextureLeft,
+	const Texture& fallTextureLeft) :
+	Rectangle{ x, y, width, height, &idleRightAnim.currentTexture(), true, Colors::white }, m_stats{ stats },
 	m_hitCollision{ &hitCollision }, m_moveLeftAnimation{ moveLeftAnim }, m_moveRightAnimation{ moveRightAnim },
-	m_idleLeftAnimation{ idleLeftAnim }, m_idleRightAnimation{ idleRightAnim } {
+	m_idleLeftAnimation{ idleLeftAnim }, m_idleRightAnimation{ idleRightAnim }, m_jumpTextureRight{ &jumpTextureRight }, 
+	m_fallTextureRight{ &fallTextureRight }, m_jumpTextureLeft{ &jumpTextureLeft }, m_fallTextureLeft{ &fallTextureLeft } {
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::entity_cpp, &mS_objectsCount);
 #endif
@@ -29,7 +31,26 @@ Entity::~Entity() {
 void Entity::update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) {
 	hitCollision().updatePreviousX();
 	hitCollision().updatePreviousY();
-	if (movementLeft()) {
+
+	moveVertically();
+	moveHorizontally();
+
+	//be sure not to iterate basicBlock on children
+	for (auto& blocks : basicBlocks) {
+		for (auto& block : *blocks) {
+			check(*block);
+		}
+	}
+
+	if (isFalling() || isJumping()) {
+		if (isFacingRight()) {
+			setTexture(m_jumpTextureRight);
+		}
+		else {
+			setTexture(m_jumpTextureLeft);
+		}
+	}
+	else if (movementLeft()) {
 		updateAnimation(m_moveLeftAnimation);
 	}
 	else if (movementRight()) {
@@ -40,20 +61,6 @@ void Entity::update(std::vector<std::vector<Entity*>*>& entities, std::vector<st
 	}
 	else {
 		updateAnimation(m_idleLeftAnimation);
-	}
-
-	moveVertically();
-	//be sure not to iterate basicBlock on children
-	for (auto& blocks : basicBlocks) {
-		for (auto& block : *blocks) {
-			checkVertically(*block);
-		}
-	}
-	moveHorizontally();
-	for (auto& blocks : basicBlocks) {
-		for (auto& block : *blocks) {
-			checkHorizontally(*block);
-		}
 	}
 
 	if (!m_isFalling && m_movementUp) {
@@ -67,10 +74,12 @@ void Entity::update(std::vector<std::vector<Entity*>*>& entities, std::vector<st
 
 void Entity::moveHorizontally() {
 	if (m_movementLeft) {
-		setX(x() - m_movementSpeed);
+		setX(x() - m_stats.movementSpeed());
+		setFacingRight(false);
 	}
 	else if (m_movementRight) {
-		setX(x() + m_movementSpeed);
+		setX(x() + m_stats.movementSpeed());
+		setFacingRight(true);
 	}
 }
 void Entity::moveVertically() {
@@ -79,7 +88,7 @@ void Entity::moveVertically() {
 	}
 	else if (m_isJumping && (m_currentJumpSeconds > 0)) {
 		m_currentJumpSeconds -= 0.01f;
-		setY(y() + m_currentJumpSeconds * (m_movementSpeed));
+		setY(y() + m_stats.jumpSpeed() *  m_currentJumpSeconds - m_gravity);
 		if (m_currentJumpSeconds <= 0) {
 			setJumpFalse();
 		}
@@ -99,15 +108,16 @@ float Entity::setY(const float& y) {
 	return yDistance;
 }
 
-void Entity::setHitCollisionX(const float& x) {
-	float xDistance{ m_hitCollision->setX(x) };
-	Rectangle::setX(Entity::x() + xDistance);
-
-}
-void Entity::setHitCollisionY(const float& y) {
-	float xDistance{ m_hitCollision->setY(y) };
-	Rectangle::setY(Entity::y() + xDistance);
-}
+//void Entity::setHitCollisionX(const float& x) {
+//	
+//	float xDistance{ m_hitCollision->setX(x) };
+//	Rectangle::setX(Entity::x() + xDistance);
+//
+//}
+//void Entity::setHitCollisionY(const float& y) {
+//	float xDistance{ m_hitCollision->setY(y) };
+//	Rectangle::setY(Entity::y() + xDistance);
+//}
 
 void Entity::setWidth(const float& width) {
 	// de modificat mai tarziu
@@ -131,52 +141,48 @@ void Entity::setHeight(const float& height) {
 //checks and reacts to collision to basicBlock
 //glitch minor la miscare
 void Entity::checkHorizontally(BasicBlock& basicBlock) {
-	//const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
-	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
-	if (isCollide == Directions::LEFT) {
-		setX(basicBlock.x2() + x() - m_hitCollision->x() + 1);
-	}
-	else if (isCollide == Directions::RIGHT) {
-		setX(basicBlock.x() - width() + x2() - m_hitCollision->x2() - 1);
+	if (basicBlock.x() == basicBlock.previousX()) {
+		const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
+
+		if (isCollide == Directions::LEFT) {
+			setX(basicBlock.x2() + x() - m_hitCollision->x() + 1);
+		}
+		else if (isCollide == Directions::RIGHT) {
+			setX(basicBlock.x() - width() + x2() - m_hitCollision->x2() - 1);
+		}
 	}
 }
 void Entity::checkVertically(BasicBlock& basicBlock) {
-	const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };
-	if (isCollide == Directions::UP) {
+	if (basicBlock.y() == basicBlock.previousY()) {
+		const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };
+		if (isCollide == Directions::UP) {
+			setY(basicBlock.y() - height() + y2() - m_hitCollision->y2() - 1);
+			setJumpFalse();
+		}
+		else if (isCollide == Directions::DOWN) {
+			setY(basicBlock.y2() + y() - m_hitCollision->y() + 1);
+			m_isFalling = false;
+		}
+	}
+}
+
+void Entity::check(BasicBlock& basicBlock) {
+	const Directions::Direction& entIsCollideHorizontally{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
+	const Directions::Direction& entIsCollideVertically{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };
+
+	if (entIsCollideHorizontally == Directions::LEFT ) {
+		setX(basicBlock.x2() + x() - m_hitCollision->x() + 1);
+	}
+	else if (entIsCollideHorizontally == Directions::RIGHT ) {
+		setX(basicBlock.x() - width() + x2() - m_hitCollision->x2() - 1);
+	}
+	if (entIsCollideVertically == Directions::UP ) {
 		setY(basicBlock.y() - height() + y2() - m_hitCollision->y2() - 1);
 		setJumpFalse();
 	}
-	else if (isCollide == Directions::DOWN) {
+	else if (entIsCollideVertically == Directions::DOWN ) {
 		setY(basicBlock.y2() + y() - m_hitCollision->y() + 1);
 		m_isFalling = false;
 	}
 }
-
-//void Entity::check(BasicBlock& basicBlock) {
-//	const Directions::Direction& entIsCollideHorizontally{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
-//	const Directions::Direction& entIsCollideVertically{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };
-//	const Directions::Direction& blockIsCollideHorizontally{ basicBlock.isCollideAfterMovingHorizontally(*m_hitCollision) };
-//	const Directions::Direction& blockIsCollideVertically{ basicBlock.isCollideAfterMovingVertically(*m_hitCollision) };
-//	if (static_cast<int>(blockIsCollideHorizontally) != 4) {
-//		std::cout << directionsDecifer(static_cast<int>(blockIsCollideHorizontally));
-//	}
-//	if (static_cast<int>(blockIsCollideVertically) != 4) {
-//		std::cout << "|| " << directionsDecifer(static_cast<int>(blockIsCollideVertically)) << '\n';
-//	}
-//
-//	if (entIsCollideHorizontally == Directions::LEFT ) {
-//		setX(basicBlock.x2() + x() - m_hitCollision->x() + 1);
-//	}
-//	else if (entIsCollideHorizontally == Directions::RIGHT ) {
-//		setX(basicBlock.x() - width() + x2() - m_hitCollision->x2() - 1);
-//	}
-//	if (entIsCollideVertically == Directions::UP ) {
-//		setY(basicBlock.y() - height() + y2() - m_hitCollision->y2() - 1);
-//		setJumpFalse();
-//	}
-//	else if (entIsCollideVertically == Directions::DOWN ) {
-//		setY(basicBlock.y2() + y() - m_hitCollision->y() + 1);
-//		m_isFalling = false;
-//	}
-//}
 

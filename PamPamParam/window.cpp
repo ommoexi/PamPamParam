@@ -19,7 +19,7 @@ Window::Window(const float& width, const float& height, std::string_view title, 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	m_window = SDL_CreateWindow(title.data(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-		static_cast<int>(width), static_cast<int>(height), SDL_WINDOW_OPENGL);
+		static_cast<int>(width), static_cast<int>(height), SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	if (m_isFullScreen) {
 		setWindowFullScreen();
 	}

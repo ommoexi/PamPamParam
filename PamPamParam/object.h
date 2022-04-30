@@ -27,9 +27,6 @@ private:
 		return *this;
 	}
 
-	bool m_deleted{ false }; // this variable is for handler only if it is on stack and it is deleted then it is true
-
-
 	Point m_bottomLeftBounds{}; // for map only
 	Point m_topRightBounds{};   // for map only
 

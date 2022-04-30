@@ -37,8 +37,6 @@ void renderObjects() {
 	Handler::basicBatch.draw();
 	Handler::charBatch.draw();
 
-	Handler::charBatch.setAllDataVoid();
-	Handler::basicBatch.setAllDataVoid();
 }
 
 void updateObjects() {

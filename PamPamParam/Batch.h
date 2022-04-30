@@ -10,10 +10,10 @@ private:
 	Shader* m_shader;
 	unsigned int m_VAO;
 	unsigned int m_VBO;
-	unsigned int m_VBC;
 	int m_verticesSize{};
 	long long m_VBOByteSize{};
-	long long m_offset{};
+	mutable long long m_offset{};
+	mutable int m_totalVertexPointsToBeDrawn{};
 
 protected:
 public:
@@ -40,8 +40,6 @@ public:
 	const Shader& shader() const {
 		return *m_shader;
 	}
-
-	void setAllDataVoid();
 
 #ifdef _DEBUG
 private:

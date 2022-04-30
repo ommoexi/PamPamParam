@@ -60,23 +60,21 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
-	/*for (int i{}; i < 10; i++) {
-#ifdef _DEBUG
-		CollisionBox* wowColl{ new CollisionBox{0,0,100,100, Textures::collisionBox, true, Colors::red } };
-#else 
-		CollisionBox* wowColl{ new CollisionBox{0,0,100,100 } };
-#endif
-		Enemy* enemy{ new Enemy{200,200,100,100, Textures::player, 5, *wowColl} };
-		Handler::map.addObj(*enemy, true);
-	}*/
+//	for (int i{}; i < 2000; i++) {
+//#ifdef _DEBUG
+//		CollisionBox* wowColl{ new CollisionBox{0,0,100,100, Textures::collisionBox, true, Colors::red } };
+//#else 
+//		CollisionBox* wowColl{ new CollisionBox{0,0,100,100 } };
+//#endif
+//		Enemy* enemy{ new Enemy{200,200,500,500, 5, *wowColl} };
+//		Handler::map.addObj(*enemy, true);
+//	}
 	Text* d{ new Text{0,0,10,10, Colors::black, "asdfasdfadsgadg", Textures::I_FONT, 0 } };
 	Handler::map.addObj(*d, true);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-	BasicBlock* newBlock{ new BasicBlock{2000,500, 200, 800, Textures::death} };
-	BasicBlock* movingBlock{ new BasicBlock{500,-500, 150, 300, Textures::death} };
-	Handler::map.addObj(*newBlock, true);
-	Handler::map.addObj(*movingBlock, true);
+
+
 	int speed{ 5 };
 	int value{ -1 };
 	bool v{};
@@ -86,17 +84,7 @@ int main(int argc, char* argv[])
 		glClear(GL_COLOR_BUFFER_BIT);
 		Input::processInput();
 		Controls::globalControlsUpdate();
-		movingBlock->updatePreviousX();
-		movingBlock->updatePreviousY();
-		if (v == true) {
-			movingBlock->setX(movingBlock->x() + speed);
-		}
-		else {
-			movingBlock->setX(movingBlock->x() - speed);
-		}
-		if (movingBlock->x() >= 2000 || movingBlock->x() <= 0) {
-			v = !v;
-		}
+
 
 		updateObjects();
 		renderObjects();

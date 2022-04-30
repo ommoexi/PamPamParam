@@ -5,7 +5,7 @@ class Player : public Entity {
 private:
 
 public:
-	Player(const float& x, const float& y, const float& width, const float& height, const float& movementSpeed, 
+	Player(const float& x, const float& y, const float& width, const float& height, const Stats& stats, 
 		CollisionBox& hitCollision);
 	virtual ~Player();
 

@@ -307,6 +307,9 @@ void Map::update() {
 				addObj(basicBlock);
 			}
 			else {
+			/*	if (Input::mouse.isCollideWithCamMovementAndZoom(basicBlock, Handler::cam)) {
+					basicBlock.setRemoveFromVector(true);
+				}*/
 				Input::mouse.dragRect(basicBlock, Handler::cam);
 				basicBlock.update();
 				k++;
