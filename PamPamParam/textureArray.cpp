@@ -24,6 +24,23 @@ namespace image {
 		return image;
 	}
 
+	int loadImages(std::vector<Image>& inV, const std::string& folderPath, const std::string& setName, const int& desiredChannels) {
+		int row = 1;
+		int col = 1;
+	
+		for (const auto& file : std::filesystem::directory_iterator::directory_iterator(folderPath)) {
+			std::string filePathString { file.path().generic_string() };
+			if (stringEndsWith(filePathString, ".png")) {
+				Image image { splitTextureName(setName, row, col), 0,0 };
+				image.data = stbi_load(filePathString.data(), &image.width, &image.height, &image.channels, desiredChannels);
+				inV.push_back(image);
+				col += 1;
+			}
+		}
+		
+		return col - 1;
+	}
+
 	void freeImageData(Image& image) {
 		stbi_image_free(image.data);
 	}

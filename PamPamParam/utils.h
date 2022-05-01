@@ -67,3 +67,5 @@ inline float normalizeCoord(const float& x) {
 inline float denormalizeCoord(const float& x) {
 	return x * Constants::windowStretch;
 }
+
+bool stringEndsWith(const std::string& str, const std::string& suffix);

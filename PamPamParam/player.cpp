@@ -16,6 +16,17 @@ Textures::animations::dogWalkingRight, Textures::animations::dogIdleLeft, Textur
 void Player::update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks) {
 	setMovementByInput();
 	Entity::update(entities, basicBlocks);
+
+	if (Input::mouse.isLeftClick()) {
+		if (isFacingRight()) {
+			m_projectiles.push_back(new Projectile{ hitCollision().x2(), (hitCollision().y() + hitCollision().y2()) / 2, 50,50,
+				Textures::animationV::dogIdleRight[0], true, 50, 0, 1.8f });
+		}
+		else {
+			m_projectiles.push_back(new Projectile{ hitCollision().x(), (hitCollision().y() + hitCollision().y2()) / 2, 50,50,
+			Textures::animationV::dogIdleLeft[0], true, -50, 0, 1.8f });
+		}
+	}
 }
 
 Player::~Player() {

@@ -40,14 +40,6 @@ protected:
 	float transformX(const float& xCoord) const;
 	float transformY(const float& yCoord) const;
 
-	Mesh& mesh() {
-		return m_mesh;
-	}
-
-	const Mesh& mesh() const {
-		return m_mesh;
-	}
-
 	const Constants::vec4& colorNormalized() {
 		return m_colorNormalized;
 	}
@@ -114,6 +106,14 @@ public:
 	virtual ~Object();
 	Object(const Object& other) = delete;
 	Object& operator=(const Object& other) = delete;
+
+	Mesh& mesh() {
+		return m_mesh;
+	}
+
+	const Mesh& mesh() const {
+		return m_mesh;
+	}
 
 	const float& width() const {
 		return m_width;

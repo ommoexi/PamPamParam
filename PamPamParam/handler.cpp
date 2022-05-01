@@ -17,14 +17,7 @@ void renderObjects() {
 	Handler::hud.addToBasicBatch(Handler::basicBatch);
 	for (auto& entities : renderVectors.entities) {
 		for (auto& entity : *entities) {
-			entity->updateGraphics();
-			Handler::basicBatch.setSubData(entity->mesh());
-#ifdef _DEBUG
-			if (DebugSettings::I_SHOWCOLLISIONBOXES) {
-				entity->hitCollision().updateGraphics();
-				Handler::basicBatch.setSubData(entity->hitCollision().mesh());
-			}
-#endif
+			entity->renderToBasicBatch(Handler::basicBatch);
 		}
 	}
 

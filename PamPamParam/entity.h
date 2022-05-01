@@ -4,6 +4,8 @@
 #include <array>
 #include "basicBlock.h"
 #include "stats.h"
+#include "Batch.h"
+#include "projectile.h"
 
 class Entity :public Rectangle {
 private:
@@ -29,6 +31,8 @@ private:
 	const Texture* m_jumpTextureLeft;
 	const Texture* m_fallTextureLeft;
 	
+
+
 	using Rectangle::setX;
 	using Rectangle::setY;
 	using Rectangle::setWidth;
@@ -36,6 +40,11 @@ private:
 
 
 protected:
+
+	// PROTOTYPE
+	// updating is relative to player pos not the projectile itself
+	std::vector<Projectile*> m_projectiles{};
+
 public:
 	Entity(const Entity& entity) = delete;
 	Entity& operator=(const Entity& entity) = delete;
@@ -46,6 +55,7 @@ public:
 	virtual ~Entity();
 
 	virtual void update(std::vector<std::vector<Entity*>*>& entities, std::vector<std::vector<BasicBlock*>*>& basicBlocks);
+	void renderToBasicBatch(Batch& batch);
 	void moveHorizontally();
 	void moveVertically();
 

@@ -25,6 +25,9 @@ Entity::~Entity() {
 		setDebugDestructor(false);
 	}
 #endif 
+	for (auto& projectile : m_projectiles) {
+		delete projectile;
+	}
 	delete m_hitCollision;
 }
 
@@ -68,6 +71,18 @@ void Entity::update(std::vector<std::vector<Entity*>*>& entities, std::vector<st
 	}
 	else if (!m_isJumping) {
 		m_isFalling = true;
+	}
+
+	for (size_t i{}; i < m_projectiles.size();) {
+		Projectile& projectile{ *(m_projectiles[i]) };
+		if (projectile.isRemoveFromVector()) {
+			delete& projectile;
+			m_projectiles.erase(m_projectiles.begin() + i);
+		}
+		else {
+			projectile.update();
+			i++;
+		}
 	}
 
 }
@@ -158,3 +173,18 @@ void Entity::check(BasicBlock& basicBlock) {
 	}
 }
 
+
+void Entity::renderToBasicBatch(Batch& batch) {
+	updateGraphics();
+	batch.setSubData(mesh());
+#ifdef _DEBUG
+	if (DebugSettings::I_SHOWCOLLISIONBOXES) {
+		m_hitCollision->updateGraphics();
+		batch.setSubData(m_hitCollision->mesh());
+	}
+#endif
+	for (auto& projectile : m_projectiles) {
+		projectile->updateGraphics();
+		batch.setSubData(projectile->mesh());
+	}
+}

@@ -7,6 +7,14 @@ Background::Background(const float& x, const float& y, const float& width, const
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::entity_cpp, &mS_objectsCount);
 #endif
 }
+
+Background::Background(const float& x, const float& y, const float& width, const float& height, const Animation& animation,
+	const float& isAffectedByCamera) : Background{ x,y,width,height, &animation.currentTexture(), isAffectedByCamera }
+	{
+	m_animation = animation;
+	m_hasAnimation = true;
+}
+
 Background::~Background() {
 #ifdef _DEBUG
 	if (debugDestructor()) {
@@ -14,4 +22,10 @@ Background::~Background() {
 		setDebugDestructor(false);
 	}
 #endif
+}
+
+void Background::update() {
+	if (m_hasAnimation) {
+		m_animation.nextTexture();
+	}
 }

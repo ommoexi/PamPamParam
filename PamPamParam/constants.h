@@ -89,6 +89,10 @@ namespace Constants {
 
 		const inline std::string texturesFolder{ "textures" };
 		const inline std::filesystem::path texturesPath{ currentDirectoryPath / texturesFolder };
+		const inline std::string mossyPlantsFolder{ "Mossy Plants" };
+		const inline std::filesystem::path mossyPlantsPath{ texturesPath / mossyPlantsFolder };
+		const inline std::string mossyPlantsBlueFlower1Folder{ "BlueFlower2" };
+		const inline std::filesystem::path mossyPlantsBlueFlower1Path{ mossyPlantsPath / mossyPlantsBlueFlower1Folder };
 
 		const inline std::string player_pngFile{ "player.png" };
 		const inline std::string player_pngPath{ (texturesPath / player_pngFile).generic_string() };
@@ -160,6 +164,7 @@ enum class Header_Files {
 	stats_h,
 	physicsStats_h,
 	background_h,
+	projectile_h
 };
 
 enum class Source_Files {
@@ -195,6 +200,7 @@ enum class Source_Files {
 	stats_cpp,
 	physicsStats_cpp,
 	background_cpp,
+	projectile_cpp,
 };
 #endif
 

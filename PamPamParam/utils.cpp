@@ -12,3 +12,12 @@ std::string _getLastScope(std::string_view s) {
 	return std::string{ s.substr(start, s.length() - start) };
 }
 #endif
+
+
+bool stringEndsWith(const std::string& str, const std::string& suffix) {
+	if (str.length() < suffix.length()) {
+		return false;
+	}
+	return std::equal(suffix.rbegin(), suffix.rend(), str.rbegin());
+
+}

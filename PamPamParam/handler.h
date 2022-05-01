@@ -23,7 +23,7 @@ namespace Handler {
 	inline CollisionBox* playerHitCollision{ new CollisionBox{30,20,155,180 } };
 #endif
 
-	inline Player& player{ *(new Player{0,0 , 200, 200, Stats{12,100}, *playerHitCollision}) };
+	inline Player& player{ *(new Player{0,0 , 200, 200, Stats{12,100, 1}, *playerHitCollision}) };
 	inline Map map{ Point{-50000,-50000}, Point{50000, 50000}, static_cast<unsigned int>(Constants::windowSizeStretched),
 		3,7, &player };
 

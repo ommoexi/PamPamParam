@@ -12,6 +12,7 @@ namespace Textures {
 		inline const std::string background{ "background" };
 		inline const std::string grassland{ "grassland" };
 		inline const std::string tree{ "tree" };
+		inline const std::string blueFlower1{ "blueFlower1" };
 		inline const std::string splitTest{ "splitTest" };
 		inline const std::string collisionBox{ "collisionBox" };
 	}
@@ -36,6 +37,7 @@ namespace Textures {
 		inline std::vector<const Texture*> dogWalkingLeft{};
 		inline std::vector<const Texture*> dogIdleRight{};
 		inline std::vector<const Texture*> dogIdleLeft{};
+		inline std::vector<const Texture*> blueFlower1{};
 	}
 
 	namespace animations{
@@ -43,6 +45,7 @@ namespace Textures {
 		inline Animation dogWalkingLeft{ animationV::dogWalkingLeft, 12 };
 		inline Animation dogIdleRight{ animationV::dogIdleRight, 12 };
 		inline Animation dogIdleLeft{ animationV::dogIdleLeft, 12 };
+		inline Animation blueFlower1{animationV::blueFlower1, 1};
 	}
 
 

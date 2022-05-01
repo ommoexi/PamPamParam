@@ -5,10 +5,11 @@ class Stats {
 private:
 	float m_movementSpeed{};
 	float m_jumpSpeed{};
+	float m_attackSpeed{};
 public:
 	Stats();
 	Stats(const Stats& other);
-	Stats(const float& movementSpeed, const float& jumpSpeed);
+	Stats(const float& movementSpeed, const float& jumpSpeed, const float& attackSpeed);
 	virtual ~Stats();
 
 	const float& movementSpeed() const {
@@ -19,12 +20,20 @@ public:
 		return m_jumpSpeed;
 	}
 
+	const float& attackSpeed() const {
+		return m_attackSpeed;
+	}
+
 	void setMovementSpeed(const float& value) {
 		m_movementSpeed = value;
 	}
 
 	void setJumpSpeed(const float& value) {
 		m_jumpSpeed = value;
+	}
+
+	void setAttackSpeed(const float& value) {
+		m_attackSpeed = value;
 	}
 
 #ifdef _DEBUG

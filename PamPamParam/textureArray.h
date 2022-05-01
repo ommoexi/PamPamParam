@@ -135,6 +135,8 @@ namespace image {
 
 	Image loadImage(std::string_view filePath, std::string_view setName, const int& desiredChannels, unsigned int splitWidth = 0,
 		unsigned int splitHeight = 0);
+	// loads png only from a folder
+	int loadImages(std::vector<Image>& inV, const std::string& folderPath, const std::string& setName, const int& desiredChannels);
 
 	void freeImageData(Image& image);
 
