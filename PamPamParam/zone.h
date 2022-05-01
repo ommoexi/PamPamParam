@@ -3,11 +3,13 @@
 #include "basicBlock.h"
 #include "entity.h"
 #include "text.h"
+#include "background.h"
 
 struct ZoneVectors {
 	std::vector<std::vector<Entity*>*> entities{};
 	std::vector<std::vector<BasicBlock*>*> basicBlocks{};
 	std::vector<std::vector<Text*>*> texts{};
+	std::vector<std::vector<Background*>*> backgrounds{};
 };
 
 class Zone {
@@ -25,6 +27,7 @@ private:
 	std::vector<Entity*> m_entities{};
 	std::vector<BasicBlock*> m_basicBlocks{};
 	std::vector<Text*> m_texts{};
+	std::vector<Background*> m_backgrounds{};
 
 	Zone* m_north{};
 	Zone* m_east{};
@@ -55,6 +58,11 @@ private:
 	}
 
 	Zone* getZone(const Object& obj);
+
+	void addObj(Entity& entity);
+	void addObj(BasicBlock& basicBlock);
+	void addObj(Text& text);
+	void addObj(Background& background);
 
 public:
 	Zone(const Zone& zone) = delete;
@@ -97,9 +105,6 @@ public:
 		return m_coords;
 	}
 
-	void addObj(Entity& entity);
-	void addObj(BasicBlock& basicBlock);
-	void addObj(Text& text);
 
 	bool isObjInBounds(const Object& obj);
 

@@ -6,7 +6,9 @@
 #include "zone.h"
 #include "player.h"
 #include <type_traits>
+#include "background.h"
 
+// only add free store objects with addObj(obj) function
 class Map
 {
 private:
@@ -61,10 +63,6 @@ private:
 	void setUpdateVectors();
 	void setRenderVectors();
 
-	void addObj(Entity& entity);
-	void addObj(BasicBlock& basicBlock);
-	void addObj(Text& text);
-
 public:
 	~Map();
 	Map(const Map& map) = delete;
@@ -72,10 +70,6 @@ public:
 	// minCellSize should be large >= 500
 	Map(const Point& botLeft, const Point& topRight, const int& minCellSize, const unsigned int& updateRadius,
 		const unsigned int& renderRadius, Player* player);
-
-	void addObj(Entity& entity, const bool& useDeleteWhenRemoved);
-	void addObj(BasicBlock& basicBlock, const bool& useDeleteWhenRemoved);
-	void addObj(Text& text, const bool& useDeleteWhenRemoved);
 
 	const Constants::ZoneCoords& coords() const {
 		return m_coords;
@@ -105,6 +99,15 @@ public:
 	Player& mainPlayer() {
 		return *m_mainPlayer;
 	}
+
+	// add free store entity only !!!!!!
+	void addObj(Entity& entity);
+	// add free store basicBlock only !!!!!!
+	void addObj(BasicBlock& basicBlock);
+	// add free store text only !!!!!!
+	void addObj(Text& text);
+	// add free store background only !!!!!!
+	void addObj(Background& background);
 
 #ifdef _DEBUG
 private:

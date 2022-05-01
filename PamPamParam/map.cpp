@@ -113,29 +113,6 @@ void Map::setCurrentZone(const Object& obj) {
 #endif
 }
 
-void Map::addObj(Entity& entity, const bool& useDeleteWhenRemoved) {
-	Zone* zone{ getZone(entity) };
-	if (zone) {
-		entity.setUseDeleteWhenRemoved(useDeleteWhenRemoved);
-		zone->addObj(entity);
-	}
-}
-void Map::addObj(BasicBlock& basicBlock, const bool& useDeleteWhenRemoved) {
-	Zone* zone{ getZone(basicBlock) };
-	if (zone) {
-		basicBlock.setUseDeleteWhenRemoved(useDeleteWhenRemoved);
-		zone->addObj(basicBlock);
-	}
-}
-
-void Map::addObj(Text& text, const bool& useDeleteWhenRemoved) {
-	Zone* zone{ getZone(text) };
-	if (zone) {
-		text.setUseDeleteWhenRemoved(useDeleteWhenRemoved);
-		zone->addObj(text);
-	}
-}
-
 void Map::addObj(Entity& entity) {
 	Zone* zone{ getZone(entity) };
 	if (zone) {
@@ -152,6 +129,13 @@ void Map::addObj(Text& text) {
 	Zone* zone{ getZone(text) };
 	if (zone) {
 		zone->addObj(text);
+	}
+}
+
+void Map::addObj(Background& background) {
+	Zone* zone{ getZone(background) };
+	if (zone) {
+		zone->addObj(background);
 	}
 }
 
@@ -233,6 +217,8 @@ void Map::setVectorsZone(ZoneVectors& vectors, Zone* zone, const int& index) {
 	vectors.basicBlocks[index] = &zone->m_basicBlocks;
 	vectors.texts[index] = &zone->m_texts;
 	vectors.entities[index] = &zone->m_entities;
+	vectors.backgrounds[index] = &zone->m_backgrounds;
+
 }
 
 void Map::setVectors(ZoneVectors& vectors, const unsigned int& radius, const unsigned int& vectorsTotalSize,
@@ -241,6 +227,7 @@ void Map::setVectors(ZoneVectors& vectors, const unsigned int& radius, const uns
 	vectors.basicBlocks.resize(vectorsTotalSize);
 	vectors.entities.resize(vectorsTotalSize);
 	vectors.texts.resize(vectorsTotalSize);
+	vectors.backgrounds.resize(vectorsTotalSize);
 
 	int index{ 0 };
 	int counter{ 0 };
@@ -297,9 +284,7 @@ void Map::update() {
 		for (size_t k{}; k < basicBlocks.size();) {
 			BasicBlock& basicBlock{ *basicBlocks[k] };
 			if (basicBlock.isRemoveFromVector()) {
-				if (basicBlock.useDeleteWhenRemoved()) {
-					delete& basicBlock;
-				}
+				delete& basicBlock;
 				basicBlocks.erase(basicBlocks.begin() + k);
 			}
 			else if (!basicBlock.isInBounds()) {
@@ -307,9 +292,9 @@ void Map::update() {
 				addObj(basicBlock);
 			}
 			else {
-			/*	if (Input::mouse.isCollideWithCamMovementAndZoom(basicBlock, Handler::cam)) {
-					basicBlock.setRemoveFromVector(true);
-				}*/
+				/*	if (Input::mouse.isCollideWithCamMovementAndZoom(basicBlock, Handler::cam)) {
+						basicBlock.setRemoveFromVector(true);
+					}*/
 				Input::mouse.dragRect(basicBlock, Handler::cam);
 				basicBlock.update();
 				k++;
@@ -322,9 +307,7 @@ void Map::update() {
 		for (size_t k{}; k < entities.size();) {
 			Entity& entity{ *entities[k] };
 			if (entity.isRemoveFromVector()) {
-				if (entity.useDeleteWhenRemoved()) {
-					delete& entity;
-				}
+				delete& entity;
 				entities.erase(entities.begin() + k);
 			}
 			else if (!entity.isInBounds()) {
@@ -338,14 +321,30 @@ void Map::update() {
 		}
 	}
 
+	for (size_t i{}; i < m_updateVectors.backgrounds.size() - lastRing; i++) {
+		auto& backgrounds{ *m_updateVectors.backgrounds[i] };
+		for (size_t k{}; k < backgrounds.size();) {
+			Background& background{ *backgrounds[k] };
+			if (background.isRemoveFromVector()) {
+				delete& background;
+				backgrounds.erase(backgrounds.begin() + k);
+			}
+			else if (!background.isInBounds()) {
+				backgrounds.erase(backgrounds.begin() + k);
+				addObj(background);
+			}
+			else {
+				k++;
+			}
+		}
+	}
+
 	for (size_t i{}; i < m_updateVectors.texts.size() - lastRing; i++) {
 		auto& texts{ *m_updateVectors.texts[i] };
 		for (size_t k{}; k < texts.size();) {
 			Text& text{ *texts[k] };
 			if (text.isRemoveFromVector()) {
-				if (text.useDeleteWhenRemoved()) {
-					delete& text;
-				}
+				delete& text;
 				texts.erase(texts.begin() + k);
 			}
 			else if (!text.isInBounds()) {

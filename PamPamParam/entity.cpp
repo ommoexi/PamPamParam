@@ -138,34 +138,6 @@ void Entity::setHeight(const float& height) {
 	Rectangle::setHeight(height);
 }
 
-//checks and reacts to collision to basicBlock
-//glitch minor la miscare
-//void Entity::checkHorizontally(BasicBlock& basicBlock) {
-//	if (basicBlock.x() == basicBlock.previousX()) {
-//		const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
-//
-//		if (isCollide == Directions::LEFT) {
-//			setX(basicBlock.x2() + x() - m_hitCollision->x() + 1);
-//		}
-//		else if (isCollide == Directions::RIGHT) {
-//			setX(basicBlock.x() - width() + x2() - m_hitCollision->x2() - 1);
-//		}
-//	}
-//}
-//void Entity::checkVertically(BasicBlock& basicBlock) {
-//	if (basicBlock.y() == basicBlock.previousY()) {
-//		const Directions::Direction& isCollide{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };
-//		if (isCollide == Directions::UP) {
-//			setY(basicBlock.y() - height() + y2() - m_hitCollision->y2() - 1);
-//			setJumpFalse();
-//		}
-//		else if (isCollide == Directions::DOWN) {
-//			setY(basicBlock.y2() + y() - m_hitCollision->y() + 1);
-//			m_isFalling = false;
-//		}
-//	}
-//}
-
 void Entity::check(BasicBlock& basicBlock) {
 	const Directions::Direction& entIsCollideHorizontally{ m_hitCollision->isCollideAfterMovingHorizontally(basicBlock) };
 	const Directions::Direction& entIsCollideVertically{ m_hitCollision->isCollideAfterMovingVertically(basicBlock) };

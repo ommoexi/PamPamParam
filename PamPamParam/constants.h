@@ -98,6 +98,8 @@ namespace Constants {
 		const inline std::string background_pngPath{ (texturesPath / background_pngFile).generic_string() };
 		const inline std::string grassland_pngFile{ "grassland.png" };
 		const inline std::string grassland_pngPath{ (texturesPath / grassland_pngFile).generic_string() };
+		const inline std::string tree_pngFile{ "tree.png" };
+		const inline std::string tree_pngPath{ (texturesPath / tree_pngFile).generic_string() };
 		const inline std::string splitTest_pngFile{ "splitTest.png" };
 		const inline std::string splitTest_pngPath{ (texturesPath / splitTest_pngFile).generic_string() };
 		const inline std::string collisionBox_pngFile{ "collisionBox.png" };
@@ -157,6 +159,7 @@ enum class Header_Files {
 	mouse_h,
 	stats_h,
 	physicsStats_h,
+	background_h,
 };
 
 enum class Source_Files {
@@ -191,6 +194,7 @@ enum class Source_Files {
 	mouse_cpp,
 	stats_cpp,
 	physicsStats_cpp,
+	background_cpp,
 };
 #endif
 

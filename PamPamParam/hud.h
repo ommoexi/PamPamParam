@@ -4,13 +4,13 @@
 #include "framerate.h"
 #include "initTextures.h"
 #include "Batch.h"
-#include "rectangle.h"
+#include "background.h"
 
 class Hud {
 private:
-	std::vector<Text*> m_texts;
-	Framerate* m_framerate;
-	Rectangle* m_background;
+	std::vector<Text*> m_texts; // unique only
+	Framerate* m_framerate; // unique 
+	Background* m_background; // unique
 public:
 	Hud();
 	virtual ~Hud();
@@ -18,8 +18,8 @@ public:
 	std::vector<Text*>& texts() {
 		return m_texts;
 	}
-
-	void addObj(Text& text, const bool& useDeleteWhenRemoved);
+	// add only free store text only!!!!!!!
+	void addObj(Text& text);
 	void removeObj(Text& text);
 	void update();
 

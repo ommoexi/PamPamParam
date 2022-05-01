@@ -49,6 +49,12 @@
     <Filter Include="Source Files\entities\statistics">
       <UniqueIdentifier>{4a65e367-dd3d-40aa-961a-97f619e20bff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\background">
+      <UniqueIdentifier>{9534c54a-fa55-4152-87aa-e10abe1af5db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\background">
+      <UniqueIdentifier>{10b269b3-5613-491a-a72b-563190f34b49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -143,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="physicsStats.cpp">
       <Filter>Source Files\entities\statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="background.cpp">
+      <Filter>Source Files\background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="physicsStats.h">
       <Filter>Header Files\entities\statistics</Filter>
+    </ClInclude>
+    <ClInclude Include="background.h">
+      <Filter>Header Files\background</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -28,6 +28,13 @@ void renderObjects() {
 		}
 	}
 
+	for (auto& backgrounds : renderVectors.backgrounds) {
+		for (auto& background : *backgrounds) {
+			background->updateGraphics();
+			Handler::basicBatch.setSubData(background->mesh());
+		}
+	}
+
 	for (auto& basicBlocks : renderVectors.basicBlocks) {
 		for (auto& basicBlock : *basicBlocks) {
 			basicBlock->updateGraphics();

@@ -11,6 +11,7 @@ namespace Textures {
 		inline const std::string grass{ "grass" };
 		inline const std::string background{ "background" };
 		inline const std::string grassland{ "grassland" };
+		inline const std::string tree{ "tree" };
 		inline const std::string splitTest{ "splitTest" };
 		inline const std::string collisionBox{ "collisionBox" };
 	}
@@ -23,9 +24,10 @@ namespace Textures {
 	inline TextureArray* I_ALLTEXTURES;
 
 	inline const Texture* player{};
-	inline const Texture* death{};
-	inline const Texture* death2{};
-	inline const Texture* death3{};
+	inline const Texture* grass{};
+	inline const Texture* background{};
+	inline const Texture* grassland{};
+	inline const Texture* tree{};
 	inline const Texture* splitTest{};
 	inline const Texture* collisionBox{};
 

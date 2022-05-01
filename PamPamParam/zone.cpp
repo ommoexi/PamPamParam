@@ -1,8 +1,8 @@
 #include "zone.h"
 
-Zone::Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, std::vector<Zone*>& lowestZones) : 
+Zone::Zone(const Point& botLeft, const Point& topRight, const int& minCellSize, std::vector<Zone*>& lowestZones) :
 	m_coords{ botLeft, topRight }
-	 {
+{
 #ifdef _DEBUG
 	DEBUG_CONSTRUCTOR_OBJ(this, Source_Files::zone_cpp, &mS_objectsCount);
 #endif
@@ -52,21 +52,21 @@ Zone::~Zone() {
 
 	for (size_t i{}; i < m_entities.size(); i++) {
 		Entity*& entity{ m_entities[i] };
-		if (entity->useDeleteWhenRemoved()) {
-			delete entity;
-		}
+		delete entity;
+
 	}
 	for (size_t i{}; i < m_basicBlocks.size(); i++) {
 		BasicBlock*& basicBlock{ m_basicBlocks[i] };
-		if (basicBlock->useDeleteWhenRemoved()) {
-			delete basicBlock;
-		}
+		delete basicBlock;
+
 	}
 	for (size_t i{}; i < m_texts.size(); i++) {
 		Text*& text{ m_texts[i] };
-		if (text->useDeleteWhenRemoved()) {
-			delete text;
-		}
+		delete text;
+	}
+	for (size_t i{}; i < m_backgrounds.size(); i++) {
+		Background*& background{ m_backgrounds[i] };
+		delete background;
 	}
 }
 
@@ -84,6 +84,12 @@ void Zone::addObj(Text& text) {
 	m_texts.push_back(&text);
 	text.setBottomLeftBounds(m_coords.x, m_coords.y);
 	text.setTopRightBounds(m_coords.x2, m_coords.y2);
+}
+
+void Zone::addObj(Background& background) {
+	m_backgrounds.push_back(&background);
+	background.setBottomLeftBounds(m_coords.x, m_coords.y);
+	background.setTopRightBounds(m_coords.x2, m_coords.y2);
 }
 
 Zone* Zone::getZone(const Object& obj) {

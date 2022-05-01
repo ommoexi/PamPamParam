@@ -20,12 +20,6 @@ private:
 	Constants::vec4 m_colorNormalized{normalizeColor(m_color)};
 
 	bool m_removeFromVector{ false };
-	bool m_useDeleteWhenRemoved{ false };
-
-	Object& setUseDeleteWhenRemoved(const bool& value) {
-		m_useDeleteWhenRemoved = value;
-		return *this;
-	}
 
 	Point m_bottomLeftBounds{}; // for map only
 	Point m_topRightBounds{};   // for map only
@@ -171,10 +165,6 @@ public:
 
 	void setRemoveFromVector(const bool& value) {
 		m_removeFromVector = value;
-	}
-
-	const bool& useDeleteWhenRemoved() const {
-		return m_useDeleteWhenRemoved;
 	}
 
 	const Point& bottomLeftBounds() const {

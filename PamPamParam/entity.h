@@ -16,7 +16,7 @@ private:
 	CollisionBox* m_hitCollision;		// unique deleted by destructor
 	bool m_isFalling{ true };
 	bool m_isJumping{ false };
-	float m_jumpSeconds{ 2.f };
+	float m_jumpSeconds{ 0.5f };
 	float m_currentJumpSeconds{ m_jumpSeconds };
 	float m_gravity{ 20};
 
@@ -95,8 +95,6 @@ public:
 		return *m_hitCollision;
 	}
 	// checks and reacts to collision to basicBlock
-	//void checkHorizontally(BasicBlock& basicBlock);
-	//void checkVertically(BasicBlock& basicBlock);
 	void check(BasicBlock& basicBlock);
 
 	float setX(const float& x);
