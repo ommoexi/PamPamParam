@@ -12,7 +12,6 @@ Background::Background(const float& x, const float& y, const float& width, const
 	const float& isAffectedByCamera) : Background{ x,y,width,height, &animation.currentTexture(), isAffectedByCamera }
 	{
 	m_animation = animation;
-	m_hasAnimation = true;
 }
 
 Background::~Background() {
@@ -25,7 +24,7 @@ Background::~Background() {
 }
 
 void Background::update() {
-	if (m_hasAnimation) {
-		m_animation.nextTexture();
+	if (m_animation.hasAnimation()) {
+		updateAnimation(m_animation);
 	}
 }

@@ -28,6 +28,9 @@ public:
 	const Texture& nextTexture() const;
 	const Texture& currentTexture() const;
 	void reset() const;
+	bool hasAnimation() const {
+		return m_textures;
+	}
 
 
 #ifdef _DEBUG

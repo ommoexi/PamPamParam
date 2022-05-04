@@ -89,10 +89,37 @@ namespace Constants {
 
 		const inline std::string texturesFolder{ "textures" };
 		const inline std::filesystem::path texturesPath{ currentDirectoryPath / texturesFolder };
+
 		const inline std::string mossyPlantsFolder{ "Mossy Plants" };
 		const inline std::filesystem::path mossyPlantsPath{ texturesPath / mossyPlantsFolder };
-		const inline std::string mossyPlantsBlueFlower1Folder{ "BlueFlower2" };
+
+		const inline std::string mossyPlantsBlueFlower1Folder{ "BlueFlower1" };
 		const inline std::filesystem::path mossyPlantsBlueFlower1Path{ mossyPlantsPath / mossyPlantsBlueFlower1Folder };
+
+		const inline std::string mossyPlantsBlueFlower2Folder{ "BlueFlower2" };
+		const inline std::filesystem::path mossyPlantsBlueFlower2Path{ mossyPlantsPath / mossyPlantsBlueFlower2Folder };
+
+		const inline std::string mossyPlantsPlant1Folder{ "Plant 1" };
+		const inline std::filesystem::path mossyPlantsPlant1Path{ mossyPlantsPath / mossyPlantsPlant1Folder };
+
+		const inline std::string mossyPlantsPlant2Folder{ "Plant 2" };
+		const inline std::filesystem::path mossyPlantsPlant2Path{ mossyPlantsPath / mossyPlantsPlant2Folder };
+
+		const inline std::string mossyPlantsPlant3Folder{ "Plant 3" };
+		const inline std::filesystem::path mossyPlantsPlant3Path{ mossyPlantsPath / mossyPlantsPlant3Folder };
+
+		const inline std::string mossyPlantsPlant4Folder{ "Plant 4" };
+		const inline std::filesystem::path mossyPlantsPlant4Path{ mossyPlantsPath / mossyPlantsPlant4Folder };
+
+		const inline std::string mossyPlantsPlant5Folder{ "Plant 5" };
+		const inline std::filesystem::path mossyPlantsPlant5Path{ mossyPlantsPath / mossyPlantsPlant5Folder };
+
+		const inline std::string mossyPlantsPlant6Folder{ "Plant 6" };
+		const inline std::filesystem::path mossyPlantsPlant6Path{ mossyPlantsPath / mossyPlantsPlant6Folder };
+
+		const inline std::string mossyPlantsPlant7Folder{ "Plant 7" };
+		const inline std::filesystem::path mossyPlantsPlant7Path{ mossyPlantsPath / mossyPlantsPlant7Folder };
+
 
 		const inline std::string player_pngFile{ "player.png" };
 		const inline std::string player_pngPath{ (texturesPath / player_pngFile).generic_string() };
